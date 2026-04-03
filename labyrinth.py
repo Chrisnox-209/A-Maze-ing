@@ -1,13 +1,14 @@
 import sys
+from typing import Any, Literal
 
 
-def gird_logo(data: dict):
-    x = data["WIDTH"]
-    y = data["HEIGHT"]
+def gird_logo(data: dict) -> list[list[int]] | Literal[False]:
+    x: int = data["WIDTH"]
+    y: int = data["HEIGHT"]
 
-    grid = [[0 for _ in range(x)] for _ in range(y)]
+    grid: list[list[int]] = [[0 for _ in range(x)] for _ in range(y)]
 
-    logo_42 = [
+    logo_42: list[list[int]] = [
         [6, 2, 2, 2, 2, 2, 2, 2, 7],
         [4, 0, 1, 0, 10, 0, 0, 0, 5],
         [4, 0, 1, 0, 10, 1, 1, 0, 5],
@@ -17,12 +18,12 @@ def gird_logo(data: dict):
         [8, 3, 3, 3, 3, 3, 3, 3, 9],
     ]
 
-    logo_y = len(logo_42)
-    logo_x = len(logo_42[0])
+    logo_y: int = len(logo_42)
+    logo_x: int = len(logo_42[0])
 
     if x >= 13 and y >= 13:
-        start_x = (x // 2) - (logo_x // 2)
-        start_y = (y // 2) - (logo_y // 2)
+        start_x: Any | int = (x // 2) - (logo_x // 2)
+        start_y: Any | int = (y // 2) - (logo_y // 2)
 
         for i in range(logo_y):
             for j in range(logo_x):
@@ -30,13 +31,18 @@ def gird_logo(data: dict):
         return grid
     else:
         print("Error: maze too small to display 42.")
+        return False
 
 
 def labyrinth_generation(data: dict) -> None:
-    x = data["WIDTH"]
-    y = data["HEIGHT"]
+    x: int = data["WIDTH"]
+    y: int = data["HEIGHT"]
+    flag = True
 
-    grid = gird_logo(data)
+    if gird_logo(data) is False:
+        flag = False
+    else:
+        grid: list[list[int]] | Literal[False] = gird_logo(data)
 
     top = "▀▀"
     bottom = "▄▄"
@@ -59,27 +65,30 @@ def labyrinth_generation(data: dict) -> None:
             elif i == y - 1:
                 sys.stdout.write(bottom)
             else:
-                val = grid[i][j]
-                if val == 1:
-                    sys.stdout.write(mur_interieur)
-                elif val == 10:
-                    sys.stdout.write(middle)
-                elif val == 2:
-                    sys.stdout.write(bottom)
-                elif val == 3:
-                    sys.stdout.write(top)
-                elif val == 4:
-                    sys.stdout.write(wall_right_pattern)
-                elif val == 5:
-                    sys.stdout.write(left_wall_pattern)
-                elif val == 6:
-                    sys.stdout.write(top_left_wall_pattern)
-                elif val == 7:
-                    sys.stdout.write(wall_top_right_pattern)
-                elif val == 8:
-                    sys.stdout.write(bottom_left_wall_pattern)
-                elif val == 9:
-                    sys.stdout.write(wall_lower_right_pattern)
+                if flag:
+                    val: Any | int = grid[i][j]
+                    if val == 1:
+                        sys.stdout.write(mur_interieur)
+                    elif val == 10:
+                        sys.stdout.write(middle)
+                    elif val == 2:
+                        sys.stdout.write(bottom)
+                    elif val == 3:
+                        sys.stdout.write(top)
+                    elif val == 4:
+                        sys.stdout.write(wall_right_pattern)
+                    elif val == 5:
+                        sys.stdout.write(left_wall_pattern)
+                    elif val == 6:
+                        sys.stdout.write(top_left_wall_pattern)
+                    elif val == 7:
+                        sys.stdout.write(wall_top_right_pattern)
+                    elif val == 8:
+                        sys.stdout.write(bottom_left_wall_pattern)
+                    elif val == 9:
+                        sys.stdout.write(wall_lower_right_pattern)
+                    else:
+                        sys.stdout.write(empty)
                 else:
                     sys.stdout.write(empty)
         sys.stdout.write(f"{lateral}\n")
