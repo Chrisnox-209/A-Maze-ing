@@ -4,7 +4,7 @@ from labyrinth import labyrinth_generation
 
 if __name__ == "__main__":
     file_config = "config.txt"
-    data = {}
+    data: dict = {}
     if parsing_data(file_config) is not False:
         data = parsing_data(file_config)
         clear()
