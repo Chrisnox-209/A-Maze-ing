@@ -14,8 +14,8 @@ run:
 
 .PHONY: clean
 clean:
-	rm -rf */*__pycache__
-	rm -rf 
+	rm -rf */**__pycache__
+	rm -rf */**.mypy_cache
 
 .PHONY: lint
 lint:
