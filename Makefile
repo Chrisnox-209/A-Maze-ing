@@ -1,22 +1,17 @@
-.PHONY: install
+.PHONY: run, install, clean, lint
+
 install:
-	pip install -r requirements.txt
+	@poetry install
 
-.PHONY: venv
-venv:
-	python3 -m venv venv
-	source venv/bin/activate 
-	@echo "Activate with: source venv/bin/activate"
-
-.PHONY: run
 run:
-	python3 main.py
+	@poetry run python3 a_maze_ing.py
 
-.PHONY: clean
 clean:
-	rm -rf */**__pycache__
-	rm -rf */**.mypy_cache
+	@rm -rf */__pycache__
+	@rm -rf */.mypy_cache
+	@rm -rf __pycache__
+	@rm -rf .mypy_cache
+	@echo "All code clean"
 
-.PHONY: lint
 lint:
-	flake8 . && mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+	python3 -m flake8 . && python3 -m mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
