@@ -1,5 +1,5 @@
 from maze.parsing import clear, parsing_data
-from maze.labyrinth import labyrinth_generation
+from maze.maze import Maze
 
 def main() -> None:
     file_config = "config.txt"
@@ -7,7 +7,8 @@ def main() -> None:
     if parsing_data(file_config) is not False:
         data = parsing_data(file_config)
         clear()
-        labyrinth_generation(data)
+        maze = Maze(data)
+        maze.draw_maze()
         print(data)
 
 if __name__ == "__main__":

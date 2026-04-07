@@ -8,7 +8,6 @@ authors = ["papilaz <papilaz@student.42lyon.fr>", "cpietrza <cpietrza@student.42
 [tool.poetry.dependencies]
 python = "^3.12.3"
 
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
