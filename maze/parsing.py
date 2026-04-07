@@ -8,6 +8,7 @@ def clear() -> None:
     else:
         os.system('clear')
 
+
 def parsing_data(file: str) -> dict | Literal[False]:
     data: dict = {}
     try:
