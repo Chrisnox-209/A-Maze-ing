@@ -1,7 +1,6 @@
 from maze.parsing import clear, parsing_data
 from maze.labyrinth import labyrinth_generation
 
-
 def main() -> None:
     file_config = "config.txt"
     data: dict = {}
@@ -10,7 +9,6 @@ def main() -> None:
         clear()
         labyrinth_generation(data)
         print(data)
-
 
 if __name__ == "__main__":
     main()
