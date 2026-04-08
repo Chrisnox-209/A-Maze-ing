@@ -11,6 +11,9 @@ def main() -> None:
         maze = Maze(data)
         maze.draw_maze()
         print(data)
+        print(f"L'ID de la cellule (x=0, y=0) est : {maze.grid[0][0].cell_id}")
+        print(f"L'ID de la cellule (x=0, y=10) est : {maze.grid[0][9].cell_id}")
+        print(f"L'ID de la cellule (x=2, y=1) est : {maze.grid[1][2].cell_id}")
 
 
 if __name__ == "__main__":
