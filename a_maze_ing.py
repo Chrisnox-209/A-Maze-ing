@@ -1,5 +1,6 @@
-from maze.parsing import clear, parsing_data
+from utils.parser import clear, parsing_data
 from maze.maze import Maze
+
 
 def main() -> None:
     file_config = "config.txt"
@@ -10,6 +11,7 @@ def main() -> None:
         maze = Maze(data)
         maze.draw_maze()
         print(data)
+
 
 if __name__ == "__main__":
     main()
