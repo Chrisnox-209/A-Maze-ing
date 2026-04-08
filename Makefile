@@ -4,7 +4,7 @@ install:
 	@poetry install
 
 run:
-	@poetry run python3 a_maze_ing.py
+	@python3 -m poetry run python3 a_maze_ing.py
 
 clean:
 	@rm -rf */__pycache__
