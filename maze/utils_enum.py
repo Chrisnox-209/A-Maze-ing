@@ -18,6 +18,23 @@ class WallDouble(Enum):
     T_RIGHT = "╣"
 
 
+# class Wall(Enum):
+#     H_LINE = "━━━"
+#     H_PATH = "   "
+#     V_LINE = "┃   "
+#     V_PATH = "    "
+#     V_RIGHT = "┃"
+#     CROSS = "╋"
+#     TOP_LEFT = "┏"
+#     TOP_RIGHT = "┓"
+#     BOT_LEFT = "┗"
+#     BOT_RIGHT = "┛"
+#     T_TOP = "┳"
+#     T_BOT = "┻"
+#     T_LEFT = "┣"
+#     T_RIGHT = "┃"
+
+
 class Wall(Enum):
     H_LINE = "━━━"
     H_PATH = "   "
@@ -31,8 +48,9 @@ class Wall(Enum):
     BOT_RIGHT = "┛"
     T_TOP = "┳"
     T_BOT = "┻"
-    T_LEFT = "┣"    
-    T_RIGHT = "┫"
+    T_LEFT = "┃"
+    T_RIGHT = "┃"
+    MIDDLE = "██"
 
 
 class WallSkinny(Enum):
@@ -71,7 +89,7 @@ class WallRetro(Enum):
 
 class WallUgly(Enum):
     H_LINE = "···"
-    H_PATH = "    "
+    H_PATH = "   "
     V_LINE = "∶   "
     V_PATH = "    "
     V_RIGHT = "∶"
@@ -85,6 +103,7 @@ class WallUgly(Enum):
     T_LEFT = "┟"
     T_RIGHT = "┧"
 
+
 class Color(Enum):
     RESET = '\033[0m'
     DEFAULT = '\033[0m'
@@ -96,3 +115,6 @@ class Color(Enum):
     MAGENTA = '\033[35m'
     CYAN = '\033[36m'
     WHITE = '\033[37m'
+
+    BG_YELLOW = '\033[43m'
+
