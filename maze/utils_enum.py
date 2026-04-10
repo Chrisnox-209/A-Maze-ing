@@ -1,120 +1,80 @@
 from enum import Enum
 
 
-class WallDouble(Enum):
-    H_LINE = "═══"
-    H_PATH = "   "
-    V_LINE = "║   "
-    V_PATH = "    "
-    V_RIGHT = "║"
-    CROSS = "╬"
-    TOP_LEFT = "╔"
-    TOP_RIGHT = "╗"
-    BOT_LEFT = "╚"
-    BOT_RIGHT = "╝"
-    T_TOP = "╦"
-    T_BOT = "╩"
-    T_LEFT = "╠"
-    T_RIGHT = "╣"
-
-
-# class Wall(Enum):
-#     H_LINE = "━━━"
-#     H_PATH = "   "
-#     V_LINE = "┃   "
-#     V_PATH = "    "
-#     V_RIGHT = "┃"
-#     CROSS = "╋"
-#     TOP_LEFT = "┏"
-#     TOP_RIGHT = "┓"
-#     BOT_LEFT = "┗"
-#     BOT_RIGHT = "┛"
-#     T_TOP = "┳"
-#     T_BOT = "┻"
-#     T_LEFT = "┣"
-#     T_RIGHT = "┃"
+class WallRetro(Enum):
+    horizontal = '---'
+    vertical = '|'
+    corner = '+'
+    box = '   '
+    corners_tl = "+"
+    corners_tr = "+"
+    corners_bl = "+"
+    corners_br = "+"
+    corners_tt = "+"
+    corners_bt = "+"
+    corners_lt = "+"
+    corners_rt = "+"
+    corners_x = "+"
+    cursor = '###'
 
 
 class Wall(Enum):
-    H_LINE = "━━━"
-    H_PATH = "   "
-    V_LINE = "┃   "
-    V_PATH = "    "
-    V_RIGHT = "┃"
-    CROSS = "╋"
-    TOP_LEFT = "┏"
-    TOP_RIGHT = "┓"
-    BOT_LEFT = "┗"
-    BOT_RIGHT = "┛"
-    T_TOP = "┳"
-    T_BOT = "┻"
-    T_LEFT = "┃"
-    T_RIGHT = "┃"
-    MIDDLE = "██"
-
-
-class WallSkinny(Enum):
-    H_LINE = "───"
-    H_PATH = "   "
-    V_LINE = "│   "
-    V_PATH = "    "
-    V_RIGHT = "│"
-    CROSS = "┼"
-    TOP_LEFT = "╭"
-    TOP_RIGHT = "╮"
-    BOT_LEFT = "╰"
-    BOT_RIGHT = "╯"
-    T_TOP = "┬"
-    T_BOT = "┴"
-    T_LEFT = "├"
-    T_RIGHT = "┤"
-
-
-class WallRetro(Enum):
-    H_LINE = "---"
-    H_PATH = "   "
-    V_LINE = "|   "
-    V_PATH = "    "
-    V_RIGHT = "|"
-    CROSS = "+"
-    TOP_LEFT = "+"
-    TOP_RIGHT = "+"
-    BOT_LEFT = "+"
-    BOT_RIGHT = "+"
-    T_TOP = "+"
-    T_BOT = "+"
-    T_LEFT = "+"
-    T_RIGHT = "+"
+    horizontal = '───'
+    vertical = '│'
+    corner = '┼'
+    box = '   '
+    corners_tl = "┌"
+    corners_tr = "┐"
+    corners_bl = "└"
+    corners_br = "┘"
+    corners_tt = "┬"
+    corners_bt = "┴"
+    corners_lt = "├"
+    corners_rt = "┤"
+    corners_x = "┼"
+    cursor = '███'
 
 
 class WallUgly(Enum):
-    H_LINE = "···"
-    H_PATH = "   "
-    V_LINE = "∶   "
-    V_PATH = "    "
-    V_RIGHT = "∶"
-    CROSS = "⊹"
-    TOP_LEFT = "┌"
-    TOP_RIGHT = "┐"
-    BOT_LEFT = "└"
-    BOT_RIGHT = "┘"
-    T_TOP = "┮"
-    T_BOT = "┶"
-    T_LEFT = "┟"
-    T_RIGHT = "┧"
+    horizontal = '···'
+    vertical = '┆'
+    corner = '+'
+    box = '   '
+    corners_tl = "+"
+    corners_tr = "+"
+    corners_bl = "+"
+    corners_br = "+"
+    corners_tt = "+"
+    corners_bt = "+"
+    corners_lt = "+"
+    corners_rt = "+"
+    corners_x = "+"
+    cursor = '@@@'
+
+
+class WallDouble(Enum):
+    horizontal = '═══'
+    vertical = '║'
+    corner = '╬'
+    box = '   '
+    corners_tl = "╔"
+    corners_tr = "╗"
+    corners_bl = "╚"
+    corners_br = "╝"
+    corners_tt = "╦"
+    corners_bt = "╩"
+    corners_lt = "╠"
+    corners_rt = "╣"
+    corners_x = "╬"
+    cursor = '▓▓▓'
 
 
 class Color(Enum):
-    RESET = '\033[0m'
-    DEFAULT = '\033[0m'
-    BLACK = '\033[30m'
-    RED = '\033[31m'
-    GREEN = '\033[32m'
-    YELLOW = '\033[33m'
-    BLUE = '\033[34m'
-    MAGENTA = '\033[35m'
-    CYAN = '\033[36m'
-    WHITE = '\033[37m'
-
-    BG_YELLOW = '\033[43m'
-
+    DEFAULT = "\033[0m"
+    BLEU  = "\033[94m"
+    ROUGE = "\033[91m"
+    VERT  = "\033[92m"
+    JAUNE = "\033[93m"
+    CYAN  = "\033[96m"
+    BLANC = "\033[97m"
+    OR    = "\033[38;5;214m"
