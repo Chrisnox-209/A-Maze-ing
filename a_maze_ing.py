@@ -1,6 +1,6 @@
 from utils.parser import clear, parsing_data
 from maze.maze import Maze
-from maze.utils_enum import Wall
+from maze.utils_enum import Wall, WallUgly, WallDouble, WallRetro
 
 
 def main() -> None:
