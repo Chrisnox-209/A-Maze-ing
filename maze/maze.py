@@ -66,6 +66,7 @@ class Maze:
         c1.color_case = Color.OR.value
         c2.color_case = Color.OR.value
         c3.color_case = Color.OR.value
+        # ## fin de la super demo
 
         for y in range(self.height):
 
