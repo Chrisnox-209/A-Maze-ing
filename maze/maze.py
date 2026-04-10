@@ -27,6 +27,7 @@ class Maze:
         self.color_select = Color.DEFAULT.value
         self.wall = wall_style
         self.color_wall = Color.BLEU.value
+        self.is_logo = False
 
         for y in range(self.height):
             row: list[Cell] = []
@@ -49,8 +50,22 @@ class Maze:
         # chaque cellule possède son propre dictionnaire de murs
 
         # Super demo ici :
-        self.grid[1][1].walls["East"] = False
-        self.grid[1][2].walls["West"] = False
+        # declaratiuon des cellules
+        c1 = self.grid[1][1]
+        c2 = self.grid[1][2]
+        c3 = self.grid[1][3]
+
+        # on casse les murs
+        c1.walls["East"] = False
+        c2.walls["West"] = False
+
+        c2.walls["East"] = False
+        c3.walls["West"] = False
+
+        # on rempli les cases
+        c1.color_case = Color.OR.value
+        c2.color_case = Color.OR.value
+        c3.color_case = Color.OR.value
 
         for y in range(self.height):
 
@@ -114,7 +129,6 @@ class Maze:
             if not cell.walls["South"]:
                 if cell.color_case != Color.DEFAULT.value:
                     h_char = cell.color_case + w.cursor.value
-                else:
                     h_char = w.box.value
             else:
                 h_char = self.color_wall + w.horizontal.value
