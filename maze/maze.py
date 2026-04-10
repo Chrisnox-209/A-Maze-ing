@@ -9,7 +9,6 @@ class Cell:
         self.x: int = int(x)
         self.y: int = int(y)
         self.cell_id: int = int(cell_id)
-        self.visitee: bool = False
         self.color_case: Color = Color.DEFAULT.value
         self.walls: dict = {
             "North": True,
@@ -51,7 +50,7 @@ class Maze:
         ## chaque cellules a ses propres mur
         ## chaque cellule possède son propre dictionnaire de murs
 
-        ## Super demo ici : 
+        ## Super demo ici :
         self.grid[1][1].walls["East"] = False
         self.grid[1][2].walls["West"] = False
 
@@ -126,20 +125,12 @@ class Maze:
         print(f"{line_bot}{self.color_wall}{w.corners_br.value}{Color.DEFAULT.value}", flush=True)
 
     def logo(self):
-        p4 = [
-            [1,0,1],
-            [1,0,1],
-            [1,1,1],
-            [0,0,1],
-            [0,0,1]
-        ]
-
-        p2 = [
-            [1,1,1],
-            [0,0,1],
-            [1,1,1],
-            [1,0,0],
-            [1,1,1]
+        pattern = [
+            [1,0,1, 0,0, 1,1,1],
+            [1,0,1, 0,0, 0,0,1],
+            [1,1,1, 0,0, 1,1,1],
+            [0,0,1, 0,0, 1,0,0],
+            [0,0,1, 0,0, 1,1,1]
         ]
 
         # ici on calcul le centrage
@@ -151,28 +142,19 @@ class Maze:
         start_x = (self.width - 8) // 2
         start_y = (self.height - 5) // 2
 
-        logo_cells = []
-
-        for y in range(5):
-            for x in range(3):
-                if p4[y][x]:
-                    logo_cells.append((start_y + y, start_x + x))
-
-        for y in range(5):
-            for x in range(3):
-                if p2[y][x]:
-                    logo_cells.append((start_y + y, start_x + 5 + x))
-
-
-        for y, x in logo_cells:
-            cell = self.grid[y][x]
-            cell.color_case = Color.OR.value
-            if y > 0 and (y - 1, x) in logo_cells:
-                cell.walls["North"] = False
-            if x < self.width - 1 and (y, x + 1) in logo_cells:
-                cell.walls["East"] = False
-            if y < self.height - 1 and (y + 1, x) in logo_cells:
-                cell.walls["South"] = False
-            if x > 0 and (y, x - 1) in logo_cells:
-                cell.walls["West"] = False
-
+        for row in range(5):
+            for col in range(8):
+                if pattern[row][col] == 1:
+                    grid_y = start_y + row
+                    grid_x = start_x + col
+                    cell = self.grid[grid_y][grid_x]
+                    cell.color_case = Color.OR.value
+                    
+                    if row > 0 and pattern[row - 1][col] == 1:
+                        cell.walls["North"] = False
+                    if row < 4 and pattern[row + 1][col] == 1:
+                        cell.walls["South"] = False
+                    if col > 0 and pattern[row][col - 1] == 1:
+                        cell.walls["West"] = False
+                    if col < 7 and pattern[row][col + 1] == 1:
+                        cell.walls["East"] = False
