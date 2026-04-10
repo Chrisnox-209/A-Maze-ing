@@ -6,15 +6,15 @@ class WallRetro(Enum):
     vertical = '|'
     corner = '+'
     box = '   '
-    corners_tl = "+"
-    corners_tr = "+"
-    corners_bl = "+"
-    corners_br = "+"
-    corners_tt = "+"
-    corners_bt = "+"
-    corners_lt = "+"
-    corners_rt = "+"
-    corners_x = "+"
+    corner_tl = "+"
+    corner_tr = "+"
+    corner_bl = "+"
+    corner_br = "+"
+    corner_tt = "+"
+    corner_bt = "+"
+    corner_lt = "+"
+    corner_rt = "+"
+    corner_x = "+"
     cursor = '###'
 
 
@@ -23,15 +23,15 @@ class Wall(Enum):
     vertical = '│'
     corner = '┼'
     box = '   '
-    corners_tl = "┌"
-    corners_tr = "┐"
-    corners_bl = "└"
-    corners_br = "┘"
-    corners_tt = "┬"
-    corners_bt = "┴"
-    corners_lt = "├"
-    corners_rt = "┤"
-    corners_x = "┼"
+    corner_tl = "┌"
+    corner_tr = "┐"
+    corner_bl = "└"
+    corner_br = "┘"
+    corner_tt = "┬"
+    corner_bt = "┴"
+    corner_lt = "├"
+    corner_rt = "┤"
+    corner_x = "┼"
     cursor = '███'
 
 
@@ -40,15 +40,15 @@ class WallUgly(Enum):
     vertical = '┆'
     corner = '+'
     box = '   '
-    corners_tl = "+"
-    corners_tr = "+"
-    corners_bl = "+"
-    corners_br = "+"
-    corners_tt = "+"
-    corners_bt = "+"
-    corners_lt = "+"
-    corners_rt = "+"
-    corners_x = "+"
+    corner_tl = "+"
+    corner_tr = "+"
+    corner_bl = "+"
+    corner_br = "+"
+    corner_tt = "+"
+    corner_bt = "+"
+    corner_lt = "+"
+    corner_rt = "+"
+    corner_x = "+"
     cursor = '@@@'
 
 
@@ -57,24 +57,24 @@ class WallDouble(Enum):
     vertical = '║'
     corner = '╬'
     box = '   '
-    corners_tl = "╔"
-    corners_tr = "╗"
-    corners_bl = "╚"
-    corners_br = "╝"
-    corners_tt = "╦"
-    corners_bt = "╩"
-    corners_lt = "╠"
-    corners_rt = "╣"
-    corners_x = "╬"
+    corner_tl = "╔"
+    corner_tr = "╗"
+    corner_bl = "╚"
+    corner_br = "╝"
+    corner_tt = "╦"
+    corner_bt = "╩"
+    corner_lt = "╠"
+    corner_rt = "╣"
+    corner_x = "╬"
     cursor = '▓▓▓'
 
 
 class Color(Enum):
     DEFAULT = "\033[0m"
-    BLEU  = "\033[94m"
+    BLEU = "\033[94m"
     ROUGE = "\033[91m"
-    VERT  = "\033[92m"
+    VERT = "\033[92m"
     JAUNE = "\033[93m"
-    CYAN  = "\033[96m"
+    CYAN = "\033[96m"
     BLANC = "\033[97m"
-    OR    = "\033[38;5;214m"
+    OR = "\033[38;5;214m"
