@@ -1,7 +1,5 @@
-from maze.utils_enum import Wall, Color
-from typing import Any
+from maze.utils_enum import Color
 import time
-import random
 
 
 class Cell:
@@ -44,13 +42,13 @@ class Maze:
         w = self.wall
         delay = 0.05
 
-        ## pour casser les mur il faut les casser sur
-        ## les deux cellules
-        ## sa evite de visiter la prochaine
-        ## chaque cellules a ses propres mur
-        ## chaque cellule possède son propre dictionnaire de murs
+        # pour casser les mur il faut les casser sur
+        # les deux cellules
+        # sa evite de visiter la prochaine
+        # chaque cellules a ses propres mur
+        # chaque cellule possède son propre dictionnaire de murs
 
-        ## Super demo ici :
+        # Super demo ici :
         self.grid[1][1].walls["East"] = False
         self.grid[1][2].walls["West"] = False
 
@@ -63,9 +61,9 @@ class Maze:
                 cc = self.color_wall
 
                 if y == 0:
-                    inter = w.corners_tl.value if x == 0 else w.corners_tt.value
+                    inter = w.corner_tl.value if x == 0 else w.corner_tt.value
                 else:
-                    inter = w.corners_lt.value if x == 0 else w.corners_x.value
+                    inter = w.corner_lt.value if x == 0 else w.corner_x.value
 
                 if not cell.walls["North"]:
                     if cell.color_case != Color.DEFAULT.value:
@@ -77,8 +75,9 @@ class Maze:
 
                 line_top += f"{cc}{inter}{h_char}"
 
-            last_inter = w.corners_tr.value if y == 0 else w.corners_rt.value
-            print(f"{line_top}{self.color_wall}{last_inter}{Color.DEFAULT.value}", flush=True)
+            last_inter = w.corner_tr.value if y == 0 else w.corner_rt.value
+            print(f"{line_top}{self.color_wall}{last_inter}"
+                  f"{Color.DEFAULT.value}", flush=True)
             time.sleep(delay)
 
             # La putain de ligne du millieu
@@ -110,7 +109,7 @@ class Maze:
         for x in range(self.width):
             cell = self.grid[self.height - 1][x]
 
-            inter = w.corners_bl.value if x == 0 else w.corners_bt.value
+            inter = w.corner_bl.value if x == 0 else w.corner_bt.value
 
             if not cell.walls["South"]:
                 if cell.color_case != Color.DEFAULT.value:
@@ -122,23 +121,24 @@ class Maze:
 
             line_bot += f"{self.color_wall}{inter}{h_char}"
 
-        print(f"{line_bot}{self.color_wall}{w.corners_br.value}{Color.DEFAULT.value}", flush=True)
+        print(f"{line_bot}{self.color_wall}{w.corner_br.value}"
+              f"{Color.DEFAULT.value}", flush=True)
 
     def logo(self):
         pattern = [
-            [1,0,1, 0,0, 1,1,1],
-            [1,0,1, 0,0, 0,0,1],
-            [1,1,1, 0,0, 1,1,1],
-            [0,0,1, 0,0, 1,0,0],
-            [0,0,1, 0,0, 1,1,1]
+            [1, 0, 1, 0, 0, 1, 1, 1],
+            [1, 0, 1, 0, 0, 0, 0, 1],
+            [1, 1, 1, 0, 0, 1, 1, 1],
+            [0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 1, 0, 0, 1, 1, 1]
         ]
 
         # ici on calcul le centrage
         # il faut rajouter un if else au nombre de cellules min
         # comme j'avais fait au debut dans le old
-        #je pense WIDTH=12 et HEIGHT=9 c'est bien pour laisser deux case
-        #j'ai aussi laissé deux cases entre le 4 et 2 pour faire passer
-        #le labyrinthe
+        # je pense WIDTH=12 et HEIGHT=9 c'est bien pour laisser deux case
+        # j'ai aussi laissé deux cases entre le 4 et 2 pour faire passer
+        # le labyrinthe
         start_x = (self.width - 8) // 2
         start_y = (self.height - 5) // 2
 
@@ -149,7 +149,7 @@ class Maze:
                     grid_x = start_x + col
                     cell = self.grid[grid_y][grid_x]
                     cell.color_case = Color.OR.value
-                    
+
                     if row > 0 and pattern[row - 1][col] == 1:
                         cell.walls["North"] = False
                     if row < 4 and pattern[row + 1][col] == 1:
