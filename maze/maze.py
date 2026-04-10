@@ -44,6 +44,17 @@ class Maze:
     def draw_maze(self) -> None:
         w = self.wall
         delay = 0.05
+
+        ## pour casser les mur il faut les casser sur
+        ## les deux cellules
+        ## sa evite de visiter la prochaine
+        ## chaque cellules a ses propres mur
+        ## chaque cellule possède son propre dictionnaire de murs
+
+        ## Super demo ici : 
+        self.grid[1][1].walls["East"] = False
+        self.grid[1][2].walls["West"] = False
+
         for y in range(self.height):
 
             # La ligne du haut
