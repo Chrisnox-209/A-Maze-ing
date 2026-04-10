@@ -62,7 +62,7 @@ class Maze:
         c2.walls["East"] = False
         c3.walls["West"] = False
 
-        # on rempli les cases en couleur or 
+        # on rempli les cases en couleur or
         c1.color_case = Color.OR.value
         c2.color_case = Color.OR.value
         c3.color_case = Color.OR.value
