@@ -1,4 +1,4 @@
-from maze.utils_enum import Wall, WallDouble, WallSkinny, WallRetro, WallUgly, Color
+from maze.utils_enum import Wall, Color
 from typing import Any
 import time
 import random
@@ -23,11 +23,14 @@ class Cell:
 
 
 class Maze:
-    def __init__(self, data: dict) -> None:
+    def __init__(self, data: dict, wall_style) -> None:
         self.width: int = data["WIDTH"]
         self.height: int = data["HEIGHT"]
         self.grid: list[list[Cell]] = []
         self.color_select = Color.DEFAULT.value
+        self.wall = wall_style
+        self.color_wall = Color.BLEU.value
+
         for y in range(self.height):
             row: list[Cell] = []
             for x in range(self.width):
@@ -38,123 +41,127 @@ class Maze:
     def set_color() -> None:
         pass
 
-    def create_logo(self):
-        x = int(self.width / 2) - 3
-        y = int(self.height / 2) - 1
-        self.grid[y][x].walls["North"] = False
-        self.grid[y + 1][x].walls["North"] = False
-        self.grid[y + 1][x + 1].walls["West"] = False
-        self.grid[y + 1][x + 2].walls["West"] = False
-        self.grid[y + 2][x + 2].walls["North"] = False
-        self.grid[y + 3][x + 2].walls["North"] = False
-        self.grid[y][x].color_case = Color.BG_YELLOW.value
-        self.grid[y + 1][x].color_case = Color.BG_YELLOW.value
-
-
-        self.grid[y - 1][x + 4].walls["West"] = False
-        self.grid[y - 1][x + 5].walls["West"] = False
-        self.grid[y][x + 5].walls["North"] = False
-        self.grid[y + 1][x + 5].walls["North"] = False
-        self.grid[y + 1][x + 4].walls["West"] = False
-        self.grid[y + 1][x + 5].walls["West"] = False
-        self.grid[y + 2][x + 3].walls["North"] = False
-        self.grid[y + 3][x + 3].walls["North"] = False
-        self.grid[y + 3][x + 4].walls["West"] = False
-        self.grid[y + 3][x + 5].walls["West"] = False
-
-    def draw_maze(self, wall) -> None:
-        delais = 0.001
-        if wall is None:
-            wall = Wall
-        if wall == "random":
-            list_style = [
-                Wall,
-                WallDouble,
-                WallSkinny,
-                WallRetro,
-                WallUgly
-            ]
-            wall = random.choice(list_style)
+    def draw_maze(self) -> None:
+        w = self.wall
+        delay = 0.05
         for y in range(self.height):
+
+            # La ligne du haut
+            line_top = ""
             for x in range(self.width):
+                cell = self.grid[y][x]
+                cc = self.color_wall
+
                 if y == 0:
-                    inter = (
-                        wall.TOP_LEFT.value if x == 0 else wall.T_TOP.value
-                    )
+                    inter = w.corners_tl.value if x == 0 else w.corners_tt.value
                 else:
-                    inter = (
-                        wall.T_LEFT.value if x == 0 else wall.CROSS.value
-                    )
-                time.sleep(delais)
-                print(
-                    f"{self.color_select}{inter}{Color.DEFAULT.value}",
-                    end="",
-                    flush=True
-                )
+                    inter = w.corners_lt.value if x == 0 else w.corners_x.value
 
-                if self.grid[y][x].walls["North"]:
-                    time.sleep(delais)
-                    print(
-                        f"{self.grid[y][x].color_case}{wall.H_LINE.value}"
-                        f"{Color.DEFAULT.value}",
-                        end="",
-                        flush=True
-                    )
+                if not cell.walls["North"]:
+                    if cell.color_case != Color.DEFAULT.value:
+                        h_char = cell.color_case + w.cursor.value
+                    else:
+                        h_char = w.box.value
                 else:
-                    time.sleep(delais)
-                    print(
-                        f"{self.grid[y][x].color_case}{wall.H_PATH.value}"
-                        f"{Color.DEFAULT.value}",
-                        end="",
-                        flush=True
-                    )
-            if y == 0:
-                time.sleep(delais)
-                print(
-                    f"{Color.DEFAULT.value}{wall.TOP_RIGHT.value}"
-                    f"{Color.DEFAULT.value}"
-                )
-            else:
-                time.sleep(delais)
-                print(
-                    f"{Color.DEFAULT.value}{wall.T_RIGHT.value}"
-                    f"{Color.DEFAULT.value}"
-                )
+                    h_char = self.color_wall + w.horizontal.value
 
+                line_top += f"{cc}{inter}{h_char}"
+
+            last_inter = w.corners_tr.value if y == 0 else w.corners_rt.value
+            print(f"{line_top}{self.color_wall}{last_inter}{Color.DEFAULT.value}", flush=True)
+            time.sleep(delay)
+
+            # La putain de ligne du millieu
+            line_mid = ""
             for x in range(self.width):
-                if self.grid[y][x].walls["West"]:
-                    time.sleep(delais)
-                    print(
-                        f"{Color.DEFAULT.value}{wall.V_LINE.value}"
-                        f"{Color.DEFAULT.value}",
-                        end="",
-                        flush=True
-                    )
-                else:
-                    time.sleep(delais)
-                    print(
-                        f"{self.grid[y][x].color_case}{wall.V_PATH.value}"
-                        f"{Color.DEFAULT.value}",
-                        end="",
-                        flush=True
-                    )
-            time.sleep(delais)
-            print(
-                f"{self.grid[y][x].color_case}{wall.V_RIGHT.value}"
-                f"{Color.DEFAULT.value}"
-            )
+                cell = self.grid[y][x]
 
+                if not cell.walls["West"]:
+                    if cell.color_case != Color.DEFAULT.value:
+                        v_char = cell.color_case + w.cursor.value[0]
+                    else:
+                        v_char = " "
+                else:
+                    v_char = self.color_wall + w.vertical.value
+
+                content = (
+                    cell.color_case + w.cursor.value
+                    if cell.color_case != Color.DEFAULT.value
+                    else w.box.value
+                )
+
+                line_mid += f"{v_char}{content}{Color.DEFAULT.value}"
+
+            print(f"{line_mid}{self.color_wall}{w.vertical.value}", flush=True)
+            time.sleep(delay)
+
+        # La ligne du bas
+        line_bot = ""
         for x in range(self.width):
-            inter = wall.BOT_LEFT.value if x == 0 else wall.T_BOT.value
-            time.sleep(delais)
-            print(
-                f"{self.grid[y][x].color_case}{inter}{wall.H_LINE.value}"
-                f"{Color.DEFAULT.value}",
-                end="",
-                flush=True
-            )
-        time.sleep(delais)
-        print(
-            f"{self.grid[y][x].color_case}{wall.BOT_RIGHT.value}"
-            f"{Color.DEFAULT.value}"
-        )
+            cell = self.grid[self.height - 1][x]
+
+            inter = w.corners_bl.value if x == 0 else w.corners_bt.value
+
+            if not cell.walls["South"]:
+                if cell.color_case != Color.DEFAULT.value:
+                    h_char = cell.color_case + w.cursor.value
+                else:
+                    h_char = w.box.value
+            else:
+                h_char = self.color_wall + w.horizontal.value
+
+            line_bot += f"{self.color_wall}{inter}{h_char}"
+
+        print(f"{line_bot}{self.color_wall}{w.corners_br.value}{Color.DEFAULT.value}", flush=True)
+
+    def logo(self):
+        p4 = [
+            [1,0,1],
+            [1,0,1],
+            [1,1,1],
+            [0,0,1],
+            [0,0,1]
+        ]
+
+        p2 = [
+            [1,1,1],
+            [0,0,1],
+            [1,1,1],
+            [1,0,0],
+            [1,1,1]
+        ]
+
+        # ici on calcul le centrage
+        # il faut rajouter un if else au nombre de cellules min
+        # comme j'avais fait au debut dans le old
+        #je pense WIDTH=12 et HEIGHT=9 c'est bien pour laisser deux case
+        #j'ai aussi laissé deux cases entre le 4 et 2 pour faire passer
+        #le labyrinthe
+        start_x = (self.width - 8) // 2
+        start_y = (self.height - 5) // 2
+
+        logo_cells = []
+
+        for y in range(5):
+            for x in range(3):
+                if p4[y][x]:
+                    logo_cells.append((start_y + y, start_x + x))
+
+        for y in range(5):
+            for x in range(3):
+                if p2[y][x]:
+                    logo_cells.append((start_y + y, start_x + 5 + x))
+
+
+        for y, x in logo_cells:
+            cell = self.grid[y][x]
+            cell.color_case = Color.OR.value
+            if y > 0 and (y - 1, x) in logo_cells:
+                cell.walls["North"] = False
+            if x < self.width - 1 and (y, x + 1) in logo_cells:
+                cell.walls["East"] = False
+            if y < self.height - 1 and (y + 1, x) in logo_cells:
+                cell.walls["South"] = False
+            if x > 0 and (y, x - 1) in logo_cells:
+                cell.walls["West"] = False
+
