@@ -5,6 +5,11 @@ install:
 
 run:
 	@python3 -m poetry run python3 a_maze_ing.py
+	@echo "----------------------------"
+	@echo "Fait un make install enculé"
+	@echo "j'ai refait le parsing"
+	@echo "il faut pydantic maintenant"
+	@echo "----------------------------"
 
 clean:
 	@rm -rf */__pycache__
