@@ -21,8 +21,8 @@ class Cell:
 
 class Maze:
     def __init__(self, data: dict, wall_style) -> None:
-        self.width: int = data["WIDTH"]
-        self.height: int = data["HEIGHT"]
+        self.width: int = data.WIDTH
+        self.height: int = data.HEIGHT
         self.grid: list[list[Cell]] = []
         self.color_select = Color.DEFAULT.value
         self.wall = wall_style
