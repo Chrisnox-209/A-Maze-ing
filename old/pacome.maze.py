@@ -1,4 +1,4 @@
-from maze.utils_enum import Wall, WallDouble, WallSkinny, WallRetro, WallUgly, Color
+from maze.utils_enum import Wall, WallDouble, WallSkinny, WallRetro, WallUgly, Color, Animation
 from typing import Any
 import time
 import random
@@ -10,7 +10,7 @@ class Cell:
         self.y: int = int(y)
         self.cell_id: int = int(cell_id)
         self.visitee: bool = False
-        self.color_case: Color = Color.DEFAULT.value
+        self.color_case: Color = Animation.color_case
         self.walls: dict = {
             "North": True,
             "East": True,
@@ -27,7 +27,6 @@ class Maze:
         self.width: int = data["WIDTH"]
         self.height: int = data["HEIGHT"]
         self.grid: list[list[Cell]] = []
-        self.color_select = Color.DEFAULT.value
         for y in range(self.height):
             row: list[Cell] = []
             for x in range(self.width):
@@ -63,7 +62,7 @@ class Maze:
         self.grid[y + 3][x + 5].walls["West"] = False
 
     def draw_maze(self, wall) -> None:
-        delais = 0.001
+        
         if wall is None:
             wall = Wall
         if wall == "random":
@@ -85,15 +84,15 @@ class Maze:
                     inter = (
                         wall.T_LEFT.value if x == 0 else wall.CROSS.value
                     )
-                time.sleep(delais)
+                time.sleep(Animation.delais_draw.value)
                 print(
-                    f"{self.color_select}{inter}{Color.DEFAULT.value}",
+                    f"{Animation.color_select.value}{inter}{Color.DEFAULT.value}",
                     end="",
                     flush=True
                 )
 
                 if self.grid[y][x].walls["North"]:
-                    time.sleep(delais)
+                    time.sleep(Animation.delais_draw.value)
                     print(
                         f"{self.grid[y][x].color_case}{wall.H_LINE.value}"
                         f"{Color.DEFAULT.value}",

@@ -9,7 +9,7 @@ from rich.text import Text
 from rich import box
 from rich.live import Live
 from maze.maze import Maze
-from maze.utils_enum import WallDouble, Wall, WallSkinny, WallRetro, WallUgly
+from maze.utils_enum import WallDouble, Wall, WallSkinny, WallRetro, WallUgly, Theme
 import random
 
 
@@ -63,7 +63,6 @@ def Menu(maze: Maze) -> None:
                 Panel(
                     menu_content,
                     title=current_menu,
-                    width=90,
                     box=box.DOUBLE_EDGE,
                     border_style="cyan",
                     padding=(
@@ -79,13 +78,13 @@ def Menu(maze: Maze) -> None:
                 if current_menu == "MAIN":
                     if index == 0:
                         live.stop()
-                        clear()
-                        maze.draw_maze(wall_select)
-                        console.print(
-                            "\n[dim]Appuie sur une touche pour revenir au menu...[/]")
-                        readchar.readkey()
-                        clear()
+                        print("\033[H", end="")
+                        maze.generate_grid()
+                        maze.generate_logo()
+                        maze.generate_maze()
                         live.start()
+                        clear()
+                        maze.draw_maze()
                     elif index == 2:
                         current_menu = "COLORS"
                         options = style_options
@@ -94,35 +93,36 @@ def Menu(maze: Maze) -> None:
                         sys.exit()
                 elif current_menu == "COLORS":
                     if index == 0:
-                        current_menu = "MAIN"
-                        options = main_options
-                        wall_select = Wall
+                        Theme.wall = Wall
+                        clear()
+                        maze.generate_maze()
+                        maze.draw_maze()
                         index = 0
                     if index == 1:
-                        current_menu = "MAIN"
-                        options = main_options
-                        wall_select = WallDouble
-                        index = 0
+                        Theme.wall = WallDouble
+                        clear()
+                        maze.draw_maze()
+                        index = 1
                     if index == 2:
-                        current_menu = "MAIN"
-                        options = main_options
-                        wall_select = WallSkinny
-                        index = 0
+                        Theme.wall = WallSkinny
+                        clear()
+                        maze.draw_maze()
+                        index = 2
                     if index == 3:
-                        current_menu = "MAIN"
-                        options = main_options
-                        wall_select = WallRetro
-                        index = 0
+                        Theme.wall = WallRetro
+                        clear()
+                        maze.draw_maze()
+                        index = 3
                     if index == 4:
-                        current_menu = "MAIN"
-                        options = main_options
-                        wall_select = WallUgly
-                        index = 0
+                        Theme.wall = WallUgly
+                        clear()
+                        maze.draw_maze()
+                        index = 4
                     if index == 5:
-                        current_menu = "MAIN"
-                        options = main_options
-                        wall_select = "random"
-                        index = 0
+                        Theme.wall = "random"
+                        clear()
+                        maze.draw_maze()
+                        index = 5
                     if index == len(style_options) - 1:
                         current_menu = "MAIN"
                         options = main_options

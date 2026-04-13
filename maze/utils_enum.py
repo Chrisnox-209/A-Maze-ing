@@ -1,5 +1,5 @@
 from enum import Enum
-
+import random
 
 class WallRetro(Enum):
     horizontal = '---'
@@ -17,8 +17,7 @@ class WallRetro(Enum):
     corner_x = "+"
     cursor = '###'
 
-
-class Wall(Enum):
+class WallSkinny(Enum):
     horizontal = '───'
     vertical = '│'
     corner = '┼'
@@ -32,6 +31,38 @@ class Wall(Enum):
     corner_lt = "├"
     corner_rt = "┤"
     corner_x = "┼"
+    cursor = '███'
+
+class WallBigBig(Enum):
+    horizontal = '███'
+    vertical = '█'
+    corner = '█'
+    box = '   '
+    corner_tl = "█"
+    corner_tr = "█"
+    corner_bl = "█"
+    corner_br = "█"
+    corner_tt = "█"
+    corner_bt = "█"
+    corner_lt = "█"
+    corner_rt = "█"
+    corner_x = "█"
+    cursor = '███'
+
+class Wall(Enum):
+    horizontal = '━━━'
+    vertical = '┃'
+    corner = '╋'
+    box = '   '
+    corner_tl = "┏"
+    corner_tr = "┓"
+    corner_bl = "┗"
+    corner_br = "┛"
+    corner_tt = "┳"
+    corner_bt = "┻"
+    corner_lt = "┣"
+    corner_rt = "┫"
+    corner_x = "╋"
     cursor = '███'
 
 
@@ -70,11 +101,51 @@ class WallDouble(Enum):
 
 
 class Color(Enum):
+    RESET = "\033[0m"
     DEFAULT = "\033[0m"
-    BLEU = "\033[94m"
-    ROUGE = "\033[91m"
-    VERT = "\033[92m"
-    JAUNE = "\033[93m"
+
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    MAGENTA = "\033[95m"
     CYAN = "\033[96m"
-    BLANC = "\033[97m"
-    OR = "\033[38;5;214m"
+    WHITE = "\033[97m"
+    
+    DARK_RED = "\033[31m"
+    DARK_GREEN = "\033[32m"
+    DARK_BLUE = "\033[34m"
+    DARK_MAGENTA = "\033[35m"
+    GRAY = "\033[90m"
+
+    GOLD = "\033[38;5;214m"
+    ORANGE = "\033[38;5;208m"
+    PINK = "\033[38;5;206m"
+    PURPLE = "\033[38;5;129m"
+    SKY_BLUE = "\033[38;5;117m"
+
+    @classmethod
+    def random_color(cls) -> str:
+        valid_colors = [c.value for c in cls if c not in (cls.RESET, cls.DEFAULT)]
+        return random.choice(valid_colors)
+
+class Logo(Enum):
+    none = None
+    logo_42 = "logo_42"
+    caca = "caca"
+    logo_surprise = "logo_surprise"
+
+class Theme:
+    color_select = Color.MAGENTA.value
+    color_case = Color.DEFAULT.value
+    color_wall = Color.SKY_BLUE.value
+    color_case_logo = "random"
+    color_animation_backtraking = Color.GOLD.value
+
+    delais_draw: float = 0.01
+    animation_draw: bool = True
+
+    wall = Wall
+    entry_color_case = Color.WHITE.value
+    exit_color_case = Color.PURPLE.value
+    logo_midile = Logo.logo_surprise.value
