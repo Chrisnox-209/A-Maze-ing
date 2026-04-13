@@ -22,3 +22,4 @@ ajout du mode techno pour le logo
 class pour faire plus facilement les logo
 ajout d une petite surprise
 
+ajout de la creation de n importe quelle nombre de 0 a 99 tu verra la ligne en commentaire dans le enum pour tester
