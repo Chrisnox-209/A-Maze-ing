@@ -11,11 +11,11 @@ def main() -> None:
         print(f"[ERROR]: file {file_config}")
         return
     maze = Maze(config)
-    # maze.draw_grid()
     maze.generate_logo()
+    # maze.draw_grid()
     maze.generate_maze()
-    maze.draw_maze()
-    Menu(maze)
+    # maze.draw_maze()
+    # Menu(maze)
 
 
 if __name__ == "__main__":
