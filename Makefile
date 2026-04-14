@@ -1,7 +1,7 @@
 .PHONY: run, install, clean, lint
 
 install:
-	@poetry install
+	@python3 -m poetry install
 
 run:
 	@python3 -m poetry run python3 a_maze_ing.py
