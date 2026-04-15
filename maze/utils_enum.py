@@ -1,6 +1,7 @@
 from enum import Enum
 import random
 
+
 class WallRetro(Enum):
     horizontal = '---'
     vertical = '|'
@@ -16,6 +17,7 @@ class WallRetro(Enum):
     corner_rt = "+"
     corner_x = "+"
     cursor = '###'
+
 
 class WallSkinny(Enum):
     horizontal = '───'
@@ -33,6 +35,7 @@ class WallSkinny(Enum):
     corner_x = "┼"
     cursor = '███'
 
+
 class WallBigBig(Enum):
     horizontal = '███'
     vertical = '█'
@@ -48,6 +51,7 @@ class WallBigBig(Enum):
     corner_rt = "█"
     corner_x = "█"
     cursor = '███'
+
 
 class Wall(Enum):
     horizontal = '━━━'
@@ -111,7 +115,7 @@ class Color(Enum):
     MAGENTA = "\033[95m"
     CYAN = "\033[96m"
     WHITE = "\033[97m"
-    
+
     DARK_RED = "\033[31m"
     DARK_GREEN = "\033[32m"
     DARK_BLUE = "\033[34m"
@@ -126,14 +130,18 @@ class Color(Enum):
 
     @classmethod
     def random_color(cls) -> str:
-        valid_colors = [c.value for c in cls if c not in (cls.RESET, cls.DEFAULT)]
+        valid_colors = [
+            c.value for c in cls if c not in (
+                cls.RESET, cls.DEFAULT)]
         return random.choice(valid_colors)
+
 
 class Logo(Enum):
     none = None
     logo_42 = "logo_42"
     caca = "caca"
     logo_surprise = "logo_surprise"
+
 
 class Theme:
     color_select = Color.MAGENTA.value
@@ -143,12 +151,12 @@ class Theme:
     # color_case_logo = Color.DARK_MAGENTA.value
     color_animation_backtraking = Color.RED.value
 
-    delais_draw: float = 0.01
-    animation_draw: bool = True
+    delais_draw: float = 0.001
+    animation_draw: bool = False
 
     wall = WallDouble
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
     logo_midile = Logo.logo_surprise.value
-    # logo_midile = "67"
-    logo_chrono:bool = False
+    logo_midile = "99"
+    logo_chrono: bool = False

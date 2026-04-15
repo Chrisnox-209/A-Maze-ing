@@ -3,13 +3,14 @@ from maze.create_maze import create_maze
 from maze.pattern_logo import Logo
 import time
 
+
 class Cell:
     def __init__(self, x: int, y: int, cell_id: int) -> None:
         self.x: int = int(x)
         self.y: int = int(y)
         self.cell_id: int = int(cell_id)
         self.color_case: Color = Theme.color_case
-        self.visit = False 
+        self.visit = False
         self.walls: dict = {
             "North": True,
             "East": True,
@@ -25,8 +26,8 @@ class Maze:
     def __init__(self, data: dict) -> None:
         self.width: int = data.WIDTH
         self.height: int = data.HEIGHT
-        self.entry:int = (data.ENTRY_X, data.ENTRY_Y)
-        self.exit:int = (data.EXIT_X, data.EXIT_Y)
+        self.entry: int = (data.ENTRY_X, data.ENTRY_Y)
+        self.exit: int = (data.EXIT_X, data.EXIT_Y)
         self.logo = Logo(self)
         self.generate_grid()
 
@@ -45,15 +46,17 @@ class Maze:
     def generate_maze(self) -> None:
         create_maze(self)
 
-    # laisse cette fonction pour le moment ca sert pour le debug pour voir la matrice de chiffre
+    # laisse cette fonction pour le moment ca sert pour le debug pour voir la
+    # matrice de chiffre
     def draw_grid(self) -> None:
         for data in self.grid:
             for visited in data:
-                if visited.visit == False:
-                    print("0 ", end= '')
+                if not visited.visit:
+                    print("0 ", end='')
                 else:
-                    print("1 ", end= '')
+                    print("1 ", end='')
             print()
+
     def draw_maze(self) -> None:
         print("\033[H", end="")
         w = Theme.wall
@@ -83,7 +86,10 @@ class Maze:
                     h_char = Theme.color_wall + w.horizontal.value
                 line_top += f"{cc}{inter}{h_char}{Color.DEFAULT.value}"
             last_inter = w.corner_tr.value if y == 0 else w.corner_rt.value
-            print(f"{line_top}{Theme.color_wall}{last_inter}{res}\033[K", flush=True)
+            print(
+                f"{line_top}{
+                    Theme.color_wall}{last_inter}{res}\033[K",
+                flush=True)
 
             # La putain de ligne du millieu
             line_mid = ""
@@ -105,7 +111,11 @@ class Maze:
                 )
 
                 line_mid += f"{v_char}{content}{Color.DEFAULT.value}"
-            print(f"{line_mid}{Theme.color_wall}{w.vertical.value}{res}\033[K", flush=True)
+            print(
+                f"{line_mid}{
+                    Theme.color_wall}{
+                    w.vertical.value}{res}\033[K",
+                flush=True)
             # time.sleep(self.delay)
         # La ligne du bas
         line_bot = ""
@@ -123,4 +133,8 @@ class Maze:
                 h_char = Theme.color_wall + w.horizontal.value
 
             line_bot += f"{Theme.color_wall}{inter}{h_char}{Color.DEFAULT.value}"
-        print(f"{line_bot}{Theme.color_wall}{w.corner_br.value}{res}\033[K", flush=True)
+        print(
+            f"{line_bot}{
+                Theme.color_wall}{
+                w.corner_br.value}{res}\033[K",
+            flush=True)
