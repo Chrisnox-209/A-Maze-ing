@@ -12,11 +12,10 @@ def find_path_bfs(maze):
         x = cell_work[0]
         y = cell_work[1]
         if x == maze.exit[0] and y == maze.exit[1]:
-            print(stack)
+            for x, y in stack:
+                maze.grid[y][x].color_case = Theme.color_path
             return
         cell = maze.grid[y][x]
-        if cell.visit == True:
-            cell.color_case = Theme.color_animation_backtraking
         cell.visit = True
         direction = [(x - 1, y),
                      (x, y + 1),
@@ -24,6 +23,7 @@ def find_path_bfs(maze):
                      (x, y - 1)]
         shuffle(direction)
         found = False
+        cell.color_case = Color.BLUE.value
         for direct_x, direct_y in direction:
             if 0 <= direct_x < maze.width and 0 <= direct_y < maze.height:
                 verif_visit = maze.grid[direct_y][direct_x]
@@ -38,20 +38,31 @@ def find_path_bfs(maze):
                     # on monte vers le nord
                     if direct_y < y and cell_destruction.walls["North"] == False:
                         neighbor.visit = True
+                        stack.append((direct_x, direct_y))
+
                     elif direct_y > y and cell_destruction.walls["South"] == False:
                         # on dessend vers le sud
                         neighbor.visit = True
+                        stack.append((direct_x, direct_y))
+
                 # Mouvement Horizontal
                 elif direct_y == y and verif_visit.visit == False:
                     if direct_x < x and cell_destruction.walls["West"] == False:
                         # on va vers l ouest
                         neighbor.visit = True
+                        stack.append((direct_x, direct_y))
+
                     elif direct_x > x and cell_destruction.walls["East"] == False:
                         # on va vers l est
                         neighbor.visit = True
-                stack.append((direct_x, direct_y))
-                # maze.draw_maze()
-                # time.sleep(delay)
+                        stack.append((direct_x, direct_y))
+
+
+                # stack.append((direct_x, direct_y))
+                if Theme.animation_draw_path:
+                    maze.draw_maze()
+                    time.sleep(delay)
+                break
         if not found:
             stack.pop()
             cell.color_case = Color.DEFAULT.value

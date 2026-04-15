@@ -13,9 +13,11 @@ def main() -> None:
     maze = Maze(config)
     # maze.generate_logo()
     maze.generate_maze()
+    # maze.all_cell_false()
+    # maze.generate_maze()
     maze.generate_path()
-    maze.draw_grid()
-    # maze.draw_maze()
+    # maze.draw_grid()
+    maze.draw_maze()
     # Menu(maze)
 
 

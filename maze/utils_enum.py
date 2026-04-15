@@ -145,15 +145,20 @@ class Logo(Enum):
 class Theme:
     color_select = Color.MAGENTA.value
     color_case = Color.DEFAULT.value
-    color_wall = Color.GREEN.value
-    color_case_logo = "random"
     # color_case_logo = Color.DARK_MAGENTA.value
-    color_animation_backtraking = Color.RED.value
+
+    color_wall = Color.GREEN.value
+    wall = WallDouble
+
+    color_case_logo = "random"
 
     delais_draw: float = 0.005
-    animation_draw: bool = False
+    animation_draw: bool = True
+    color_animation_backtraking = None
 
-    wall = WallDouble
+    animation_draw_path:bool = True
+    color_path = Color.GREEN.value
+
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
     logo_midile = "42"
