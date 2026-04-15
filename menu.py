@@ -65,6 +65,7 @@ def Menu(maze: Maze) -> None:
                     title=current_menu,
                     box=box.DOUBLE_EDGE,
                     border_style="cyan",
+                    width = 90,
                     padding=(
                         1,
                         2)))
@@ -84,6 +85,7 @@ def Menu(maze: Maze) -> None:
                         maze.generate_maze()
                         live.start()
                         clear()
+                        # print("\033[H", end="")
                         maze.draw_maze()
                     elif index == 2:
                         current_menu = "COLORS"

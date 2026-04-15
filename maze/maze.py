@@ -1,6 +1,7 @@
 from maze.utils_enum import Color, Theme
-from maze.create_maze import create_maze
-from maze.pattern_logo import Logo
+from algos.algo_dfs import create_maze
+from algos.algo_bfs import find_path_bfs
+from maze.logo import Logo
 import time
 
 
@@ -46,6 +47,10 @@ class Maze:
     def generate_maze(self) -> None:
         create_maze(self)
 
+    def generate_path(self) -> None:
+        # self.logo.select_logo()
+        find_path_bfs(self)
+
     # laisse cette fonction pour le moment ca sert pour le debug pour voir la
     # matrice de chiffre
     def draw_grid(self) -> None:
@@ -56,6 +61,12 @@ class Maze:
                 else:
                     print("1 ", end='')
             print()
+
+    def all_cell_false(self) -> None:
+        for height in self.grid:
+            for width in height:
+                width.visit = False
+        self.generate_logo()
 
     def draw_maze(self) -> None:
         print("\033[H", end="")

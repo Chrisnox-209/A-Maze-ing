@@ -241,6 +241,8 @@ class Logo:
         pass
 
     def make_logo(self):
+        if Theme.logo_midile == None:
+            return
         with_logo: int = len(self.pattern[0])
         height_logo: int = len(self.pattern)
         if self.maze.width <= with_logo + 4 and self.maze.height < height_logo + 4:
