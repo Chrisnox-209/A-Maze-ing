@@ -2,7 +2,7 @@
 
 calcul auto de la taille pour le logo j ai remis 1 au millieu pour que ca colle au sujet et je trouve que ces plus joli
 
-docs dfs : https://favtutor.com/blogs/depth-first-search-python
+docs dfs : https://favtutor.com/blogs/depth-first-search-python, https://www.geeksforgeeks.org/python/python-program-for-breadth-first-search-or-bfs-for-a-graph/ https://reeborg.ca/docs/en/reference/mazes.html
 
 creation algo generation dfs ajout casse entrer et sortie reste
 il faut ajouter une secu dans le parsing car si entree impossible ca crash

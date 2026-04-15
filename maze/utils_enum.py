@@ -137,7 +137,6 @@ class Color(Enum):
 
 
 class Logo(Enum):
-    none = None
     logo_42 = "logo_42"
     caca = "caca"
     logo_surprise = "logo_surprise"
@@ -151,12 +150,12 @@ class Theme:
     # color_case_logo = Color.DARK_MAGENTA.value
     color_animation_backtraking = Color.RED.value
 
-    delais_draw: float = 0.001
+    delais_draw: float = 0.005
     animation_draw: bool = False
 
     wall = WallDouble
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
-    logo_midile = Logo.logo_surprise.value
-    logo_midile = "99"
+    logo_midile = "42"
+    # logo_midile = "69"
     logo_chrono: bool = False
