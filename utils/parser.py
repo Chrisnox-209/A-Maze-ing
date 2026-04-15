@@ -7,8 +7,8 @@ clear: Callable[[], int] = lambda: os.system('cls' if os.name == 'nt'
 
 
 class MazeConfig(BaseModel):
-    WIDTH: int = Field(ge=3, le=100)
-    HEIGHT: int = Field(ge=3, le=100)
+    WIDTH: int = Field(ge=3)
+    HEIGHT: int = Field(ge=3)
     ENTRY_X: int = Field(ge=0, le=100)
     ENTRY_Y: int = Field(ge=0, le=100)
     EXIT_X: int = Field(ge=0, le=100)
