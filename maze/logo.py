@@ -6,9 +6,9 @@ import random
 def number_zero() -> None:
     pattern = [
         [1, 1, 1],
-        [1, 0, 1],
-        [1, 0, 1],
-        [1, 0, 1],
+        [1, 2, 1],
+        [1, 2, 1],
+        [1, 2, 1],
         [1, 1, 1],
     ]
     return pattern
@@ -16,10 +16,10 @@ def number_zero() -> None:
 
 def number_one() -> None:
     pattern = [
-        [0, 1, 0],
-        [1, 1, 0],
-        [0, 1, 0],
-        [0, 1, 0],
+        [2, 1, 2],
+        [1, 1, 2],
+        [2, 1, 2],
+        [2, 1, 2],
         [1, 1, 1],
     ]
     return pattern
@@ -28,9 +28,9 @@ def number_one() -> None:
 def number_two() -> None:
     pattern = [
         [1, 1, 1],
-        [0, 0, 1],
+        [2, 2, 1],
         [1, 1, 1],
-        [1, 0, 0],
+        [1, 2, 2],
         [1, 1, 1]
     ]
     return pattern
@@ -39,9 +39,9 @@ def number_two() -> None:
 def number_tree() -> None:
     pattern = [
         [1, 1, 1],
-        [0, 0, 1],
+        [2, 2, 1],
         [1, 1, 1],
-        [0, 0, 1],
+        [2, 2, 1],
         [1, 1, 1]
     ]
     return pattern
@@ -49,11 +49,11 @@ def number_tree() -> None:
 
 def number_fourth() -> None:
     pattern = [
-        [1, 0, 1,],
-        [1, 0, 1,],
+        [1, 2, 1,],
+        [1, 2, 1,],
         [1, 1, 1,],
-        [0, 0, 1,],
-        [0, 0, 1,]
+        [2, 2, 1,],
+        [2, 2, 1,]
     ]
     return pattern
 
@@ -61,9 +61,9 @@ def number_fourth() -> None:
 def number_five() -> None:
     pattern = [
         [1, 1, 1,],
-        [1, 0, 0,],
+        [1, 2, 2,],
         [1, 1, 1,],
-        [0, 0, 1,],
+        [2, 2, 1,],
         [1, 1, 1,]
     ]
     return pattern
@@ -72,9 +72,9 @@ def number_five() -> None:
 def number_six() -> None:
     pattern = [
         [1, 1, 1,],
-        [1, 0, 0,],
+        [1, 2, 2,],
         [1, 1, 1,],
-        [1, 0, 1,],
+        [1, 2, 1,],
         [1, 1, 1,]
     ]
     return pattern
@@ -83,10 +83,10 @@ def number_six() -> None:
 def number_seven() -> None:
     pattern = [
         [1, 1, 1,],
-        [0, 0, 1,],
-        [0, 0, 1,],
-        [0, 0, 1,],
-        [0, 0, 1,]
+        [2, 2, 1,],
+        [2, 2, 1,],
+        [2, 2, 1,],
+        [2, 2, 1,]
     ]
     return pattern
 
@@ -94,9 +94,9 @@ def number_seven() -> None:
 def number_eighth() -> None:
     pattern = [
         [1, 1, 1,],
-        [1, 0, 1,],
+        [1, 2, 1,],
         [1, 1, 1,],
-        [1, 0, 1,],
+        [1, 2, 1,],
         [1, 1, 1,]
     ]
     return pattern
@@ -105,10 +105,20 @@ def number_eighth() -> None:
 def number_ninth() -> None:
     pattern = [
         [1, 1, 1,],
-        [1, 0, 1,],
+        [1, 2, 1,],
         [1, 1, 1,],
-        [0, 0, 1,],
+        [2, 2, 1,],
         [1, 1, 1,]
+    ]
+    return pattern
+
+def reset_logo_func() -> None:
+    pattern = [
+        [2, 2, 2, 2, 2, 2, 2,],
+        [2, 2, 2, 2, 2, 2, 2,],
+        [2, 2, 2, 2, 2, 2, 2,],
+        [2, 2, 2, 2, 2, 2, 2,],
+        [2, 2, 2, 2, 2, 2, 2,],
     ]
     return pattern
 
@@ -149,7 +159,7 @@ def combine_twoo_number(number_one: str, number_twoo: str):
             if i < len_number_one:
                 res_ligne_fusion.append(res_choice_one[a][i])
             if i == (len_number_one + 1):
-                res_ligne_fusion.append(0)
+                res_ligne_fusion.append(2)
             if i > len_number_one:
                 res_ligne_fusion.append(
                     res_choice_twoo[a][i - (len_number_one + 1)])
@@ -237,8 +247,9 @@ class Logo:
     #         [1, 1, 1, 1, 1, 1, 1]
     #     ]
 
-    def create_logo(number: int):
-        pass
+    def reset_logo(self):
+        self.pattern = reset_logo_func()
+        self.make_logo()
 
     def make_logo(self):
         if Theme.logo_midile == None:
@@ -252,8 +263,17 @@ class Logo:
 
         for row in range(height_logo):
             for col in range(with_logo):
-                if self.pattern[row][col] == 2:
+                if self.pattern[row][col] == 2 and Theme.logo_chrono:
+                    grid_y = start_y + row
+                    grid_x = start_x + col
+                    cell = self.maze.grid[grid_y][grid_x]
                     cell.visit = True
+                    cell.color_case = Color.DEFAULT.value
+                    cell.walls["North"] = True
+                    cell.walls["East"] = True
+                    cell.walls["South"] = True
+                    cell.walls["West"] = True
+
                 if self.pattern[row][col] == 1:
                     grid_y = start_y + row
                     grid_x = start_x + col

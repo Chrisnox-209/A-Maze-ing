@@ -8,7 +8,7 @@ def create_maze(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
     while stack:
-        if Theme.color_case_logo == "random":
+        if Theme.color_case_logo == "random" and Theme.logo_midile:
             maze.logo.random_color_2()
         cell_work = stack[-1]
         x = cell_work[0]

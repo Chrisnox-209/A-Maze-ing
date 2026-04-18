@@ -150,7 +150,7 @@ class Theme:
     color_wall = Color.GREEN.value
     wall = WallDouble
 
-    color_case_logo = "random"
+    color_case_logo = Color.DARK_BLUE.value
 
     delais_draw: float = 0.005
     animation_draw: bool = True
@@ -161,6 +161,6 @@ class Theme:
 
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
-    logo_midile = "42"
+    logo_midile = "00"
     # logo_midile = "69"
-    logo_chrono: bool = False
+    logo_chrono: bool = True

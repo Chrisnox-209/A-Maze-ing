@@ -3,7 +3,6 @@ from maze.maze import Maze
 from maze.utils_enum import Wall, WallUgly, WallDouble, WallRetro
 from menu import Menu
 
-
 def main() -> None:
     file_config = "config.txt"
     config = parsing_data(file_config)
@@ -11,10 +10,9 @@ def main() -> None:
         print(f"[ERROR]: file {file_config}")
         return
     maze = Maze(config)
-    # maze.generate_logo()
+    maze.generate_logo()
     maze.generate_maze()
-    # maze.all_cell_false()
-    # maze.generate_maze()
+    # maze.imperfect_maze()
     maze.generate_path()
     # maze.draw_grid()
     maze.draw_maze()

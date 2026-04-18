@@ -2,11 +2,14 @@ from random import shuffle, randrange
 from maze.utils_enum import Color, Theme
 from utils.parser import clear
 import time
+from utils.timer import Timer
+
 
 def find_path_bfs(maze):
     maze.all_cell_false()
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
+    time_start = Timer()
     while stack:
         cell_work = stack[-1]
         x = cell_work[0]
@@ -57,12 +60,20 @@ def find_path_bfs(maze):
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
 
-
                 # stack.append((direct_x, direct_y))
                 if Theme.animation_draw_path:
                     maze.draw_maze()
+                    # print(f"x{direct_x} y{direct_y}", end= " ")
                     time.sleep(delay)
+                if Theme.logo_chrono:
+                    # maze.logo.reset_logo()
+                    maze.logo.reset_logo()
+                    maze.generate_logo()
+                    timestr = f"{time_start.get_time(): .0f}"
+                    Theme.logo_midile = str(timestr)
+                    maze.generate_logo()
                 break
+            print()
         if not found:
             stack.pop()
             cell.color_case = Color.DEFAULT.value
