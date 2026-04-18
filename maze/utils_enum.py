@@ -152,7 +152,7 @@ class Theme:
 
     color_case_logo = Color.DARK_BLUE.value
 
-    delais_draw: float = 0.005
+    delais_draw: float = 0.01
     animation_draw: bool = True
     color_animation_backtraking = None
 

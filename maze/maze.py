@@ -30,6 +30,7 @@ class Maze:
         self.entry: int = (data.ENTRY_X, data.ENTRY_Y)
         self.exit: int = (data.EXIT_X, data.EXIT_Y)
         self.logo = Logo(self)
+        self.seed = data.SEED
         self.generate_grid()
 
     def generate_grid(self) -> None:

@@ -1,4 +1,5 @@
 from random import shuffle, randrange
+import random
 from maze.utils_enum import Color, Theme
 from utils.parser import clear
 import time
@@ -7,6 +8,8 @@ import time
 def create_maze(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
+    if maze.seed:
+        random.seed(maze.seed)
     while stack:
         if Theme.color_case_logo == "random" and Theme.logo_midile:
             maze.logo.random_color_2()
