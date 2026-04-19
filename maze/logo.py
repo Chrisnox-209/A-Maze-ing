@@ -252,6 +252,7 @@ class Logo:
         self.make_logo()
 
     def make_logo(self):
+        self.maze.logo_ids = set()
         if Theme.logo_midile == None:
             return
         with_logo: int = len(self.pattern[0])
@@ -267,6 +268,7 @@ class Logo:
                     grid_y = start_y + row
                     grid_x = start_x + col
                     cell = self.maze.grid[grid_y][grid_x]
+                    self.maze.logo_ids.add(cell.cell_id)
                     cell.visit = True
                     cell.color_case = Color.DEFAULT.value
                     cell.walls["North"] = True
@@ -278,6 +280,7 @@ class Logo:
                     grid_y = start_y + row
                     grid_x = start_x + col
                     cell = self.maze.grid[grid_y][grid_x]
+                    self.maze.logo_ids.add(cell.cell_id)
                     cell.color_case = self.color
                     cell.visit = True
                     if row > 0 and self.pattern[row - 1][col] == 1:
