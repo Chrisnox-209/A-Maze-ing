@@ -147,17 +147,17 @@ class Theme:
     color_case = Color.DEFAULT.value
     # color_case_logo = Color.DARK_MAGENTA.value
 
-    color_wall = Color.GREEN.value
-    wall = WallDouble
+    color_wall = Color.WHITE.value
+    wall = Wall
 
-    color_case_logo = Color.DARK_BLUE.value
+    color_case_logo = Color.DARK_RED.value
 
     delais_draw: float = 0.01
     animation_draw: bool = True
     color_animation_backtraking = None
 
     animation_draw_path:bool = True
-    color_path = Color.GREEN.value
+    color_path = Color.BLUE.value
 
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
