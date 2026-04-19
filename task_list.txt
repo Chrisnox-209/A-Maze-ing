@@ -1,13 +1,12 @@
-[PAS DE VARIABLE EN FRANCAIS ENCULEEEEE]
-
 calcul auto de la taille pour le logo j ai remis 1 au millieu pour que ca colle au sujet et je trouve que ces plus joli
 
 docs dfs : https://favtutor.com/blogs/depth-first-search-python, https://www.geeksforgeeks.org/python/python-program-for-breadth-first-search-or-bfs-for-a-graph/ https://reeborg.ca/docs/en/reference/mazes.html
+docs kruskal https://weblog.jamisbuck.org/2011/1/3/maze-generation-kruskal-s-algorithm, https://www.youtube.com/watch?v=71UQH7Pr9kU
 
 creation algo generation dfs ajout casse entrer et sortie reste
 il faut ajouter une secu dans le parsing car si entree impossible ca crash
 
-je t ai ajouter une petite animation pour voir comment le backtraking agi je t ai aussi mis vite fait des petites commentaire dans le code 
+je t ai ajouter une petite animation pour voir comment le backtraking agi je t ai aussi mis vite fait des petites commentaire dans le code
 le site que je t ai mis est vraiment bien il explique etape par etape comment l algo marche
 
 creation d un fichier pattern_logo.py il y aura tout les futur logo
@@ -16,8 +15,8 @@ ajout dans enum une class theme si tu veux modifier la couleur animation et tout
 mise a jour du menu ptn c etait vraiment relou a tout changer mais ca marche bien la
 j ai refait l animation du maze a la creation pas mal du tout ca print("\033[H", end="") mais ptn j en ai chier
 
-changement des couleur avec les bon nom en anglais 
-ajout du mode techno pour le logo 
+changement des couleur avec les bon nom en anglais
+ajout du mode techno pour le logo
 
 class pour faire plus facilement les logo
 ajout d une petite surprise
@@ -26,6 +25,6 @@ ajout de la creation de n importe quelle nombre de 0 a 99 tu verra la ligne en c
 
 algo pour trouver un chemin
 
-timer au millieu 
+timer au millieu
 
 ajout SEED
