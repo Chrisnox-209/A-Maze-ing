@@ -11,9 +11,9 @@ def main() -> None:
         return
     maze = Maze(config)
     maze.generate_logo()
-    maze.generate_maze()
+    maze.generate_maze2()
     # maze.imperfect_maze()
-    maze.generate_path()
+    # maze.generate_path()
     # maze.draw_grid()
     maze.draw_maze()
     # Menu(maze)
