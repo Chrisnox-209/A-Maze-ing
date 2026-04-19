@@ -1,6 +1,7 @@
 from maze.utils_enum import Color, Theme
 from algos.algo_dfs import create_maze
 from algos.algo_bfs import find_path_bfs
+from algos.kruskal import kruskal
 from maze.logo import Logo
 import time
 from algos.imperfect_maze import imperfect_maze_func
@@ -48,8 +49,14 @@ class Maze:
     def generate_maze(self) -> None:
         create_maze(self)
 
+    def generate_maze2(self) -> None:
+        kruskal(self)
+
+
     def imperfect_maze(self) -> None:
         imperfect_maze_func(self)
+
+
     def generate_path(self) -> None:
         # self.logo.select_logo()
         find_path_bfs(self)
