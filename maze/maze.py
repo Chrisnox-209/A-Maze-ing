@@ -99,7 +99,8 @@ class Maze:
                     inter = w.corner_lt.value if x == 0 else w.corner_x.value
 
                 if not cell.walls["North"]:
-                    if cell.color_case != Color.DEFAULT.value:
+                    if (cell.color_case != Color.DEFAULT.value
+                       and cell != entry and cell != exit_cel):
                         h_char = cell.color_case + w.cursor.value
                     else:
                         h_char = w.box.value
@@ -118,7 +119,8 @@ class Maze:
                 cell = self.grid[y][x]
 
                 if not cell.walls["West"]:
-                    if cell.color_case != Color.DEFAULT.value:
+                    if (cell.color_case != Color.DEFAULT.value
+                       and cell != entry and cell != exit_cel):
                         v_char = cell.color_case + w.cursor.value[0]
                     else:
                         v_char = " "
@@ -146,7 +148,8 @@ class Maze:
             inter = w.corner_bl.value if x == 0 else w.corner_bt.value
 
             if not cell.walls["South"]:
-                if cell.color_case != Color.DEFAULT.value:
+                if (cell.color_case != Color.DEFAULT.value
+                   and cell != entry and cell != exit_cel):
                     h_char = cell.color_case + w.cursor.value
                 else:
                     h_char = w.box.value
