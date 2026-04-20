@@ -128,6 +128,17 @@ class Color(Enum):
     PURPLE = "\033[38;5;129m"
     SKY_BLUE = "\033[38;5;117m"
 
+    NEON_RED = "\033[38;5;196m"
+    NEON_GREEN = "\033[38;5;46m"
+    NEON_YELLOW = "\033[38;5;226m"
+    NEON_BLUE = "\033[38;5;39m"
+    NEON_CYAN = "\033[38;5;51m"
+    NEON_MAGENTA = "\033[38;5;201m"
+    NEON_ORANGE = "\033[38;5;208m"
+    NEON_PURPLE = "\033[38;5;93m"
+    NEON_PINK = "\033[38;5;198m"
+    SPRING_GREEN = "\033[38;5;48m"
+
     @classmethod
     def random_color(cls) -> str:
         valid_colors = [

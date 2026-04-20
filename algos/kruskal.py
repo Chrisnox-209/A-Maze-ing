@@ -1,5 +1,6 @@
 
 
+from maze.utils_enum import Color
 import random
 import time
 
@@ -74,6 +75,16 @@ def pair_wall(direction):
     if direction == 'W':
         return ("West", "East")
 
+list_color = ["NEON_RED",
+              "NEON_GREEN",
+              "NEON_YELLOW",
+              "NEON_BLUE",
+              "NEON_CYAN",
+              "NEON_MAGENTA",
+              "NEON_ORANGE",
+              "NEON_PURPLE",
+              "NEON_PINK",]
+
 
 def create_family(maze, breakable_walls, familly_cell):
     total_cell = maze.width * maze.height - len(maze.logo_ids)
@@ -91,21 +102,37 @@ def create_family(maze, breakable_walls, familly_cell):
         check = check_familly(cell1.cell_id, cell2.cell_id, familly_cell)
 
         if check:
-            breakable_walls.remove(element)
+            del breakable_walls[0]
         else:
             wall_1, wall_2 = pair_wall(direction)
             cell1.walls[wall_1] = False
             cell2.walls[wall_2] = False
 
+            col = random.choice(list_color)
+            color_case = getattr(Color, col).value
+
+            cell2.color_case = color_case
+            cell1.color_case = color_case
+
             old_familly = familly_cell[cell2.cell_id]
             new_familly = familly_cell[cell1.cell_id]
+
             for id_cell in familly_cell:
                 if familly_cell[id_cell] == old_familly:
                     familly_cell[id_cell] = new_familly
-            breakable_walls.remove(element)
+            del breakable_walls[0]
             nb_wall_broken += 1
 
         if nb_wall_broken == total_cell - 1:
+            cell1.color_case = Color.DEFAULT.value
+            cell2.color_case = Color.DEFAULT.value
             break
         maze.draw_maze()
-        time.sleep(0.009)
+        if nb_wall_broken < ((total_cell - 1) * 19) / 20:
+            time.sleep(0.015)
+
+        cell1.color_case = Color.DEFAULT.value
+        cell2.color_case = Color.DEFAULT.value
+    maze.draw_maze()
+    print(f"Boucle terminée. Murs cassés: {nb_wall_broken}, Cible: {total_cell - 1}")
+    print(f"Murs restants dans la liste: {len(breakable_walls)}")
