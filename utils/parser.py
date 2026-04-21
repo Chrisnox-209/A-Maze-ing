@@ -43,7 +43,9 @@ def parsing_data(file: str) -> MazeConfig | bool:
     try:
         with open(file, "r", encoding="utf-8") as f:
             for line in f:
-                key,  value = line.split("=")
+                if not line or "=" not in line:
+                    continue
+                key, value = line.split("=")
                 key = key.strip()
                 value = value.strip()
                 if key == "WIDTH":
@@ -66,6 +68,8 @@ def parsing_data(file: str) -> MazeConfig | bool:
                     data["PERFECT"] = value.lower() == "true"
                 elif key == "SEED":
                     data["SEED"] = str(value)
+                    if data["SEED"] == "None":
+                        data["SEED"] = None
         return MazeConfig(**data)
     except ValidationError as error:
         print(f"[ERROR]: {error.errors()[0]['msg']}")
