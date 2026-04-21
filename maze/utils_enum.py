@@ -172,6 +172,6 @@ class Theme:
 
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
-    logo_midile = "00"
+    logo_midile = "logo_42"
     # logo_midile = "69"
     logo_chrono: bool = True
