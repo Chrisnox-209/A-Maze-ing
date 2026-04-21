@@ -11,12 +11,11 @@ def main() -> None:
         return
     maze = Maze(config)
     maze.generate_logo()
-    maze.generate_maze2()
     # maze.imperfect_maze()
     # maze.generate_path()
     # maze.draw_grid()
     maze.draw_maze()
-    # Menu(maze)
+    Menu(maze)
 
 
 if __name__ == "__main__":
