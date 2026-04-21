@@ -5,7 +5,7 @@ from utils.parser import clear
 import time
 
 
-def create_maze(maze):
+def dfs(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
     if maze.seed:
