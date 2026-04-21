@@ -1,10 +1,11 @@
 from maze.utils_enum import Color, Theme
-from algos.algo_dfs import create_maze
+from algos.algo_dfs import dfs
 from algos.algo_bfs import find_path_bfs
 from algos.kruskal import kruskal
 from maze.logo import Logo
 import time
 from algos.imperfect_maze import imperfect_maze_func
+
 
 class Cell:
     def __init__(self, x: int, y: int, cell_id: int) -> None:
@@ -32,6 +33,8 @@ class Maze:
         self.exit: int = (data.EXIT_X, data.EXIT_Y)
         self.logo = Logo(self)
         self.seed = data.SEED
+        self.file = data.OUTPUT_FILE
+        self.perfect = data.PERFECT
         self.generate_grid()
 
     def generate_grid(self) -> None:
@@ -46,16 +49,20 @@ class Maze:
     def generate_logo(self) -> None:
         self.logo.select_logo()
 
-    def generate_maze(self) -> None:
-        create_maze(self)
-
-    def generate_maze2(self) -> None:
-        kruskal(self)
-
+    def generate_maze(self, algo_name: str) -> None:
+        algorithms = ["DFS", "KRUSKAL", "PRIMS"]
+        
+        if algo_name not in algorithms:
+            raise ValueError(f"Unknown algorithm: {algo_name}")
+        if algo_name == "DFS":
+            dfs(self)
+        elif algo_name == "KRUSKAL":
+            kruskal(self)
+        # elif algo_name == "PRIMS":
+        #     prims(self)
 
     def imperfect_maze(self) -> None:
         imperfect_maze_func(self)
-
 
     def generate_path(self) -> None:
         # self.logo.select_logo()
