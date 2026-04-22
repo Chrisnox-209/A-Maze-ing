@@ -13,17 +13,18 @@ def main() -> None:
     maze = Maze(config)
     
     #maze.generate_maze2()
-    # maze.imperfect_maze()
-    # maze.generate_path()
     # maze.draw_grid()
-    #maze.generate_logo()
+    maze.generate_logo()
 
     
-    maze.draw_maze(True)
-    maze.generate_maze("DEMO")
+    maze.generate_maze("DFS")
+    # maze.imperfect_maze()
+    maze.draw_maze(False)
+    maze.generate_path()
+    maze.play_game()
 
     print()
-    Menu(maze)
+    # Menu(maze)
     #menu = Menu(maze)
     #menu.run()
 

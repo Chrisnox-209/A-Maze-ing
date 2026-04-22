@@ -178,13 +178,13 @@ class Theme:
     wall = Wall
 
     delais_draw: float = 0.01
-    animation_draw: bool = True
+    animation_draw: bool = False
     color_animation_backtraking = Color.BLUE.value
 
-    animation_draw_path:bool = True
+    animation_draw_path:bool = False
     color_path = Color.BLUE.value
 
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
     logo_midile: str = "LOGO_42"
-    logo_chrono: bool = False
+    logo_chrono: bool = True

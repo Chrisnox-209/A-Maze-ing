@@ -363,6 +363,6 @@ class Logo:
         for c in list_cell:
             c.color_case = self.color
             time.sleep(0.07)
-            self.maze.draw_maze(False)       
+            self.maze.draw_maze(False)
 
 

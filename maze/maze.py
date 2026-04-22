@@ -5,7 +5,8 @@ from algos.kruskal import kruskal
 from maze.logo import Logo
 import time
 from algos.imperfect_maze import imperfect_maze_func
-
+from pynput import keyboard
+from utils.timer import Timer
 
 class Cell:
     def __init__(self, x: int, y: int, cell_id: int) -> None:
@@ -14,6 +15,9 @@ class Cell:
         self.cell_id: int = int(cell_id)
         self.color_case: Color = Theme.color_case
         self.visit = False
+        self.path_id = -1
+        self.path_active = False
+        self.path_content = "   "
         self.walls: dict = {
             "North": True,
             "East": True,
@@ -88,6 +92,96 @@ class Maze:
                 width.visit = False
         self.generate_logo()
 
+    def draw_path(self) -> None:
+        max_id_path = 0
+        id_select = 0
+        for y in range(self.height):
+            for x in range(self.width):
+                cell = self.grid[y][x]
+                if cell.path_id > max_id_path:
+                    max_id_path = cell.path_id
+        i:int = max_id_path
+        old_x = 0
+        old_y = 0
+        while i != 0:
+            for y in range(self.height):
+                for x in range(self.width):
+                    cell = self.grid[y][x]
+                    if cell.path_id != -1 and cell.path_id == i:
+                        cell.path_active = True
+                        if old_x < x:
+                            cell.path_content = "(>)"
+                            old_x = x
+                        elif old_x > x:
+                            cell.path_content = "(<)"
+                            old_x = x
+                        elif old_y > y:
+                            cell.path_content = "(^)"
+                            old_y = y
+                        elif old_y < y:
+                            cell.path_content = "(v)"
+                            old_y = y
+                        self.draw_maze(False)
+                        cell.path_active = False
+                        time.sleep(0.1)
+                        id_select = cell.path_id
+                        i-=1
+                        break
+    def all_path_false(self):
+        for y in range(self.height):
+            for x in range(self.width):
+                cell = self.grid[y][x]
+                cell.path_active = False
+    def play_game(self) -> None:
+        x = 0
+        y = 0
+        i = 0
+        cell = self.grid[y][x]
+        while True:
+            with keyboard.Events() as events:
+                self.logo.reset_logo()
+                self.generate_logo()
+                Theme.logo_midile = "0" + str(i)
+                self.generate_logo()
+                event = events.get()
+                if self.exit[0] == x and self.exit[1] == y:
+                    print("win")
+                    return
+                if isinstance(event, keyboard.Events.Press):
+                    if hasattr(event.key, 'char') and event.key.char == 'd' and cell.walls["East"] is not True:
+                        x+=1
+                        i+=1
+                        cell = self.grid[y][x]
+                        cell.path_active = True
+                        cell.path_content = "(>)"
+                        self.draw_maze(False)
+                        self.all_path_false()
+                    elif hasattr(event.key, 'char') and event.key.char == 'a' and cell.walls["West"] is not True:
+                        x-=1
+                        i+=1
+                        cell = self.grid[y][x]
+                        cell.path_active = True
+                        cell.path_content = "(<)"
+                        self.draw_maze(False)
+                        self.all_path_false()
+                    elif hasattr(event.key, 'char') and event.key.char == 'w' and cell.walls["North"] is not True:
+                        y-=1
+                        i+=1
+                        cell = self.grid[y][x]
+                        cell.path_active = True
+                        cell.path_content = "(^)"
+                        self.draw_maze(False)
+                        self.all_path_false()
+                    elif hasattr(event.key, 'char') and event.key.char == 's' and cell.walls["South"] is not True:
+                        y+=1
+                        i+=1
+                        cell = self.grid[y][x]
+                        cell.path_active = True
+                        cell.path_content = "(v)"
+                        self.draw_maze(False)
+                        self.all_path_false()
+
+
     def draw_maze(self, start: bool) -> None:
         print("\033[H", end="")
         w = Theme.wall
@@ -137,11 +231,18 @@ class Maze:
                 else:
                     v_char = Theme.color_wall + w.vertical.value
 
-                content = (
-                    cell.color_case + w.cursor.value
-                    if cell.color_case != Color.DEFAULT.value
-                    else w.box.value
-                )
+                if cell.path_active is not True:
+                    content = (
+                        cell.color_case + w.cursor.value
+                        if cell.color_case != Color.DEFAULT.value
+                        else w.box.value
+                    )
+                else:
+                    content = (
+                        cell.color_case + w.cursor.value
+                        if cell.color_case != Color.DEFAULT.value
+                        else cell.path_content
+                    )
 
                 line_mid += f"{v_char}{content}{Color.DEFAULT.value}"
             print(

@@ -18,8 +18,10 @@ def find_path_bfs(maze):
         y = cell_work[1]
         if x == maze.exit[0] and y == maze.exit[1]:
             current = (maze.exit[0], maze.exit[1])
+            i:int = 0
             while current != (maze.entry[0], maze.entry[1]):
-                maze.grid[current[1]][current[0]].color_case = Theme.color_path
+                maze.grid[current[1]][current[0]].path_id = i
+                i+=1
                 current = path[current]
             return
         cell = maze.grid[y][x]

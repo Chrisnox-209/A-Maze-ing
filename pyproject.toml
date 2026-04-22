@@ -12,6 +12,7 @@ readchar = "^4.2.0"
 rich = "^13.7.1"
 art = "^6.1"
 pydantic = "^2.6"
+pynput = "^1.8.1"
 
 [build-system]
 requires = ["poetry-core"]
