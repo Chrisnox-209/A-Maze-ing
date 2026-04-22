@@ -382,7 +382,6 @@ def Menu(maze) -> None:
                     current_menu = "MAIN"
                 index = 0
             elif key == ' ':
-
                 if current_menu == "CONFIG":
                     if index == 0:
                         is_perfect = not is_perfect
@@ -396,6 +395,12 @@ def Menu(maze) -> None:
                     algo_name = list_algo[index]
                 elif current_menu == "LOGO":
                     logo_name = logos_list[index]
+                    if logo_name == "TIMER":
+                        Theme.logo_midile = "00"
+                        Theme.logo_chrono = True
+                    else:
+                        Theme.logo_midile = logo_name
+                        Theme.logo_chrono = False
                 elif current_menu == "COLOR_W":
                     color_wall = colors_list[index % len(color_map)]
                     Theme.color_wall = color_map[index % len(color_map)]
