@@ -14,17 +14,15 @@ def main() -> None:
     
     #maze.generate_maze2()
     # maze.draw_grid()
-    maze.generate_logo()
-
-    
-    maze.generate_maze("DFS")
     # maze.imperfect_maze()
-    maze.draw_maze(False)
-    maze.generate_path()
-    maze.play_game()
-
+    # maze.generate_maze("DEMO")
+    # maze.generate_logo()
+    maze.draw_maze(True)
+    maze.generate_maze("DEMO")
+    # maze.play_game()
+    # maze.draw_path
     print()
-    # Menu(maze)
+    Menu(maze)
     #menu = Menu(maze)
     #menu.run()
 
