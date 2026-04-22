@@ -3,20 +3,24 @@ from maze.utils_enum import Color, Theme
 from utils.parser import clear
 import time
 from utils.timer import Timer
+from collections import deque 
 
 
 def find_path_bfs(maze):
     maze.all_cell_false()
-    stack = [(maze.entry[0], maze.entry[1])]
+    stack = deque([(maze.entry[0], maze.entry[1])])
     delay: int = Theme.delais_draw
     time_start = Timer()
+    path = {}
     while stack:
-        cell_work = stack[-1]
+        cell_work = stack.popleft()
         x = cell_work[0]
         y = cell_work[1]
         if x == maze.exit[0] and y == maze.exit[1]:
-            for x, y in stack:
-                maze.grid[y][x].color_case = Theme.color_path
+            current = (maze.exit[0], maze.exit[1])
+            while current != (maze.entry[0], maze.entry[1]):
+                maze.grid[current[1]][current[0]].color_case = Theme.color_path
+                current = path[current]
             return
         cell = maze.grid[y][x]
         cell.visit = True
@@ -26,7 +30,6 @@ def find_path_bfs(maze):
                      (x, y - 1)]
         shuffle(direction)
         found = False
-        cell.color_case = Color.BLUE.value
         for direct_x, direct_y in direction:
             if 0 <= direct_x < maze.width and 0 <= direct_y < maze.height:
                 verif_visit = maze.grid[direct_y][direct_x]
@@ -36,34 +39,31 @@ def find_path_bfs(maze):
                     found = True
                 cell_destruction = maze.grid[y][x]
                 neighbor = maze.grid[direct_y][direct_x]
-                # Mouvement Vertical
                 if direct_x == x and verif_visit.visit == False:
-                    # on monte vers le nord
                     if direct_y < y and cell_destruction.walls["North"] == False:
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
+                        path[(direct_x, direct_y)] = (x, y)
 
                     elif direct_y > y and cell_destruction.walls["South"] == False:
-                        # on dessend vers le sud
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
+                        path[(direct_x, direct_y)] = (x, y)
 
-                # Mouvement Horizontal
                 elif direct_y == y and verif_visit.visit == False:
                     if direct_x < x and cell_destruction.walls["West"] == False:
-                        # on va vers l ouest
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
+                        path[(direct_x, direct_y)] = (x, y)
 
                     elif direct_x > x and cell_destruction.walls["East"] == False:
-                        # on va vers l est
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
-
+                        path[(direct_x, direct_y)] = (x, y)
+                cell.color_case = Theme.color_path
                 # stack.append((direct_x, direct_y))
                 if Theme.animation_draw_path:
                     maze.draw_maze(False)
-                    # print(f"x{direct_x} y{direct_y}", end= " ")
                     time.sleep(delay)
                 if Theme.logo_chrono:
                     # maze.logo.reset_logo()
@@ -72,9 +72,5 @@ def find_path_bfs(maze):
                     timestr = f"{time_start.get_time(): .0f}"
                     Theme.logo_midile = str(timestr)
                     maze.generate_logo()
-                break
-            print()
-        if not found:
-            stack.pop()
             cell.color_case = Color.DEFAULT.value
         
