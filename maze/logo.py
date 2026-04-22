@@ -285,11 +285,11 @@ class Logo:
     def make_logo(self):
         self.maze.logo_ids = set()
         if Theme.logo_midile is None:
-            return
+            return False
         width_logo: int = len(self.pattern[0])
         height_logo: int = len(self.pattern)
         if self.maze.width <= width_logo + 4 and self.maze.height < height_logo + 4:
-            return
+            return False
         start_x = (self.maze.width - width_logo) // 2
         start_y = (self.maze.height - height_logo) // 2
 
