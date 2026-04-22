@@ -15,6 +15,7 @@ from maze.utils_enum import (
     WallSkinny,
     WallRetro,
     WallUgly,
+    WallBig,
     Theme,
     Color
 )
@@ -93,7 +94,7 @@ def Menu(maze) -> None:
     config_opts: list[str] = ["PERFECT", "DESIGN", "ENTRY", "EXIT", "SIZE"]
     style_opts: list[str] = ["CLASSIC WALL", "DOUBLE WALL",
                              "SKINNY WALL", "RETRO WALL",
-                             "UGLY WALL", "WallBig"]
+                             "UGLY WALL", "BIG WALL"]
     list_algo: list[str] = ["DFS", "KRUSKAL", "PRIMS"]
     colors_list: list[str] = ["RED", "GREEN", "YELLOW", "BLUE",
                               "MAGENTA", "CYAN", "WHITE",
@@ -195,7 +196,7 @@ def Menu(maze) -> None:
             )
 
             wall_map: list = [Wall, WallDouble, WallSkinny,
-                              WallRetro, WallUgly]
+                              WallRetro, WallUgly, WallBig]
             color_map: list = [Color.NEON_RED.value, Color.NEON_GREEN.value,
                                Color.NEON_YELLOW.value, Color.NEON_BLUE.value,
                                Color.NEON_MAGENTA.value, Color.NEON_CYAN.value,
