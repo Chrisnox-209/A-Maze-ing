@@ -1,7 +1,7 @@
 from utils.parser import clear, parsing_data, MazeConfig
 from maze.maze import Maze
 from maze.utils_enum import Wall, WallUgly, WallDouble, WallRetro
-from oldmenu import Menu
+from menu import Menu
 
 
 def main() -> None:
