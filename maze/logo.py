@@ -220,12 +220,6 @@ class Logo:
             self.logo_surprise()
         if Theme.logo_midile == "HEART":
             self.logo_heart()
-        if Theme.logo_midile == "SMILEY":
-            self.logo_smiley()
-        if Theme.logo_midile == "FLASH":
-            self.logo_flash()
-        if Theme.logo_midile == "FIR_TREE":
-            self.logo_fir_tree()
         try:
             int(Theme.logo_midile)
             self.pattern = create_number(Theme.logo_midile)
