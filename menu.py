@@ -90,7 +90,7 @@ def get_menu_content(
 def Menu(maze) -> None:
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
-                            "PAKAGE", "EXIT PROGRAM"]
+                            "PAKAGE","PLAY GAME" ,"EXIT PROGRAM"]
     config_opts: list[str] = ["PERFECT", "DESIGN", "ENTRY", "EXIT", "SIZE"]
     style_opts: list[str] = ["CLASSIC WALL", "DOUBLE WALL",
                              "SKINNY WALL", "RETRO WALL",
@@ -432,6 +432,7 @@ def Menu(maze) -> None:
                         maze.generate_path()
                         clear()
                         print("\033[H", end="")
+                        maze.draw_path()
                         maze.draw_maze(False)
                         if show_advanced:
                             print("\n" * 29)
@@ -467,6 +468,15 @@ def Menu(maze) -> None:
                         current_menu = "PAKAGE"
                         pass
                     elif index == 5:
+                        current_menu = "PLAY GAME"
+                        live.stop()
+                        maze.play_game()
+                        if show_advanced:
+                            print("\n" * 29)
+                        else:
+                            print("\n" * 18)
+                        live.start()
+                    elif index == 6:
                         current_menu = "EXIT"
                         sys.exit()
                 elif current_menu == "CONFIG":
