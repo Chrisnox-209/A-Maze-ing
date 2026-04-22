@@ -21,5 +21,5 @@ def imperfect_maze_func(maze):
                     neighbor.walls["East"] = False
                 # maze.draw_maze()
                 if Theme.animation_draw:
-                    maze.draw_maze()
+                    maze.draw_maze(False)
                     time.sleep(delay)

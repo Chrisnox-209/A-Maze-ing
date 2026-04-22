@@ -62,7 +62,7 @@ def find_path_bfs(maze):
 
                 # stack.append((direct_x, direct_y))
                 if Theme.animation_draw_path:
-                    maze.draw_maze()
+                    maze.draw_maze(False)
                     # print(f"x{direct_x} y{direct_y}", end= " ")
                     time.sleep(delay)
                 if Theme.logo_chrono:

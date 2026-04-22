@@ -62,7 +62,7 @@ def dfs(maze):
                 stack.append((direct_x, direct_y))
                 # print(stack)
                 if Theme.animation_draw:
-                    maze.draw_maze()
+                    maze.draw_maze(False)
                     time.sleep(delay)
                 break
         if not found:

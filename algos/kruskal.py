@@ -53,11 +53,6 @@ def cell_familly(maze):
     return familly_cell
 
 
-def pick_up(breakable_walls):
-    element = random.choice(breakable_walls)
-    return element
-
-
 def check_familly(id_cell, id_neighbor, familly_cell):
     if familly_cell[id_cell] == familly_cell[id_neighbor]:
         return True
@@ -74,6 +69,7 @@ def pair_wall(direction):
         return ("East", "West")
     if direction == 'W':
         return ("West", "East")
+
 
 list_color = ["NEON_RED",
               "NEON_GREEN",
@@ -127,12 +123,10 @@ def create_family(maze, breakable_walls, familly_cell):
             cell1.color_case = Color.DEFAULT.value
             cell2.color_case = Color.DEFAULT.value
             break
-        maze.draw_maze()
+        maze.draw_maze(False)
         if nb_wall_broken < ((total_cell - 1) * 19) / 20:
             time.sleep(0.015)
 
         cell1.color_case = Color.DEFAULT.value
         cell2.color_case = Color.DEFAULT.value
-    maze.draw_maze()
-    print(f"Boucle terminée. Murs cassés: {nb_wall_broken}, Cible: {total_cell - 1}")
-    print(f"Murs restants dans la liste: {len(breakable_walls)}")
+    maze.draw_maze(False)
