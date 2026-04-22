@@ -108,6 +108,10 @@ class Maze:
                 for x in range(self.width):
                     cell = self.grid[y][x]
                     if cell.path_id != -1 and cell.path_id == i:
+                        self.logo.reset_logo()
+                        self.generate_logo()
+                        Theme.logo_midile = "0" + str(i)
+                        self.generate_logo()
                         cell.path_active = True
                         if old_x < x:
                             cell.path_content = "(>)"
@@ -127,14 +131,15 @@ class Maze:
                         id_select = cell.path_id
                         i-=1
                         break
+
     def all_path_false(self):
         for y in range(self.height):
             for x in range(self.width):
                 cell = self.grid[y][x]
                 cell.path_active = False
     def play_game(self) -> None:
-        x = 0
-        y = 0
+        x = self.entry[0]
+        y = self.entry[1]
         i = 0
         cell = self.grid[y][x]
         while True:
@@ -145,7 +150,8 @@ class Maze:
                 self.generate_logo()
                 event = events.get()
                 if self.exit[0] == x and self.exit[1] == y:
-                    print("win")
+                    self.generate_path()
+                    self.draw_path()
                     return
                 if isinstance(event, keyboard.Events.Press):
                     if hasattr(event.key, 'char') and event.key.char == 'd' and cell.walls["East"] is not True:
