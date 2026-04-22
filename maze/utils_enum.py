@@ -19,7 +19,7 @@ class WallRetro(Enum):
     cursor = '###'
 
 
-class WallSkinny(Enum):
+class WallRounded(Enum):
     horizontal = '───'
     vertical = '│'
     corner = '┼'
@@ -36,7 +36,24 @@ class WallSkinny(Enum):
     cursor = '███'
 
 
-class WallBigBig(Enum):
+class WallSkinny(Enum):
+    horizontal = '───'
+    vertical = '│'
+    corner = '┼'
+    box = '   '
+    corner_tl = "╭"
+    corner_tr = "╮"
+    corner_bl = "╰"
+    corner_br = "╯"
+    corner_tt = "┬"
+    corner_bt = "┴"
+    corner_lt = "├"
+    corner_rt = "┤"
+    corner_x = "┼"
+    cursor = '███'
+
+
+class WallBig(Enum):
     horizontal = '███'
     vertical = '█'
     corner = '█'
@@ -120,13 +137,13 @@ class Color(Enum):
     DARK_GREEN = "\033[32m"
     DARK_BLUE = "\033[34m"
     DARK_MAGENTA = "\033[35m"
-    GRAY = "\033[90m"
 
     GOLD = "\033[38;5;214m"
     ORANGE = "\033[38;5;208m"
     PINK = "\033[38;5;206m"
     PURPLE = "\033[38;5;129m"
     SKY_BLUE = "\033[38;5;117m"
+    LIME = "\033[38;5;118m"
 
     NEON_RED = "\033[38;5;196m"
     NEON_GREEN = "\033[38;5;46m"
@@ -148,30 +165,26 @@ class Color(Enum):
 
 
 class Logo(Enum):
-    logo_42 = "logo_42"
-    caca = "caca"
-    logo_surprise = "logo_surprise"
+    logo_42 = "LOGO_42"
+    caca = "POOH"
+    logo_surprise = "SURPRISE"
 
 
 class Theme:
     color_select = Color.MAGENTA.value
     color_case = Color.DEFAULT.value
-    # color_case_logo = Color.DARK_MAGENTA.value
-
+    color_case_logo = Color.NEON_RED.value
     color_wall = Color.WHITE.value
     wall = Wall
 
-    color_case_logo = Color.DARK_RED.value
-
     delais_draw: float = 0.01
     animation_draw: bool = True
-    color_animation_backtraking = None
+    color_animation_backtraking = Color.BLUE.value
 
     animation_draw_path:bool = True
     color_path = Color.BLUE.value
 
     entry_color_case = Color.WHITE.value
     exit_color_case = Color.RED.value
-    logo_midile = "logo_42"
-    # logo_midile = "69"
-    logo_chrono: bool = True
+    logo_midile: str = "LOGO_42"
+    logo_chrono: bool = False

@@ -1,6 +1,7 @@
 from enum import Enum
 from maze.utils_enum import Color, Theme
 import random
+import time
 
 
 def number_zero() -> None:
@@ -87,6 +88,28 @@ def number_seven() -> None:
         [2, 2, 1,],
         [2, 2, 1,],
         [2, 2, 1,]
+    ]
+    return pattern
+
+
+def number_seven() -> None:
+    pattern = [
+        [1, 1, 1,],
+        [2, 2, 1,],
+        [2, 2, 1,],
+        [2, 2, 1,],
+        [2, 2, 1,]
+    ]
+    return pattern
+
+
+def number_eighth() -> None:
+    pattern = [
+        [1, 1, 1,],
+        [1, 2, 1,],
+        [1, 1, 1,],
+        [1, 2, 1,],
+        [1, 1, 1,]
     ]
     return pattern
 
@@ -189,19 +212,27 @@ class Logo:
         self.select_logo()
 
     def select_logo(self):
-        if Theme.logo_midile == "logo_42":
+        if Theme.logo_midile == "LOGO_42":
             self.logo_42()
-        if Theme.logo_midile == "caca":
+        if Theme.logo_midile == "POOH":
             self.logo_caca()
-        if Theme.logo_midile == "logo_surprise":
+        if Theme.logo_midile == "SURPRISE":
             self.logo_surprise()
+        if Theme.logo_midile == "HEART":
+            self.logo_heart()
+        if Theme.logo_midile == "SMILEY":
+            self.logo_smiley()
+        if Theme.logo_midile == "FLASH":
+            self.logo_flash()
+        if Theme.logo_midile == "FIR_TREE":
+            self.logo_fir_tree()
         try:
             int(Theme.logo_midile)
             self.pattern = create_number(Theme.logo_midile)
             # self.tour_logo()
         except BaseException:
             pass
-        self.make_logo()
+        return self.make_logo()
 
     def change_color_logo(self):
         self.color = Theme.color_case_logo
@@ -226,6 +257,19 @@ class Logo:
             [0, 1, 1, 1, 1, 1, 0]
         ]
 
+    def logo_heart(self):
+        self.pattern = [
+            [0, 1, 1, 0, 0, 0, 1, 1, 0],
+            [1, 1, 1, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 1, 1, 1, 1, 1, 0, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0]
+        ]
+
+
     def logo_surprise(self):
         self.pattern = [
             [0, 0, 1, 1, 1, 0, 0],
@@ -238,14 +282,7 @@ class Logo:
             [1, 1, 1, 0, 1, 1, 1],
             [1, 1, 1, 0, 1, 1, 1]
         ]
-    # def tour_logo(self):
-    #     self.pattern = [
-    #         [1, 1, 1, 1, 1, 1, 1],
-    #         [1, 0, 0, 0, 0, 0, 1],
-    #         [1, 0, 0, 0, 0, 0, 1],
-    #         [1, 0, 0, 0, 0, 0, 1],
-    #         [1, 1, 1, 1, 1, 1, 1]
-    #     ]
+
 
     def reset_logo(self):
         self.pattern = reset_logo_func()
@@ -253,17 +290,17 @@ class Logo:
 
     def make_logo(self):
         self.maze.logo_ids = set()
-        if Theme.logo_midile == None:
+        if Theme.logo_midile is None:
             return
-        with_logo: int = len(self.pattern[0])
+        width_logo: int = len(self.pattern[0])
         height_logo: int = len(self.pattern)
-        if self.maze.width <= with_logo + 4 and self.maze.height < height_logo + 4:
+        if self.maze.width <= width_logo + 4 and self.maze.height < height_logo + 4:
             return
-        start_x = (self.maze.width - with_logo) // 2
+        start_x = (self.maze.width - width_logo) // 2
         start_y = (self.maze.height - height_logo) // 2
 
         for row in range(height_logo):
-            for col in range(with_logo):
+            for col in range(width_logo):
                 if self.pattern[row][col] == 2 and Theme.logo_chrono:
                     grid_y = start_y + row
                     grid_x = start_x + col
@@ -290,5 +327,42 @@ class Logo:
                         cell.walls["South"] = False
                     if col > 0 and self.pattern[row][col - 1] == 1:
                         cell.walls["West"] = False
-                    if col < with_logo - 1 and self.pattern[row][col + 1] == 1:
+                    if col < width_logo - 1 and self.pattern[row][col + 1] == 1:
                         cell.walls["East"] = False
+
+    def make_logo_start(self):
+        # 1. On force le pattern du logo 42
+        self.logo_42()
+        
+        width_logo = len(self.pattern[0])
+        height_logo = len(self.pattern)
+        
+        # Calcul du centrage
+        start_x = (self.maze.width - width_logo) // 2
+        start_y = (self.maze.height - height_logo) // 2
+
+        # 2. On "creuse" et on colorie
+        for row in range(height_logo):
+            for col in range(width_logo):
+                if self.pattern[row][col] == 1:
+                    grid_y = start_y + row
+                    grid_x = start_x + col
+                    cell = self.maze.grid[grid_y][grid_x]
+                    
+                    # On marque la cellule pour le rendu
+                    cell.visit = True
+                    cell.color_case = self.color
+                    
+                    # On ouvre les murs internes du logo
+                    if row > 0 and self.pattern[row - 1][col] == 1:
+                        cell.walls["North"] = False
+                        self.maze.grid[grid_y - 1][grid_x].walls["South"] = False
+                    if row < height_logo - 1 and self.pattern[row + 1][col] == 1:
+                        cell.walls["South"] = False
+                        self.maze.grid[grid_y + 1][grid_x].walls["North"] = False
+                    if col > 0 and self.pattern[row][col - 1] == 1:
+                        cell.walls["West"] = False
+                        self.maze.grid[grid_y][grid_x - 1].walls["East"] = False
+                    if col < width_logo - 1 and self.pattern[row][col + 1] == 1:
+                        cell.walls["East"] = False
+                        self.maze.grid[grid_y][grid_x + 1].walls["West"] = False
