@@ -212,6 +212,7 @@ class Logo:
         self.select_logo()
 
     def select_logo(self):
+        self.reset_logo()
         if Theme.logo_midile == "LOGO_42":
             self.logo_42()
         if Theme.logo_midile == "POOH":
