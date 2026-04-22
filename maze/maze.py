@@ -35,6 +35,7 @@ class Maze:
         self.seed = data.SEED
         self.file = data.OUTPUT_FILE
         self.perfect = data.PERFECT
+        self.delay = 0.08
         self.generate_grid()
 
     def generate_grid(self) -> None:
@@ -47,17 +48,19 @@ class Maze:
             self.grid.append(row)
 
     def generate_logo(self) -> None:
-        self.logo.select_logo()
+        self.logo = Logo(self)
+        return self.logo.select_logo()
 
     def generate_maze(self, algo_name: str) -> None:
-        algorithms = ["DFS", "KRUSKAL", "PRIMS"]
-        
+        algorithms = ["DFS", "KRUSKAL", "PRIMS", "DEMO"]
         if algo_name not in algorithms:
             raise ValueError(f"Unknown algorithm: {algo_name}")
         if algo_name == "DFS":
             dfs(self)
         elif algo_name == "KRUSKAL":
             kruskal(self)
+        elif algo_name == "DEMO":
+            self.logo.make_logo_start()
         # elif algo_name == "PRIMS":
         #     prims(self)
 
@@ -85,7 +88,7 @@ class Maze:
                 width.visit = False
         self.generate_logo()
 
-    def draw_maze(self) -> None:
+    def draw_maze(self, start: bool) -> None:
         print("\033[H", end="")
         w = Theme.wall
         res = Color.DEFAULT.value
@@ -146,7 +149,8 @@ class Maze:
                     Theme.color_wall}{
                     w.vertical.value}{res}\033[K",
                 flush=True)
-            # time.sleep(self.delay)
+            if start:
+                time.sleep(self.delay)
         # La ligne du bas
         line_bot = ""
         for x in range(self.width):
