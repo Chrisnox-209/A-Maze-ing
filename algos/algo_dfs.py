@@ -30,6 +30,7 @@ def dfs(maze):
             if 0 <= direct_x < maze.width and 0 <= direct_y < maze.height:
                 verif_visit = maze.grid[direct_y][direct_x]
                 if verif_visit.visit:
+                    cell.color_case = Color.DEFAULT.value
                     continue
                 if not verif_visit.visit:
                     found = True
@@ -64,8 +65,7 @@ def dfs(maze):
                 if Theme.animation_draw:
                     maze.draw_maze(False)
                     time.sleep(delay)
+                cell.color_case = Color.DEFAULT.value
                 break
         if not found:
             stack.pop()
-            if Theme.animation_draw:
-                cell.color_case = Color.DEFAULT.value
