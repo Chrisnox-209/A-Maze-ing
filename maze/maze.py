@@ -57,7 +57,7 @@ class Maze:
             raise ValueError(f"Unknown algorithm: {algo_name}")
         if algo_name == "DFS":
             dfs(self)
-        elif algo_name == " ":
+        elif algo_name == "KRUSKAL":
             kruskal(self)
         elif algo_name == "DEMO":
             self.logo.make_logo_start()
