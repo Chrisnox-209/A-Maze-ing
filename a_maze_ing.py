@@ -16,10 +16,11 @@ def main() -> None:
     # maze.imperfect_maze()
     # maze.generate_path()
     # maze.draw_grid()
-    maze.generate_logo()
+    #maze.generate_logo()
 
-    #maze.generate_maze("DEMO")
+    
     maze.draw_maze(True)
+    maze.generate_maze("DEMO")
 
     print()
     Menu(maze)

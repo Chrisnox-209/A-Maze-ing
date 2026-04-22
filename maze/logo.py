@@ -325,17 +325,14 @@ class Logo:
                         cell.walls["East"] = False
 
     def make_logo_start(self):
-        # 1. On force le pattern du logo 42
         self.logo_42()
-        
+        list_cell = []
         width_logo = len(self.pattern[0])
         height_logo = len(self.pattern)
         
-        # Calcul du centrage
         start_x = (self.maze.width - width_logo) // 2
         start_y = (self.maze.height - height_logo) // 2
 
-        # 2. On "creuse" et on colorie
         for row in range(height_logo):
             for col in range(width_logo):
                 if self.pattern[row][col] == 1:
@@ -343,11 +340,9 @@ class Logo:
                     grid_x = start_x + col
                     cell = self.maze.grid[grid_y][grid_x]
                     
-                    # On marque la cellule pour le rendu
                     cell.visit = True
-                    cell.color_case = self.color
-                    
-                    # On ouvre les murs internes du logo
+                    list_cell.append(cell)
+
                     if row > 0 and self.pattern[row - 1][col] == 1:
                         cell.walls["North"] = False
                         self.maze.grid[grid_y - 1][grid_x].walls["South"] = False
@@ -360,3 +355,13 @@ class Logo:
                     if col < width_logo - 1 and self.pattern[row][col + 1] == 1:
                         cell.walls["East"] = False
                         self.maze.grid[grid_y][grid_x + 1].walls["West"] = False
+            time.sleep(0.09)
+            self.maze.draw_maze(False)
+
+        list_cell.sort(key=lambda cell: cell.x)
+        for c in list_cell:
+            c.color_case = self.color
+            time.sleep(0.07)
+            self.maze.draw_maze(False)       
+
+
