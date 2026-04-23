@@ -9,6 +9,7 @@ from rich.live import Live
 from rich.align import Align
 from rich.columns import Columns
 from typing import Literal, Any, Optional
+from options import edit_door
 from maze.utils_enum import (
     WallDouble,
     Wall,
@@ -388,6 +389,29 @@ def Menu(maze) -> None:
                         maze.perfect = is_perfect
                     elif index == 1:
                         show_advanced = not show_advanced
+                    elif index == 2:
+                        # --- MODIFICATION DE L'ENTRÉE ---
+                        live.stop()  # On met l'affichage du menu en pause
+                        print("\n" * 2)  # On dégage un peu d'espace dans le terminal
+                        try:
+                            print(f"[CONFIGURATION DE L'ENTRÉE]")
+                            new_x = int(input(f"Nouveau X (0 à {maze.width - 1}) : "))
+                            new_y = int(input(f"Nouveau Y (0 à {maze.height - 1}) : "))
+
+                            # On vérifie que les coordonnées ne sortent pas du labyrinthe
+                            if 0 <= new_x < maze.width and 0 <= new_y < maze.height:
+                                maze.entry = (new_x, new_y)
+                            else:
+                                print("Coordonnées hors limites ! Appuyez sur Entrée pour revenir au menu...")
+                                input()
+                        except ValueError:
+                            print("Saisie invalide (nombres entiers attendus). Appuyez sur Entrée pour revenir au menu...")
+                            input()
+
+                        clear() # On nettoie l'écran avant de relancer
+                        print("\033[H", end="")
+                        live.start() # On relance l'affichage du menu
+
                 elif current_menu == "WALLS":
                     wall_name = style_opts[index]
                     Theme.wall = wall_map[index % len(wall_map)]
@@ -485,6 +509,24 @@ def Menu(maze) -> None:
                         maze.perfect = is_perfect
                     elif index == 1:
                         show_advanced = not show_advanced
+                    elif index == 2:
+                        live.stop()
+                        clear()
+                        edit_door(maze, "entry")
+                        clear()
+                        print("\033[H", end="")
+                        maze.draw_maze(False)
+                        print("\n" * (29 if show_advanced else 18))
+                        live.start()
+                    elif index == 3:
+                        live.stop()
+                        clear()
+                        edit_door(maze, "exit")
+                        clear()
+                        print("\033[H", end="")
+                        maze.draw_maze(False)
+                        print("\n" * (29 if show_advanced else 18))
+                        live.start()
                 elif current_menu == "ALGO":
                     algo_name = list_algo[index]
                     current_menu = "MAIN"
