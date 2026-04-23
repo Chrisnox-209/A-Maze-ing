@@ -1,0 +1,131 @@
+import readchar
+from maze.utils_enum import Theme
+
+
+def resize(maze) -> None:
+    pass
+
+
+def edit_door(maze, door: str) -> None:
+
+    if door == "entry":
+        x = maze.entry[0]
+        y = maze.entry[1]
+        name = "ENTRY"
+    else:
+        x = maze.exit[0]
+        y = maze.exit[1]
+        name = "EXIT"
+
+    print("\033[H", end="", flush=True)
+    maze.draw_maze(False)
+    print(f"\n[ MOVEMENT {name} ] Use the arrow keys. Press ENTER to confirm.")
+
+    while True:
+        key = readchar.readkey()
+        if key in ['q', readchar.key.ENTER]:
+            break
+
+        moved = False
+        old_x = x
+        old_y = y
+
+        if key in [readchar.key.RIGHT] and x < maze.width - 1:
+            if maze.grid[y][x + 1].cell_id not in maze.logo_ids:
+                if name == "ENTRY" and (x + 1, y) != maze.exit:
+                    x += 1
+                    moved = True
+                elif name == "EXIT" and (x + 1, y) != maze.entry:
+                    x += 1
+                    moved = True
+
+        elif key in [readchar.key.LEFT] and x > 0:
+            if maze.grid[y][x - 1].cell_id not in maze.logo_ids:
+                if name == "ENTRY" and (x - 1, y) != maze.exit:
+                    x -= 1
+                    moved = True
+                elif name == "EXIT" and (x - 1, y) != maze.entry:
+                    x -= 1
+                    moved = True
+
+        elif key in [readchar.key.UP] and y > 0:
+            if maze.grid[y - 1][x].cell_id not in maze.logo_ids:
+                if name == "ENTRY" and (x, y - 1) != maze.exit:
+                    y -= 1
+                    moved = True
+                elif name == "EXIT" and (x, y - 1) != maze.entry:
+                    y -= 1
+                    moved = True
+
+        elif key in [readchar.key.DOWN] and y < maze.height - 1:
+            if maze.grid[y + 1][x].cell_id not in maze.logo_ids:
+                if name == "ENTRY" and (x, y + 1) != maze.exit:
+                    y += 1
+                    moved = True
+                elif name == "EXIT" and (x, y + 1) != maze.entry:
+                    y += 1
+                    moved = True
+
+        if moved:
+            maze.grid[old_y][old_x].color_case = Theme.color_case
+
+            if door == "entry":
+                maze.entry = (x, y)
+            else:
+                maze.exit = (x, y)
+
+            print("\033[H", end="", flush=True)
+            maze.draw_maze(False)
+
+
+def play_game(self) -> None:
+    x = self.entry[0]
+    y = self.entry[1]
+    i = 0
+    cell = self.grid[y][x]
+    cell.path_active = True
+    cell.path_content = "(S)"
+    self.logo.reset_logo()
+    Theme.logo_midile = "0" + str(i)
+    self.generate_logo()
+    self.draw_maze(False)
+    while True:
+        if self.exit[0] == x and self.exit[1] == y:
+            self.generate_path()
+            self.draw_path()
+            return
+        key = readchar.readkey()
+        if key == 'q' or key == 'Q' or key == readchar.key.CTRL_C:
+            break
+        moved = False
+        new_content = ""
+        if key == readchar.key.RIGHT and cell.walls["East"] is not True:
+            if self.grid[y][x + 1].cell_id not in self.logo_ids:
+                x += 1
+                new_content = "(>)"
+                moved = True
+        elif key == readchar.key.LEFT and cell.walls["West"] is not True:
+            if self.grid[y][x - 1].cell_id not in self.logo_ids:
+                x -= 1
+                new_content = "(<)"
+                moved = True
+        elif key == readchar.key.UP and cell.walls["North"] is not True:
+            if self.grid[y - 1][x].cell_id not in self.logo_ids:
+                y -= 1
+                new_content = "(^)"
+                moved = True
+        elif key == readchar.key.DOWN and cell.walls["South"] is not True:
+            if self.grid[y + 1][x].cell_id not in self.logo_ids:
+                y += 1
+                new_content = "(v)"
+                moved = True
+        if moved:
+            i += 1
+            cell = self.grid[y][x]
+            cell.path_active = True
+            cell.path_content = new_content
+            self.logo.reset_logo()
+            Theme.logo_midile = "0" + str(i)
+            self.generate_logo()
+            self.draw_maze(False)
+            self.all_path_false()
