@@ -133,6 +133,9 @@ class Color(Enum):
     CYAN = "\033[96m"
     WHITE = "\033[97m"
 
+    ENTRY = "\033[38;5;246m"
+    EXIT = "\033[38;5;202m"
+
     DARK_RED = "\033[31m"
     DARK_GREEN = "\033[32m"
     DARK_BLUE = "\033[34m"
@@ -178,13 +181,13 @@ class Theme:
     wall = Wall
 
     delais_draw: float = 0.01
-    animation_draw: bool = True
+    animation_draw: bool = False
     color_animation_backtraking = Color.BLUE.value
 
     animation_draw_path:bool = True
     color_path = Color.BLUE.value
 
-    entry_color_case = Color.WHITE.value
-    exit_color_case = Color.RED.value
+    entry_color_case = Color.ENTRY.value
+    exit_color_case = Color.EXIT.value
     logo_midile: str = "LOGO_42"
     logo_chrono: bool = False
