@@ -8,17 +8,10 @@ def resize(maze) -> None:
           "║      ✦ EDIT MODE ✦      ║\n"
           "╚═════════════════════════╝")
     print("[ MAZE RESIZING ] Use the arrow keys. Press ENTER to confirm.")
-    entry_id: int = maze.entry[1] * maze.width + maze.entry[0]
-    exit_id: int = maze.exit[1] * maze.width + maze.exit[0]
-    print(maze.height)
-    print(maze.entry[0], maze.entry[1])
-    print(maze.exit[0], maze.exit[1])    
-    print(type(entry_id))
-    print(type(exit_id))
 
-        
     while True:
         key = readchar.readkey()
+
         if key in ['q', readchar.key.ENTER]:
             break
 
@@ -29,22 +22,18 @@ def resize(maze) -> None:
             maze.generate_grid()
             moved = True
 
+        error = False
         if key in [readchar.key.UP]:
-            if maze.height not in maze.logo_ids:
-                if maze.height > maze.entry[1] + 1 and maze.height > maze.exit[1] + 1:
-                    if maze.height > 3:
-                        maze.height -= 1
-                        maze.generate_logo()
-                        maze.generate_grid()
-                        moved = True
-                    else:
-                     print("\033[1;31m"
-                           "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
-                           "Minimum size has been reached ")
-                else:
-                    print("\033[1;31m"
-                          "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
-                          "An element is blocking the resize")
+            if maze.height > maze.entry[1] + 1 and maze.height > maze.exit[1] + 1:
+                if maze.height > 3:
+                    maze.height -= 1
+                    maze.generate_logo()
+                    maze.generate_grid()
+                    moved = True
+            else:
+                print("\033[1;31m"
+                      "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
+                      "An element is blocking the resize")
         if key in [readchar.key.RIGHT]:
             maze.width += 1
             maze.generate_logo()
@@ -73,9 +62,17 @@ def resize(maze) -> None:
             maze.draw_maze(False)
             moved = False
             print("╔═════════════════════════╗\n"
-                  "║      ✦ EDIT MODE ✦      ║\n"
+                  "║      ✦ EDIT MODE ✦     ║\n"
                   "╚═════════════════════════╝")
-            print("[ MAZE RESIZING ] Use the arrow keys. Press ENTER to confirm.")
+            print("[ MAZE RESIZING ] Use the arrow keys. "
+                  "Press ENTER to confirm.")
+            exit_id: int = maze.exit[1] * maze.width + maze.exit[0]
+            entry_id: int = maze.entry[1] * maze.width + maze.entry[0]
+            if exit_id in maze.logo_ids or entry_id in maze.logo_ids:
+                print("\033[1;33m"
+                      "⚠️  [WARNIN]: MAZE GENERATION ISSUE - "
+                      "the entrance or exit is located inside the logo.")
+
 
 def edit_door(maze, door: str) -> None:
 
@@ -152,7 +149,8 @@ def edit_door(maze, door: str) -> None:
             print("╔═════════════════════════╗\n"
                   "║      ✦ EDIT MODE ✦      ║\n"
                   "╚═════════════════════════╝")
-            print(f"[ MOVEMENT {name} ] Use the arrow keys. Press ENTER to confirm.")
+            print(f"[ MOVEMENT {name} ] Use the arrow keys. "
+                  "Press ENTER to confirm.")
             maze.draw_maze(False)
 
 
