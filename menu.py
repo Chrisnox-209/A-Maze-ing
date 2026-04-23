@@ -28,7 +28,8 @@ def get_menu_content(
         is_active,
         menu_type,
         selected_val=None,
-        checked_dict=None) -> Group:
+        checked_dict=None,
+        error_logo=False) -> Group:
     render_opts: list = []
 
     if checked_dict is None:
@@ -56,6 +57,9 @@ def get_menu_content(
             if opt == "EXIT PROGRAM":
                 prefix: Any = Text(prefix_text, style="bold red")
                 content: Any = Text(f" {opt} ", style="bold white on red")
+            elif error_logo and opt in ["GENERATE", "SOLVE PATH"]:
+                prefix = Text(prefix_text, style="grey27")
+                content = Text(f" {opt} ", style="grey27")
             else:
                 prefix = Text(prefix_text, style="bold yellow")
                 content = Text(f" {opt} ", style="black on yellow")
@@ -77,6 +81,8 @@ def get_menu_content(
                                 "COLOR_P"]
                   and opt == selected_val) or is_checked_config:
                 style = "bold green"
+            elif error_logo and opt in ["GENERATE", "SOLVE PATH"]:
+                style = "bright_black"
             else:
                 style = (
                     "dim cyan" if menu_type not in [
@@ -107,22 +113,19 @@ def Menu(maze) -> None:
     color_wall: str = colors_list[6]
     color_case_logo: str = colors_list[0]
     color_path: str = colors_list[1]
-
     current_menu = "MAIN"
     index = 0
 
     show_advanced = False
     is_perfect = maze.perfect
+    is_animation = True
 
     color_text_top = "bold bright_blue"
     color_frame = "white"
     color_select_frame = "cyan"
-    
-    # animation = Theme.
 
     with Live(console=console, refresh_per_second=10, transient=False) as live:
         while True:
-
             status_table: Table = Table.grid(expand=False)
             status_table.add_column(justify="right", width=20)
             status_table.add_column(justify="left", width=20)
@@ -171,16 +174,22 @@ def Menu(maze) -> None:
                 Text("WALL TYPE    :", style=color_text_top),
                 Text(f" {wall_name}", style="white")
             )
+
+            exit_id: int = maze.exit[1] * maze.width + maze.exit[0]
+            entry_id: int = maze.entry[1] * maze.width + maze.entry[0]
+            error_logo = False
+
             if maze.generate_logo() is False:
                 logo_message = Align.center(
                     Text(
-                        "LOGO GENERATION ABORTED: SIZE TOO SMALL",
+                        "[WARN]: LOGO GENERATION ABORTED: SIZE TOO SMALL",
                         style="bold red"))
+                error_logo = True
+            elif exit_id in maze.logo_ids or entry_id in maze.logo_ids:
+                logo_message = Align.center(Text("[WARN]: MAZE ISSUE - Entrance or exit inside logo", style="orange1"))
+                error_logo = True
             else:
-                logo_message = Align.center(
-                    Text(
-                        "SYSTEM STATUS: CONFIGURATION OPTIMAL",
-                        style="bold green"))
+                logo_message = Align.center(Text("SYSTEM STATUS: CONFIGURATION OPTIMAL", style="bold green"))
 
             panel_content: Any = Group(
                 status_table,
@@ -207,7 +216,8 @@ def Menu(maze) -> None:
 
             config_checked_states: dict[int, Any] = {
                 0: is_perfect,
-                1: show_advanced
+                1: is_animation,
+                2: show_advanced
             }
 
             style_p = (
@@ -219,7 +229,8 @@ def Menu(maze) -> None:
                     main_opts,
                     index,
                     current_menu == "MAIN",
-                    "MAIN"),
+                    "MAIN",
+                    error_logo=error_logo),
                 title="[bold cyan] MENU [/]",
                 border_style=style_p,
                 width=30,
@@ -238,7 +249,8 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "ALGO",
                     "ALGO",
-                    selected_val=algo_name),
+                    selected_val=algo_name,
+                    error_logo=error_logo),
                 title="[bold cyan] ALGORITHM [/]",
                 border_style=style_pa,
                 width=30,
@@ -257,7 +269,8 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "CONFIG",
                     "CONFIG",
-                    checked_dict=config_checked_states),
+                    checked_dict=config_checked_states,
+                    error_logo=error_logo),
                 title="[bold cyan] CONFIGURATION [/]",
                 border_style=style_c,
                 width=30,
@@ -274,7 +287,8 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "WALLS",
                     "WALLS",
-                    selected_val=wall_name),
+                    selected_val=wall_name,
+                    error_logo=error_logo),
                 title="[bold cyan] WALL STYLES [/]",
                 border_style=style_s,
                 width=19,
@@ -286,7 +300,8 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "LOGO",
                     "LOGO",
-                    selected_val=logo_name),
+                    selected_val=logo_name,
+                    error_logo=error_logo),
                 title="[bold cyan] LOGOS [/]",
                 border_style="cyan" if current_menu == "LOGO" else color_frame,
                 width=17,
@@ -300,7 +315,8 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "COLOR_W",
                     "COLOR_W",
-                    selected_val=color_wall),
+                    selected_val=color_wall,
+                    error_logo=error_logo),
                 title="[bold cyan] COLOR WALL [/]",
                 border_style=style_co,
                 width=18,
@@ -314,7 +330,8 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "COLOR_L",
                     "COLOR_L",
-                    selected_val=color_case_logo),
+                    selected_val=color_case_logo,
+                    error_logo=error_logo),
                 title="[bold cyan] COLOR LOGO [/]",
                 border_style=style_col,
                 width=18,
@@ -329,11 +346,13 @@ def Menu(maze) -> None:
                     index,
                     current_menu == "COLOR_P",
                     "COLOR_P",
-                    selected_val=color_path),
+                    selected_val=color_path,
+                    error_logo=error_logo),
                 title="[bold cyan] COLOR PATH [/]",
                 border_style=style_cop,
                 width=18,
                 height=11)
+
             row_1: Any = Columns(
                 [panel_main, panel_algo, panel_config], padding=(0, 2))
             row_2: Any = Columns([panel_colorw, panel_colorl,
@@ -389,7 +408,11 @@ def Menu(maze) -> None:
                         is_perfect = not is_perfect
                         maze.perfect = is_perfect
                     elif index == 1:
-                        pass
+                        is_animation = not is_animation
+                        if is_animation:
+                            Theme.animation_algo = True
+                        else:
+                            Theme.animation_algo = False
                     elif index == 2:
                         show_advanced = not show_advanced
                 elif current_menu == "WALLS":
@@ -417,32 +440,38 @@ def Menu(maze) -> None:
             elif key == readchar.key.ENTER:
                 if current_menu == "MAIN":
                     if index == 0:
-                        current_menu = "GENERATE"
-                        live.stop()
-                        maze.generate_grid()
-                        maze.generate_logo()
-                        maze.generate_maze(algo_name)
-                        clear()
-                        print("\033[H", end="")
-                        maze.draw_maze(False)
-                        if show_advanced:
-                            print("\n" * 29)
+                        if error_logo and index != 6:
+                            pass
                         else:
-                            print("\n" * 18)
-                        live.start()
+                            current_menu = "GENERATE"
+                            live.stop()
+                            maze.generate_grid()
+                            maze.generate_logo()
+                            maze.generate_maze(algo_name)
+                            clear()
+                            print("\033[H", end="")
+                            maze.draw_maze(False)
+                            if show_advanced:
+                                print("\n" * 29)
+                            else:
+                                print("\n" * 18)
+                            live.start()
                     elif index == 1:
-                        current_menu = "SOLVE PATH"
-                        live.stop()
-                        maze.generate_path()
-                        clear()
-                        print("\033[H", end="")
-                        maze.draw_path("basic")
-                        maze.draw_maze(False)
-                        if show_advanced:
-                            print("\n" * 29)
+                        if error_logo and index != 6:
+                            pass
                         else:
-                            print("\n" * 18)
-                        live.start()
+                            current_menu = "SOLVE PATH"
+                            live.stop()
+                            maze.generate_path()
+                            clear()
+                            print("\033[H", end="")
+                            maze.draw_path("basic")
+                            maze.draw_maze(False)
+                            if show_advanced:
+                                print("\n" * 29)
+                            else:
+                                print("\n" * 18)
+                            live.start()
                     elif index == 2:
                         current_menu = "UPDATE"
                         live.stop()
@@ -488,34 +517,46 @@ def Menu(maze) -> None:
                         is_perfect = not is_perfect
                         maze.perfect = is_perfect
                     elif index == 1:
-                        show_advanced = not show_advanced
+                        is_animation = not is_animation
+                        if is_animation:
+                            Theme.animation_algo = True
+                        else:
+                            Theme.animation_algo = False
                     elif index == 2:
+                        show_advanced = not show_advanced
+                    elif index == 3:
                         live.stop()
                         clear()
                         edit_door(maze, "entry")
                         clear()
                         print("\033[H", end="")
-                        maze.draw_maze(False)
-                        print("\n" * (29 if show_advanced else 18))
-                        live.start()
-                    elif index == 3:
-                        live.stop()
-                        clear()
-                        edit_door(maze, "exit")
-                        clear()
-                        print("\033[H", end="")
+                        maze.generate_logo()
                         maze.draw_maze(False)
                         print("\n" * (29 if show_advanced else 18))
                         live.start()
                     elif index == 4:
                         live.stop()
                         clear()
-                        print("\033[H", end="")
+                        edit_door(maze, "exit")
                         clear()
+                        print("\033[H", end="")
+                        maze.generate_logo()
+                        maze.draw_maze(False)
+                        print("\n" * (29 if show_advanced else 18))
+                        live.start()
+                    elif index == 5:
+                        live.stop()
+                        clear()
+                        print("\033[H", end="")
                         maze.generate_grid()
                         maze.generate_logo()
                         maze.draw_maze(False)
                         resize(maze)
+                        clear()
+                        print("\033[H", end="")
+                        maze.generate_grid()
+                        maze.generate_logo()
+                        maze.draw_maze(False)
                         if show_advanced:
                             print("\n" * 29)
                         else:
