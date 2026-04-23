@@ -132,6 +132,7 @@ def play_game_func(maze) -> None:
     maze.draw_maze(False)
     while True:
         if maze.exit[0] == x and maze.exit[1] == y:
+            Theme.animation_draw_path = False
             maze.generate_path()
             maze.draw_path()
             return
