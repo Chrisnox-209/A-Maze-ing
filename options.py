@@ -4,47 +4,78 @@ from utils.parser import clear
 
 
 def resize(maze) -> None:
-    from maze.maze import Cell
+    print("╔═════════════════════════╗\n"
+          "║      ✦ EDIT MODE ✦      ║\n"
+          "╚═════════════════════════╝")
+    print("[ MAZE RESIZING ] Use the arrow keys. Press ENTER to confirm.")
+    entry_id: int = maze.entry[1] * maze.width + maze.entry[0]
+    exit_id: int = maze.exit[1] * maze.width + maze.exit[0]
+    print(maze.height)
+    print(maze.entry[0], maze.entry[1])
+    print(maze.exit[0], maze.exit[1])    
+    print(type(entry_id))
+    print(type(exit_id))
+
+        
     while True:
         key = readchar.readkey()
         if key in ['q', readchar.key.ENTER]:
             break
 
         moved = False
-        cell_id = (maze.height * maze.width) - 1
-        row = maze.width
-        col = maze.height
-        x = maze.width - 1
-        y = maze.height -1
-
         if key in [readchar.key.DOWN]:
-            list_cell = []
-            y += 1
-            for i in range(row):
-                cell_id = (y * row) + i
-                list_cell.append(Cell(i, y, cell_id))
             maze.height += 1
+            maze.generate_logo()
             maze.generate_grid()
             moved = True
 
         if key in [readchar.key.UP]:
-            maze.height -= 1
+            if maze.height not in maze.logo_ids:
+                if maze.height > maze.entry[1] + 1 and maze.height > maze.exit[1] + 1:
+                    if maze.height > 3:
+                        maze.height -= 1
+                        maze.generate_logo()
+                        maze.generate_grid()
+                        moved = True
+                    else:
+                     print("\033[1;31m"
+                           "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
+                           "Minimum size has been reached ")
+                else:
+                    print("\033[1;31m"
+                          "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
+                          "An element is blocking the resize")
+        if key in [readchar.key.RIGHT]:
+            maze.width += 1
+            maze.generate_logo()
             maze.generate_grid()
             moved = True
 
+        if key in [readchar.key.LEFT]:
+            if maze.width > maze.entry[0] + 1 and maze.width > maze.exit[0] + 1:
+                if maze.width > 3:
+                    maze.width -= 1
+                    maze.generate_logo()
+                    maze.generate_grid()
+                    moved = True
+                else:
+                    print("\033[1;31m"
+                          "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
+                          "Minimum size has been reached ")
+            else:
+                print("\033[1;31m"
+                      "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
+                      "An element is blocking the resize")
+
         if moved:
-
             clear()
-            print("-----")
-            for i, line in enumerate(maze.grid):
-                print(f"{i}-----")
-                for cell in line:
-                    print(cell)
-
-
+            maze.generate_logo()
             maze.draw_maze(False)
             moved = False
-
+            print("╔═════════════════════════╗\n"
+                  "║      ✦ EDIT MODE ✦      ║\n"
+                  "╚═════════════════════════╝")
+            print("[ MAZE RESIZING ] Use the arrow keys. Press ENTER to confirm.")
 
 def edit_door(maze, door: str) -> None:
 
@@ -59,6 +90,9 @@ def edit_door(maze, door: str) -> None:
 
     print("\033[H", end="", flush=True)
     maze.draw_maze(False)
+    print("╔═════════════════════════╗\n"
+          "║      ✦ EDIT MODE ✦      ║\n"
+          "╚═════════════════════════╝")
     print(f"\n[ MOVEMENT {name} ] Use the arrow keys. Press ENTER to confirm.")
 
     while True:
@@ -115,6 +149,10 @@ def edit_door(maze, door: str) -> None:
                 maze.exit = (x, y)
 
             print("\033[H", end="", flush=True)
+            print("╔═════════════════════════╗\n"
+                  "║      ✦ EDIT MODE ✦      ║\n"
+                  "╚═════════════════════════╝")
+            print(f"[ MOVEMENT {name} ] Use the arrow keys. Press ENTER to confirm.")
             maze.draw_maze(False)
 
 
@@ -134,7 +172,7 @@ def play_game_func(maze) -> None:
         if maze.exit[0] == x and maze.exit[1] == y:
             Theme.animation_draw_path = False
             maze.generate_path()
-            maze.draw_path("game")
+            maze.draw_path()
             return
         key = readchar.readkey()
         if key == 'q' or key == 'Q' or key == readchar.key.CTRL_C:
