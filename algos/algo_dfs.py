@@ -17,7 +17,7 @@ def dfs(maze):
         x = cell_work[0]
         y = cell_work[1]
         cell = maze.grid[y][x]
-        if Theme.animation_draw and Theme.color_animation_backtraking is not None:
+        if Theme.animation_algo and Theme.color_animation_backtraking is not None:
             cell.color_case = Theme.color_animation_backtraking
         cell.visit = True
         direction = [(x - 1, y),
@@ -62,7 +62,7 @@ def dfs(maze):
                         neighbor.visit = True
                 stack.append((direct_x, direct_y))
                 # print(stack)
-                if Theme.animation_draw:
+                if Theme.animation_algo:
                     maze.draw_maze(False)
                     time.sleep(delay)
                 cell.color_case = Color.DEFAULT.value

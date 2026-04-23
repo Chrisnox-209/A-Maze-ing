@@ -1,6 +1,6 @@
 
 
-from maze.utils_enum import Color
+from maze.utils_enum import Color, Theme
 import random
 import time
 
@@ -107,8 +107,9 @@ def create_family(maze, breakable_walls, familly_cell):
             col = random.choice(list_color)
             color_case = getattr(Color, col).value
 
-            cell2.color_case = color_case
-            cell1.color_case = color_case
+            if Theme.animation_algo:
+                cell2.color_case = color_case
+                cell1.color_case = color_case
 
             old_familly = familly_cell[cell2.cell_id]
             new_familly = familly_cell[cell1.cell_id]
@@ -123,10 +124,12 @@ def create_family(maze, breakable_walls, familly_cell):
             cell1.color_case = Color.DEFAULT.value
             cell2.color_case = Color.DEFAULT.value
             break
-        maze.draw_maze(False)
-        if nb_wall_broken < ((total_cell - 1) * 19) / 20:
-            time.sleep(0.015)
 
-        cell1.color_case = Color.DEFAULT.value
-        cell2.color_case = Color.DEFAULT.value
+        if Theme.animation_algo:
+            maze.draw_maze(False)
+            if nb_wall_broken < ((total_cell - 1) * 19) / 20:
+                time.sleep(0.015)
+
+            cell1.color_case = Color.DEFAULT.value
+            cell2.color_case = Color.DEFAULT.value
     maze.draw_maze(False)
