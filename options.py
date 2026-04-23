@@ -1,9 +1,50 @@
 import readchar
 from maze.utils_enum import Theme
+from maze.maze import Cell
+from utils.parser import clear
 
 
 def resize(maze) -> None:
-    pass
+
+    while True:
+        key = readchar.readkey()
+        if key in ['q', readchar.key.ENTER]:
+            break
+
+        moved = False
+        cell_id = (maze.height * maze.width) - 1
+        row = maze.width
+        col = maze.height
+        x = maze.width - 1
+        y = maze.height -1
+
+        if key in [readchar.key.DOWN]:
+            list_cell = []
+            y += 1
+            for i in range(row):
+                cell_id = (y * row) + i
+                list_cell.append(Cell(i, y, cell_id))
+            maze.height += 1
+            maze.generate_grid()
+            moved = True
+
+        if key in [readchar.key.UP]:
+            maze.height -= 1
+            maze.generate_grid()
+            moved = True
+
+        if moved:
+
+            clear()
+            print("-----")
+            for i, line in enumerate(maze.grid):
+                print(f"{i}-----")
+                for cell in line:
+                    print(cell)
+
+
+            maze.draw_maze(False)
+            moved = False
 
 
 def edit_door(maze, door: str) -> None:
