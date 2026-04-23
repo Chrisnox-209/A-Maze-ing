@@ -1,11 +1,10 @@
 import readchar
 from maze.utils_enum import Theme
-from maze.maze import Cell
 from utils.parser import clear
 
 
 def resize(maze) -> None:
-
+    from maze.maze import Cell
     while True:
         key = readchar.readkey()
         if key in ['q', readchar.key.ENTER]:
@@ -119,21 +118,22 @@ def edit_door(maze, door: str) -> None:
             maze.draw_maze(False)
 
 
-def play_game(self) -> None:
-    x = self.entry[0]
-    y = self.entry[1]
+def play_game_func(maze) -> None:
+    x = maze.entry[0]
+    y = maze.entry[1]
     i = 0
-    cell = self.grid[y][x]
+    cell = maze.grid[y][x]
     cell.path_active = True
     cell.path_content = "(S)"
-    self.logo.reset_logo()
-    Theme.logo_midile = "0" + str(i)
-    self.generate_logo()
-    self.draw_maze(False)
+    maze.logo.reset_logo()
+    if Theme.logo_chrono:
+        Theme.logo_midile = "0" + str(i)
+        maze.generate_logo()
+    maze.draw_maze(False)
     while True:
-        if self.exit[0] == x and self.exit[1] == y:
-            self.generate_path()
-            self.draw_path()
+        if maze.exit[0] == x and maze.exit[1] == y:
+            maze.generate_path()
+            maze.draw_path()
             return
         key = readchar.readkey()
         if key == 'q' or key == 'Q' or key == readchar.key.CTRL_C:
@@ -141,32 +141,33 @@ def play_game(self) -> None:
         moved = False
         new_content = ""
         if key == readchar.key.RIGHT and cell.walls["East"] is not True:
-            if self.grid[y][x + 1].cell_id not in self.logo_ids:
+            if maze.grid[y][x + 1].cell_id not in maze.logo_ids:
                 x += 1
                 new_content = "(>)"
                 moved = True
         elif key == readchar.key.LEFT and cell.walls["West"] is not True:
-            if self.grid[y][x - 1].cell_id not in self.logo_ids:
+            if maze.grid[y][x - 1].cell_id not in maze.logo_ids:
                 x -= 1
                 new_content = "(<)"
                 moved = True
         elif key == readchar.key.UP and cell.walls["North"] is not True:
-            if self.grid[y - 1][x].cell_id not in self.logo_ids:
+            if maze.grid[y - 1][x].cell_id not in maze.logo_ids:
                 y -= 1
                 new_content = "(^)"
                 moved = True
         elif key == readchar.key.DOWN and cell.walls["South"] is not True:
-            if self.grid[y + 1][x].cell_id not in self.logo_ids:
+            if maze.grid[y + 1][x].cell_id not in maze.logo_ids:
                 y += 1
                 new_content = "(v)"
                 moved = True
         if moved:
             i += 1
-            cell = self.grid[y][x]
+            cell = maze.grid[y][x]
             cell.path_active = True
             cell.path_content = new_content
-            self.logo.reset_logo()
-            Theme.logo_midile = "0" + str(i)
-            self.generate_logo()
-            self.draw_maze(False)
-            self.all_path_false()
+            maze.logo.reset_logo()
+            if Theme.logo_chrono:
+                Theme.logo_midile = "0" + str(i)
+            maze.generate_logo()
+            maze.draw_maze(False)
+            maze.all_path_false()

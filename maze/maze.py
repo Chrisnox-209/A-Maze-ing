@@ -5,8 +5,8 @@ from algos.kruskal import kruskal
 from maze.logo import Logo
 import time
 from algos.imperfect_maze import imperfect_maze_func
-from pynput import keyboard
 from utils.timer import Timer
+from options import play_game_func
 
 class Cell:
     def __init__(self, x: int, y: int, cell_id: int) -> None:
@@ -110,8 +110,9 @@ class Maze:
                     if cell.path_id != -1 and cell.path_id == i:
                         self.logo.reset_logo()
                         self.generate_logo()
-                        Theme.logo_midile = "0" + str(i)
-                        self.generate_logo()
+                        if Theme.logo_chrono:
+                            Theme.logo_midile = "0" + str(i)
+                            self.generate_logo()
                         cell.path_active = True
                         if old_x < x:
                             cell.path_content = "(>)"
@@ -138,55 +139,7 @@ class Maze:
                 cell = self.grid[y][x]
                 cell.path_active = False
     def play_game(self) -> None:
-        x = self.entry[0]
-        y = self.entry[1]
-        i = 0
-        cell = self.grid[y][x]
-        while True:
-            with keyboard.Events() as events:
-                self.logo.reset_logo()
-                self.generate_logo()
-                Theme.logo_midile = "0" + str(i)
-                self.generate_logo()
-                event = events.get()
-                if self.exit[0] == x and self.exit[1] == y:
-                    self.generate_path()
-                    self.draw_path()
-                    return
-                if isinstance(event, keyboard.Events.Press):
-                    if hasattr(event.key, 'char') and event.key.char == 'd' and cell.walls["East"] is not True:
-                        x+=1
-                        i+=1
-                        cell = self.grid[y][x]
-                        cell.path_active = True
-                        cell.path_content = "(>)"
-                        self.draw_maze(False)
-                        self.all_path_false()
-                    elif hasattr(event.key, 'char') and event.key.char == 'a' and cell.walls["West"] is not True:
-                        x-=1
-                        i+=1
-                        cell = self.grid[y][x]
-                        cell.path_active = True
-                        cell.path_content = "(<)"
-                        self.draw_maze(False)
-                        self.all_path_false()
-                    elif hasattr(event.key, 'char') and event.key.char == 'w' and cell.walls["North"] is not True:
-                        y-=1
-                        i+=1
-                        cell = self.grid[y][x]
-                        cell.path_active = True
-                        cell.path_content = "(^)"
-                        self.draw_maze(False)
-                        self.all_path_false()
-                    elif hasattr(event.key, 'char') and event.key.char == 's' and cell.walls["South"] is not True:
-                        y+=1
-                        i+=1
-                        cell = self.grid[y][x]
-                        cell.path_active = True
-                        cell.path_content = "(v)"
-                        self.draw_maze(False)
-                        self.all_path_false()
-
+        play_game_func(self)
 
     def draw_maze(self, start: bool) -> None:
         print("\033[H", end="")
