@@ -103,35 +103,61 @@ class Maze:
         i:int = max_id_path
         old_x = 0
         old_y = 0
-        while i != 0:
-            for y in range(self.height):
-                for x in range(self.width):
-                    cell = self.grid[y][x]
-                    if cell.path_id != -1 and cell.path_id == i:
-                        self.logo.reset_logo()
-                        self.generate_logo()
-                        if Theme.logo_chrono:
-                            Theme.logo_midile = "0" + str(i)
+        if type == "game":
+            while i != 0:
+                for y in range(self.height):
+                    for x in range(self.width):
+                        cell = self.grid[y][x]
+                        if cell.path_id != -1 and cell.path_id == i:
+                            self.logo.reset_logo()
                             self.generate_logo()
-                        cell.path_active = True
-                        if old_x < x:
-                            cell.path_content = "(>)"
-                            old_x = x
-                        elif old_x > x:
-                            cell.path_content = "(<)"
-                            old_x = x
-                        elif old_y > y:
-                            cell.path_content = "(^)"
-                            old_y = y
-                        elif old_y < y:
-                            cell.path_content = "(v)"
-                            old_y = y
-                        self.draw_maze(False)
-                        cell.path_active = False
-                        time.sleep(0.1)
-                        id_select = cell.path_id
-                        i-=1
-                        break
+                            if Theme.logo_chrono:
+                                Theme.logo_midile = "0" + str(i)
+                                self.generate_logo()
+                            cell.path_active = True
+                            if old_x < x:
+                                cell.path_content = "(>)"
+                                old_x = x
+                            elif old_x > x:
+                                cell.path_content = "(<)"
+                                old_x = x
+                            elif old_y > y:
+                                cell.path_content = "(^)"
+                                old_y = y
+                            elif old_y < y:
+                                cell.path_content = "(v)"
+                                old_y = y
+                            self.draw_maze(False)
+                            cell.path_active = False
+                            time.sleep(0.1)
+                            id_select = cell.path_id
+                            i-=1
+                            break
+        elif type == "basic":
+            a = max_id_path
+            b = 0
+            while True:
+                i = a
+                while i >= b:
+                    for y in range(self.height):
+                        for x in range(self.width):
+                            cell = self.grid[y][x]
+                            if cell.path_id != -1 and cell.path_id == i:
+                                self.logo.reset_logo()
+                                self.generate_logo()
+                                if Theme.logo_chrono:
+                                    Theme.logo_midile = "0" + str(i)
+                                    self.generate_logo()
+                                cell.color_case = Color.RED.value
+                                self.draw_maze(False)
+                                cell.color_case = Color.DEFAULT.value
+                                i-=1
+                                old_x = x
+                                old_y = y
+                                break
+                cell = self.grid[old_y][old_x]
+                cell.color_case = Color.RED.value
+                b +=1
 
     def all_path_false(self):
         for y in range(self.height):

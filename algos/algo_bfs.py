@@ -62,11 +62,7 @@ def find_path_bfs(maze):
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
                         path[(direct_x, direct_y)] = (x, y)
-                cell.color_case = Theme.color_path
                 # stack.append((direct_x, direct_y))
-                if Theme.animation_draw_path:
-                    maze.draw_maze(False)
-                    time.sleep(delay)
                 if Theme.logo_chrono:
                     # maze.logo.reset_logo()
                     maze.logo.reset_logo()
@@ -74,5 +70,4 @@ def find_path_bfs(maze):
                     timestr = f"{time_start.get_time(): .0f}"
                     Theme.logo_midile = str(timestr)
                     maze.generate_logo()
-            cell.color_case = Color.DEFAULT.value
         
