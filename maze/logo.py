@@ -334,6 +334,7 @@ class Logo:
                         cell.walls["East"] = False
 
     def make_logo_start(self):
+        self.maze.logo_ids = set()
         self.logo_42_start()
         list_cell = []
         width_logo = len(self.pattern[0])
@@ -348,9 +349,10 @@ class Logo:
                     grid_y = start_y + row
                     grid_x = start_x + col
                     cell = self.maze.grid[grid_y][grid_x]
-                    # list_cell.append(self.pattern[row][col])
-                    # cell.visit = True
                     list_cell.append((cell, self.pattern[row][col]))
+
+                    cell_id = grid_y * self.maze.width + grid_x
+                    self.maze.logo_ids.add(cell_id)
 
                     if row > 0 and self.pattern[row - 1][col] != 0:
                         cell.walls["North"] = False
