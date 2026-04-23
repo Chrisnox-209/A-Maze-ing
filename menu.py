@@ -71,7 +71,6 @@ def get_menu_content(
             if opt == "EXIT PROGRAM":
                 style = "light_coral"
             elif (menu_type in ["WALLS",
-                                "ALGO",
                                 "LOGO",
                                 "COLOR_W",
                                 "COLOR_L",
@@ -81,7 +80,7 @@ def get_menu_content(
             else:
                 style = (
                     "dim cyan" if menu_type not in [
-                        "MAIN", "CONFIG"] else "cyan")
+                        "MAIN", "ALGO", "CONFIG"] else "cyan")
 
             render_opts.append(Text(f"{prefix_text}{opt}", style=style))
 
@@ -91,8 +90,8 @@ def get_menu_content(
 def Menu(maze) -> None:
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
-                            "PAKAGE","PLAY GAME" ,"EXIT PROGRAM"]
-    config_opts: list[str] = ["PERFECT", "DESIGN", "ENTRY", "EXIT", "SIZE"]
+                            "PAKAGE", "PLAY GAME", "EXIT PROGRAM"]
+    config_opts: list[str] = ["PERFECT", "ANIMATION", "DESIGN", "ENTRY", "EXIT", "SIZE"]
     style_opts: list[str] = ["CLASSIC WALL", "DOUBLE WALL",
                              "SKINNY WALL", "RETRO WALL",
                              "UGLY WALL", "BIG WALL"]
@@ -118,6 +117,8 @@ def Menu(maze) -> None:
     color_text_top = "bold bright_blue"
     color_frame = "white"
     color_select_frame = "cyan"
+    
+    # animation = Theme.
 
     with Live(console=console, refresh_per_second=10, transient=False) as live:
         while True:
@@ -388,6 +389,8 @@ def Menu(maze) -> None:
                         is_perfect = not is_perfect
                         maze.perfect = is_perfect
                     elif index == 1:
+                        pass
+                    elif index == 2:
                         show_advanced = not show_advanced
                 elif current_menu == "WALLS":
                     wall_name = style_opts[index]
@@ -510,12 +513,13 @@ def Menu(maze) -> None:
                         print("\033[H", end="")
                         clear()
                         maze.generate_grid()
+                        maze.generate_logo()
                         maze.draw_maze(False)
+                        resize(maze)
                         if show_advanced:
                             print("\n" * 29)
                         else:
                             print("\n" * 18)
-                        resize(maze)
                         live.start()
                 elif current_menu == "ALGO":
                     algo_name = list_algo[index]
