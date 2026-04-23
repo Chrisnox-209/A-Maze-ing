@@ -243,6 +243,15 @@ class Logo:
             [0, 0, 1, 0, 1, 1, 1]
         ]
 
+    def logo_42_start(self):
+        self.pattern = [
+            ["A", 0, "E", 0, "J", "K", "L"],
+            ["B", 0, "F", 0, 0, 0, "M"],
+            ["C", "D", "G", 0, "P", "O", "N"],
+            [0, 0, "H", 0, "Q", 0, 0],
+            [0, 0, "I", 0, "R", "S", "T"]
+        ]
+
     def logo_caca(self):
         self.pattern = [
             [0, 0, 0, 1, 0, 0, 0],
@@ -302,7 +311,6 @@ class Logo:
                     cell = self.maze.grid[grid_y][grid_x]
                     self.maze.logo_ids.add(cell.cell_id)
                     cell.visit = True
-                    cell.color_case = Color.DEFAULT.value
                     cell.walls["North"] = True
                     cell.walls["East"] = True
                     cell.walls["South"] = True
@@ -326,43 +334,44 @@ class Logo:
                         cell.walls["East"] = False
 
     def make_logo_start(self):
-        self.logo_42()
+        self.logo_42_start()
         list_cell = []
         width_logo = len(self.pattern[0])
         height_logo = len(self.pattern)
-        
+
         start_x = (self.maze.width - width_logo) // 2
         start_y = (self.maze.height - height_logo) // 2
 
         for row in range(height_logo):
             for col in range(width_logo):
-                if self.pattern[row][col] == 1:
+                if self.pattern[row][col] != 0:
                     grid_y = start_y + row
                     grid_x = start_x + col
                     cell = self.maze.grid[grid_y][grid_x]
-                    
-                    cell.visit = True
-                    list_cell.append(cell)
+                    # list_cell.append(self.pattern[row][col])
+                    # cell.visit = True
+                    list_cell.append((cell, self.pattern[row][col]))
 
-                    if row > 0 and self.pattern[row - 1][col] == 1:
+                    if row > 0 and self.pattern[row - 1][col] != 0:
                         cell.walls["North"] = False
                         self.maze.grid[grid_y - 1][grid_x].walls["South"] = False
-                    if row < height_logo - 1 and self.pattern[row + 1][col] == 1:
+                    if row < height_logo - 1 and self.pattern[row + 1][col] != 0:
                         cell.walls["South"] = False
                         self.maze.grid[grid_y + 1][grid_x].walls["North"] = False
-                    if col > 0 and self.pattern[row][col - 1] == 1:
+                    if col > 0 and self.pattern[row][col - 1] != 0:
                         cell.walls["West"] = False
                         self.maze.grid[grid_y][grid_x - 1].walls["East"] = False
-                    if col < width_logo - 1 and self.pattern[row][col + 1] == 1:
+                    if col < width_logo - 1 and self.pattern[row][col + 1] != 0:
                         cell.walls["East"] = False
                         self.maze.grid[grid_y][grid_x + 1].walls["West"] = False
             time.sleep(0.09)
             self.maze.draw_maze(False)
 
-        list_cell.sort(key=lambda cell: cell.x)
+        list_cell.sort(key=lambda letter: letter[1])
+
         for c in list_cell:
-            c.color_case = self.color
+            cell = c[0]
+            cell.color_case = self.color
             time.sleep(0.07)
             self.maze.draw_maze(False)
-
 
