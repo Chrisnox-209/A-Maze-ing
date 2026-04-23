@@ -6,7 +6,7 @@ from maze.logo import Logo
 import time
 from algos.imperfect_maze import imperfect_maze_func
 from utils.timer import Timer
-from options import play_game_func
+
 
 class Cell:
     def __init__(self, x: int, y: int, cell_id: int) -> None:
@@ -92,7 +92,7 @@ class Maze:
                 width.visit = False
         self.generate_logo()
 
-    def draw_path(self) -> None:
+    def draw_path(self, type:str) -> None:
         max_id_path = 0
         id_select = 0
         for y in range(self.height):
@@ -139,6 +139,7 @@ class Maze:
                 cell = self.grid[y][x]
                 cell.path_active = False
     def play_game(self) -> None:
+        from options import play_game_func
         play_game_func(self)
 
     def draw_maze(self, start: bool) -> None:

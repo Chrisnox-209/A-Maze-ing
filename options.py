@@ -134,7 +134,7 @@ def play_game_func(maze) -> None:
         if maze.exit[0] == x and maze.exit[1] == y:
             Theme.animation_draw_path = False
             maze.generate_path()
-            maze.draw_path()
+            maze.draw_path("game")
             return
         key = readchar.readkey()
         if key == 'q' or key == 'Q' or key == readchar.key.CTRL_C:

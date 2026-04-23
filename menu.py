@@ -433,7 +433,7 @@ def Menu(maze) -> None:
                         maze.generate_path()
                         clear()
                         print("\033[H", end="")
-                        maze.draw_path()
+                        maze.draw_path("basic")
                         maze.draw_maze(False)
                         if show_advanced:
                             print("\n" * 29)
