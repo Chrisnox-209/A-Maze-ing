@@ -298,7 +298,7 @@ class Logo:
             return False
         width_logo: int = len(self.pattern[0])
         height_logo: int = len(self.pattern)
-        if self.maze.width <= width_logo + 4 and self.maze.height < height_logo + 4:
+        if self.maze.width <= width_logo + 4 or self.maze.height < height_logo + 4:
             return False
         start_x = (self.maze.width - width_logo) // 2
         start_y = (self.maze.height - height_logo) // 2
