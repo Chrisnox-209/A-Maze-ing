@@ -1,12 +1,13 @@
-from random import shuffle, randrange
+from random import shuffle, randrange, seed
 from maze.utils_enum import Color, Theme
 from utils.parser import clear
 import time
 
-
 def imperfect_maze_func(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
+    if maze.seed:
+        seed(maze.seed)
     maze.all_cell_false()
     for height in range(maze.height):
         for width in range(maze.width):
