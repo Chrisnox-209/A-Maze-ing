@@ -8,6 +8,15 @@ from utils.timer import Timer
 def dfs(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
+    list_color = ["NEON_RED",
+              "NEON_GREEN",
+              "NEON_YELLOW",
+              "NEON_BLUE",
+              "NEON_CYAN",
+              "NEON_MAGENTA",
+              "NEON_ORANGE",
+              "NEON_PURPLE",
+              "NEON_PINK",]
     time_start = Timer()
     if maze.seed:
         random.seed(maze.seed)
@@ -18,8 +27,9 @@ def dfs(maze):
         x = cell_work[0]
         y = cell_work[1]
         cell = maze.grid[y][x]
-        if Theme.animation_algo and Theme.color_animation_backtraking is not None:
-            cell.color_case = Theme.color_animation_backtraking
+        if Theme.animation_algo:
+            col = random.choice(list_color)
+            cell.color_case = getattr(Color, col).value
         if Theme.logo_chrono and Theme.animation_algo:
             maze.logo.reset_logo()
             maze.logo.reset_logo()
