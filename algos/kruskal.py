@@ -1,9 +1,7 @@
-
-
 from maze.utils_enum import Color, Theme
 import random
 import time
-
+from utils.timer import Timer
 
 def kruskal(maze):
     breakable_walls = wall_classification(maze)
@@ -85,7 +83,7 @@ list_color = ["NEON_RED",
 def create_family(maze, breakable_walls, familly_cell):
     total_cell = maze.width * maze.height - len(maze.logo_ids)
     nb_wall_broken = 0
-
+    time_start = Timer()
     if maze.seed is not None:
         random.seed(maze.seed)
 
@@ -96,7 +94,6 @@ def create_family(maze, breakable_walls, familly_cell):
         cell1 = element[1]
         cell2 = element[2]
         check = check_familly(cell1.cell_id, cell2.cell_id, familly_cell)
-
         if check:
             del breakable_walls[0]
         else:
@@ -124,6 +121,14 @@ def create_family(maze, breakable_walls, familly_cell):
             cell1.color_case = Color.DEFAULT.value
             cell2.color_case = Color.DEFAULT.value
             break
+
+        if Theme.logo_chrono and Theme.animation_algo:
+            maze.logo.reset_logo()
+            maze.logo.reset_logo()
+            maze.generate_logo()
+            timestr = f"{time_start.get_time(): .0f}"
+            Theme.logo_midile = str(timestr)
+            maze.generate_logo()
 
         if Theme.animation_algo:
             maze.draw_maze(False)

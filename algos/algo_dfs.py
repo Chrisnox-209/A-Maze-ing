@@ -3,11 +3,12 @@ import random
 from maze.utils_enum import Color, Theme
 from utils.parser import clear
 import time
-
+from utils.timer import Timer
 
 def dfs(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
+    time_start = Timer()
     if maze.seed:
         random.seed(maze.seed)
     while stack:
@@ -19,6 +20,13 @@ def dfs(maze):
         cell = maze.grid[y][x]
         if Theme.animation_algo and Theme.color_animation_backtraking is not None:
             cell.color_case = Theme.color_animation_backtraking
+        if Theme.logo_chrono and Theme.animation_algo:
+            maze.logo.reset_logo()
+            maze.logo.reset_logo()
+            maze.generate_logo()
+            timestr = f"{time_start.get_time(): .0f}"
+            Theme.logo_midile = str(timestr)
+            maze.generate_logo()
         cell.visit = True
         direction = [(x - 1, y),
                      (x, y + 1),
