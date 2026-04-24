@@ -6,6 +6,7 @@ from maze.logo import Logo
 import time
 from algos.imperfect_maze import imperfect_maze_func
 from utils.timer import Timer
+import random
 
 
 class Cell:
@@ -90,26 +91,27 @@ class Maze:
         for height in self.grid:
             for width in height:
                 width.visit = False
-        self.generate_logo()
+        if Theme.logo_midile:
+            self.generate_logo()
 
-    def draw_path(self, type:str) -> None:
+    def draw_path(self, type: str) -> None:
         max_id_path = 0
-        id_select = 0
         for y in range(self.height):
             for x in range(self.width):
                 cell = self.grid[y][x]
                 if cell.path_id > max_id_path:
                     max_id_path = cell.path_id
-        i:int = max_id_path
-        old_x = 0
-        old_y = 0
+
         if type == "game":
+            i = max_id_path
+            old_x = 0
+            old_y = 0
             while i != 0:
                 for y in range(self.height):
                     for x in range(self.width):
                         cell = self.grid[y][x]
                         if cell.path_id != -1 and cell.path_id == i:
-                            self.logo.reset_logo()
+                            self.logo.reset_logo() 
                             self.generate_logo()
                             if Theme.logo_chrono:
                                 Theme.logo_midile = "0" + str(i)
@@ -130,35 +132,35 @@ class Maze:
                             self.draw_maze(False)
                             cell.path_active = False
                             time.sleep(0.1)
-                            id_select = cell.path_id
-                            i-=1
+                            i -= 1
                             break
         elif type == "basic":
-            a = max_id_path
+            valid_colors = [
+            c.value for c in Color if c not in (
+                Color.RESET, Color.DEFAULT)]
+            self.color = random.choice(valid_colors)
+            time_start = Timer()
             b = 0
-            while True:
-                i = a
+            while b <= max_id_path:
+                i = max_id_path
                 while i >= b:
                     for y in range(self.height):
                         for x in range(self.width):
                             cell = self.grid[y][x]
-                            if cell.path_id != -1 and cell.path_id == i:
-                                self.logo.reset_logo()
-                                self.generate_logo()
+                            if cell.path_id == i:
                                 if Theme.logo_chrono:
-                                    Theme.logo_midile = "0" + str(i)
-                                    self.generate_logo()
-                                cell.color_case = Color.RED.value
+                                        self.logo.reset_logo()
+                                        self.generate_logo()
+                                        timestr = f"{time_start.get_time(): .0f}"
+                                        Theme.logo_midile = str(timestr)
+                                        self.generate_logo()
+                                cell.color_case = Theme.color_path
                                 self.draw_maze(False)
-                                cell.color_case = Color.DEFAULT.value
-                                i-=1
-                                old_x = x
-                                old_y = y
+                                if i > b:
+                                    cell.color_case = Color.DEFAULT.value
                                 break
-                cell = self.grid[old_y][old_x]
-                cell.color_case = Color.RED.value
-                b +=1
-
+                    i -= 1
+                b += 1
     def all_path_false(self):
         for y in range(self.height):
             for x in range(self.width):
@@ -242,9 +244,7 @@ class Maze:
         line_bot = ""
         for x in range(self.width):
             cell = self.grid[self.height - 1][x]
-
             inter = w.corner_bl.value if x == 0 else w.corner_bt.value
-
             if not cell.walls["South"]:
                 if (cell.color_case != Color.DEFAULT.value
                    and cell != entry and cell != exit_cel):
