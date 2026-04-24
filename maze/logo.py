@@ -309,6 +309,7 @@ class Logo:
                     grid_y = start_y + row
                     grid_x = start_x + col
                     cell = self.maze.grid[grid_y][grid_x]
+                    cell.color_case = Color.DEFAULT.value
                     self.maze.logo_ids.add(cell.cell_id)
                     cell.visit = True
                     cell.walls["North"] = True
