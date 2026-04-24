@@ -64,7 +64,6 @@ def find_path_bfs(maze):
                         stack.append((direct_x, direct_y))
                         path[(direct_x, direct_y)] = (x, y)
                 # stack.append((direct_x, direct_y))
-
                 # if Theme.animation_algo:
                 #     maze.draw_maze(False)
                 #     # cell.color_case = Theme.color_path
