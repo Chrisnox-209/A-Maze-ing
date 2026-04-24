@@ -39,6 +39,7 @@ def find_path_bfs(maze):
                     continue
                 if not verif_visit.visit:
                     found = True
+                cell.color_case = Color.DEFAULT.value
                 cell_destruction = maze.grid[y][x]
                 neighbor = maze.grid[direct_y][direct_x]
                 if direct_x == x and verif_visit.visit == False:
@@ -63,11 +64,17 @@ def find_path_bfs(maze):
                         stack.append((direct_x, direct_y))
                         path[(direct_x, direct_y)] = (x, y)
                 # stack.append((direct_x, direct_y))
-                if Theme.logo_chrono:
-                    # maze.logo.reset_logo()
-                    maze.logo.reset_logo()
-                    maze.generate_logo()
-                    timestr = f"{time_start.get_time(): .0f}"
-                    Theme.logo_midile = str(timestr)
-                    maze.generate_logo()
+
+                # if Theme.animation_algo:
+                #     maze.draw_maze(False)
+                #     # cell.color_case = Theme.color_path
+                #     time.sleep(delay)
+
+                # if Theme.logo_chrono:
+                #     # maze.logo.reset_logo()
+                #     maze.logo.reset_logo()
+                #     maze.generate_logo()
+                #     timestr = f"{time_start.get_time(): .0f}"
+                #     Theme.logo_midile = str(timestr)
+                #     maze.generate_logo()
         
