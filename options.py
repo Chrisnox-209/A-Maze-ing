@@ -22,7 +22,6 @@ def resize(maze) -> None:
             maze.generate_grid()
             moved = True
 
-        error = False
         if key in [readchar.key.UP]:
             if maze.height > maze.entry[1] + 1 and maze.height > maze.exit[1] + 1:
                 if maze.height > 3:
@@ -30,10 +29,15 @@ def resize(maze) -> None:
                     maze.generate_logo()
                     maze.generate_grid()
                     moved = True
+                else:
+                    print("\033[1;31m"
+                          "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
+                          "Minimum size has been reached ")
             else:
                 print("\033[1;31m"
                       "⚠️  [ERROR]: RESIZING NOT POSSIBLE - "
                       "An element is blocking the resize")
+
         if key in [readchar.key.RIGHT]:
             maze.width += 1
             maze.generate_logo()
@@ -62,7 +66,7 @@ def resize(maze) -> None:
             maze.draw_maze(False)
             moved = False
             print("╔═════════════════════════╗\n"
-                  "║      ✦ EDIT MODE ✦     ║\n"
+                  "║      ✦ EDIT MODE ✦      ║\n"
                   "╚═════════════════════════╝")
             print("[ MAZE RESIZING ] Use the arrow keys. "
                   "Press ENTER to confirm.")
