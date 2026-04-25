@@ -71,8 +71,9 @@ def parsing_data(file: str) -> MazeConfig | bool:
                     if data["SEED"] == "None":
                         data["SEED"] = None
         return MazeConfig(**data)
-    except ValidationError as error:
-        print(f"[ERROR]: {error.errors()[0]['msg']}")
+    except Exception as error:
+        # print(f"[ERROR]: {error.errors()[0]['msg']}")
+        print(f"[ERROR]: {error}")
         return False
     except ValidationError as error:
         print(f"[ERROR]: {error.errors()[0]['msg']}")
