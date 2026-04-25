@@ -33,6 +33,11 @@ class MazeConfig(BaseModel):
             raise ValueError("EXIT Y is outside the maze.")
         return self
 
+    @model_validator(mode='after')
+    def check_door(self) -> Self:
+        if (self.ENTRY_Y == self.EXIT_Y and self.ENTRY_X == self.EXIT_X):
+            raise ValueError("ENTRY is in the same place as the EXIT")
+
 
 def parsing_data(file: str) -> MazeConfig | bool:
     data: dict = {}
@@ -72,8 +77,7 @@ def parsing_data(file: str) -> MazeConfig | bool:
                         data["SEED"] = None
         return MazeConfig(**data)
     except Exception as error:
-        # print(f"[ERROR]: {error.errors()[0]['msg']}")
-        print(f"[ERROR]: {error}")
+        print(f"[ERROR]: {error.errors()[0]['msg']}")
         return False
     except ValidationError as error:
         print(f"[ERROR]: {error.errors()[0]['msg']}")
