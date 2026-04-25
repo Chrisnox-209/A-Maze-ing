@@ -183,10 +183,9 @@ def Menu(maze) -> None:
                 logo_message = Align.center(
                     Text(
                         "[WARN]: LOGO GENERATION ABORTED: SIZE TOO SMALL",
-                        style="bold red"))
-                error_logo = True
+                        style="orange1"))
             elif exit_id in maze.logo_ids or entry_id in maze.logo_ids:
-                logo_message = Align.center(Text("[WARN]: MAZE ISSUE - Entrance or exit inside logo", style="orange1"))
+                logo_message = Align.center(Text("[WARN]: MAZE ISSUE - Entrance or exit inside logo", style="bold red"))
                 error_logo = True
             else:
                 logo_message = Align.center(Text("SYSTEM STATUS: CONFIGURATION OPTIMAL", style="bold green"))
@@ -448,6 +447,8 @@ def Menu(maze) -> None:
                             maze.generate_grid()
                             maze.generate_logo()
                             maze.generate_maze(algo_name)
+                            if is_perfect is not True:
+                                maze.imperfect_maze()
                             clear()
                             print("\033[H", end="")
                             maze.draw_maze(False)
@@ -516,6 +517,7 @@ def Menu(maze) -> None:
                     if index == 0:
                         is_perfect = not is_perfect
                         maze.perfect = is_perfect
+                        
                     elif index == 1:
                         is_animation = not is_animation
                         if is_animation:
