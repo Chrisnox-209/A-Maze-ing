@@ -11,8 +11,14 @@ def main() -> None:
         print(f"[ERROR]: file {file_config}")
         return
     maze = Maze(config)
-    maze.draw_maze(True)
-    maze.generate_maze("DEMO")
+
+    if maze.width > 11 and maze.height > 8:
+        maze.draw_maze(True)
+        maze.generate_maze("DEMO")
+    else:
+        maze.generate_logo()
+        maze.draw_maze(True)
+
     print()
     Menu(maze)
 
