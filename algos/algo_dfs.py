@@ -1,22 +1,22 @@
-from random import shuffle, randrange
+from random import shuffle
 import random
 from maze.utils_enum import Color, Theme
-from utils.parser import clear
 import time
 from utils.timer import Timer
+
 
 def dfs(maze):
     stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
     list_color = ["NEON_RED",
-              "NEON_GREEN",
-              "NEON_YELLOW",
-              "NEON_BLUE",
-              "NEON_CYAN",
-              "NEON_MAGENTA",
-              "NEON_ORANGE",
-              "NEON_PURPLE",
-              "NEON_PINK",]
+                  "NEON_GREEN",
+                  "NEON_YELLOW",
+                  "NEON_BLUE",
+                  "NEON_CYAN",
+                  "NEON_MAGENTA",
+                  "NEON_ORANGE",
+                  "NEON_PURPLE",
+                  "NEON_PINK",]
     time_start = Timer()
     if maze.seed:
         random.seed(maze.seed)
@@ -55,7 +55,7 @@ def dfs(maze):
                 cell_destruction = maze.grid[y][x]
                 neighbor = maze.grid[direct_y][direct_x]
                 # Mouvement Vertical
-                if direct_x == x and verif_visit.visit == False:
+                if direct_x == x and not verif_visit.visit:
                     # on monte vers le nord
                     if direct_y < y:
                         cell_destruction.walls["North"] = False
@@ -67,7 +67,7 @@ def dfs(maze):
                         neighbor.walls["North"] = False
                         neighbor.visit = True
                 # Mouvement Horizontal
-                elif direct_y == y and verif_visit.visit == False:
+                elif direct_y == y and not verif_visit.visit:
                     if direct_x < x:
                         # on va vers l ouest
                         cell_destruction.walls["West"] = False

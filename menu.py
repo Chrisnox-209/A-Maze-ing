@@ -97,7 +97,13 @@ def Menu(maze) -> None:
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
                             "PAKAGE", "PLAY GAME", "EXIT PROGRAM"]
-    config_opts: list[str] = ["PERFECT", "ANIMATION", "DESIGN", "ENTRY", "EXIT", "SIZE"]
+    config_opts: list[str] = [
+        "PERFECT",
+        "ANIMATION",
+        "DESIGN",
+        "ENTRY",
+        "EXIT",
+        "SIZE"]
     style_opts: list[str] = ["CLASSIC WALL", "DOUBLE WALL",
                              "SKINNY WALL", "RETRO WALL",
                              "UGLY WALL", "BIG WALL"]
@@ -185,10 +191,16 @@ def Menu(maze) -> None:
                         "[WARN]: LOGO GENERATION ABORTED: SIZE TOO SMALL",
                         style="orange1"))
             elif exit_id in maze.logo_ids or entry_id in maze.logo_ids:
-                logo_message = Align.center(Text("[WARN]: MAZE ISSUE - Entrance or exit inside logo", style="bold red"))
+                logo_message = Align.center(
+                    Text(
+                        "[WARN]: MAZE ISSUE - Entrance or exit inside logo",
+                        style="bold red"))
                 error_logo = True
             else:
-                logo_message = Align.center(Text("SYSTEM STATUS: CONFIGURATION OPTIMAL", style="bold green"))
+                logo_message = Align.center(
+                    Text(
+                        "SYSTEM STATUS: CONFIGURATION OPTIMAL",
+                        style="bold green"))
 
             panel_content: Any = Group(
                 status_table,
@@ -517,7 +529,7 @@ def Menu(maze) -> None:
                     if index == 0:
                         is_perfect = not is_perfect
                         maze.perfect = is_perfect
-                        
+
                     elif index == 1:
                         is_animation = not is_animation
                         if is_animation:

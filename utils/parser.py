@@ -15,7 +15,7 @@ class MazeConfig(BaseModel):
     EXIT_Y: int = Field(ge=0)
     OUTPUT_FILE: str = Field(default="exit.txt", max_length=20)
     PERFECT: bool = Field(default=True)
-    SEED:  Optional[str] = Field(default=None, min_length=1)
+    SEED: Optional[str] = Field(default=None, min_length=1)
 
     @model_validator(mode='after')
     def check_entry(self) -> Self:

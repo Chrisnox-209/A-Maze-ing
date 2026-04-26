@@ -23,7 +23,8 @@ def resize(maze) -> None:
             moved = True
 
         if key in [readchar.key.UP]:
-            if maze.height > maze.entry[1] + 1 and maze.height > maze.exit[1] + 1:
+            if maze.height > maze.entry[1] + \
+                    1 and maze.height > maze.exit[1] + 1:
                 if maze.height > 3:
                     maze.height -= 1
                     maze.generate_logo()
@@ -45,7 +46,8 @@ def resize(maze) -> None:
             moved = True
 
         if key in [readchar.key.LEFT]:
-            if maze.width > maze.entry[0] + 1 and maze.width > maze.exit[0] + 1:
+            if maze.width > maze.entry[0] + \
+                    1 and maze.width > maze.exit[0] + 1:
                 if maze.width > 3:
                     maze.width -= 1
                     maze.generate_logo()

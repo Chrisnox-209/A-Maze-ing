@@ -1,10 +1,9 @@
-from random import shuffle, randrange, seed
-from maze.utils_enum import Color, Theme
-from utils.parser import clear
+from random import randrange, seed
+from maze.utils_enum import Theme
 import time
 
+
 def imperfect_maze_func(maze):
-    stack = [(maze.entry[0], maze.entry[1])]
     delay: int = Theme.delais_draw
     if maze.seed:
         seed(maze.seed)
@@ -13,13 +12,14 @@ def imperfect_maze_func(maze):
         for width in range(maze.width):
             nbr_random = randrange(1, 3)
             cell_destruction = maze.grid[height][width]
-            if height != 0 and width != 0 and height < maze.height - 1 and width < maze.width and cell_destruction.visit is not True:
+            if height != 0 and width != 0 and height < maze.height - \
+                    1 and width < maze.width and not cell_destruction.visit:
                 cell_destruction.visit = True
                 if nbr_random == 1:
-                        neighbor = maze.grid[height - 1][width]
-                        if neighbor.visit is not True:
-                            cell_destruction.walls["North"] = False
-                            neighbor.walls["South"] = False
+                    neighbor = maze.grid[height - 1][width]
+                    if neighbor.visit is not True:
+                        cell_destruction.walls["North"] = False
+                        neighbor.walls["South"] = False
                 if nbr_random == 2:
                     neighbor = maze.grid[height][width - 1]
                     if neighbor.visit is not True:

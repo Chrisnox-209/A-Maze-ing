@@ -1,14 +1,15 @@
 def binToHexa(a):
-    
+
     n = str(a)
     num = int(n, 2)
-    
+
     hex_num = format(num, 'X')
-    return(hex_num)
+    return (hex_num)
+
 
 def output_path(maze):
     maze.generate_path()
-    
+
     coords = {}
     for y in range(maze.height):
         for x in range(maze.width):
@@ -19,16 +20,19 @@ def output_path(maze):
     for i in range(1, len(coords)):
         x1, y1 = coords[i]
         x2, y2 = coords[i + 1]
-        if x2 > x1: res += "E"
-        elif x2 < x1: res += "W"
-        elif y2 > y1: res += "S"
-        elif y2 < y1: res += "N"
+        if x2 > x1:
+            res += "E"
+        elif x2 < x1:
+            res += "W"
+        elif y2 > y1:
+            res += "S"
+        elif y2 < y1:
+            res += "N"
     rev = res[::-1]
     return rev
 
 
 def output_maze_func(maze):
-    res_files = []
     name_files = maze.file
     try:
         with open(name_files, "w") as f:
@@ -59,6 +63,3 @@ def output_maze_func(maze):
             f.write(output_path(maze))
     except Exception as e:
         print(e)
-
-
-

@@ -183,9 +183,9 @@ class Theme:
     delais_draw: float = 0.01
     animation_draw: bool = False
     color_animation_backtraking = Color.BLUE.value
-    
-    animation_algo:bool = True
-    animation_draw_path:bool = False
+
+    animation_algo: bool = True
+    animation_draw_path: bool = False
     color_path = Color.BLUE.value
 
     entry_color_case = Color.ENTRY.value

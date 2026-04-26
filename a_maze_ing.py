@@ -1,6 +1,5 @@
-from utils.parser import clear, parsing_data, MazeConfig
+from utils.parser import clear, parsing_data
 from maze.maze import Maze
-from maze.utils_enum import Wall, WallUgly, WallDouble, WallRetro
 from menu import Menu
 
 

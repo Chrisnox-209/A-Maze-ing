@@ -3,6 +3,7 @@ import random
 import time
 from utils.timer import Timer
 
+
 def kruskal(maze):
     breakable_walls = wall_classification(maze)
     familly_cell = cell_familly(maze)

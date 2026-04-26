@@ -1,10 +1,9 @@
-from enum import Enum
 from maze.utils_enum import Color, Theme
 import random
 import time
 
 
-def number_zero() -> None:
+def number_zero() -> dict:
     pattern = [
         [1, 1, 1],
         [1, 2, 1],
@@ -15,7 +14,7 @@ def number_zero() -> None:
     return pattern
 
 
-def number_one() -> None:
+def number_one() -> dict:
     pattern = [
         [2, 1, 2],
         [1, 1, 2],
@@ -26,7 +25,7 @@ def number_one() -> None:
     return pattern
 
 
-def number_two() -> None:
+def number_two() -> dict:
     pattern = [
         [1, 1, 1],
         [2, 2, 1],
@@ -37,7 +36,7 @@ def number_two() -> None:
     return pattern
 
 
-def number_tree() -> None:
+def number_tree() -> dict:
     pattern = [
         [1, 1, 1],
         [2, 2, 1],
@@ -48,7 +47,7 @@ def number_tree() -> None:
     return pattern
 
 
-def number_fourth() -> None:
+def number_fourth() -> dict:
     pattern = [
         [1, 2, 1,],
         [1, 2, 1,],
@@ -59,7 +58,7 @@ def number_fourth() -> None:
     return pattern
 
 
-def number_five() -> None:
+def number_five() -> dict:
     pattern = [
         [1, 1, 1,],
         [1, 2, 2,],
@@ -70,7 +69,7 @@ def number_five() -> None:
     return pattern
 
 
-def number_six() -> None:
+def number_six() -> dict:
     pattern = [
         [1, 1, 1,],
         [1, 2, 2,],
@@ -81,7 +80,7 @@ def number_six() -> None:
     return pattern
 
 
-def number_seven() -> None:
+def number_seven() -> dict:
     pattern = [
         [1, 1, 1,],
         [2, 2, 1,],
@@ -92,18 +91,7 @@ def number_seven() -> None:
     return pattern
 
 
-def number_seven() -> None:
-    pattern = [
-        [1, 1, 1,],
-        [2, 2, 1,],
-        [2, 2, 1,],
-        [2, 2, 1,],
-        [2, 2, 1,]
-    ]
-    return pattern
-
-
-def number_eighth() -> None:
+def number_eighth() -> dict:
     pattern = [
         [1, 1, 1,],
         [1, 2, 1,],
@@ -114,18 +102,7 @@ def number_eighth() -> None:
     return pattern
 
 
-def number_eighth() -> None:
-    pattern = [
-        [1, 1, 1,],
-        [1, 2, 1,],
-        [1, 1, 1,],
-        [1, 2, 1,],
-        [1, 1, 1,]
-    ]
-    return pattern
-
-
-def number_ninth() -> None:
+def number_ninth() -> dict:
     pattern = [
         [1, 1, 1,],
         [1, 2, 1,],
@@ -135,7 +112,8 @@ def number_ninth() -> None:
     ]
     return pattern
 
-def reset_logo_func() -> None:
+
+def reset_logo_func() -> dict:
     pattern = [
         [2, 2, 2, 2, 2, 2, 2,],
         [2, 2, 2, 2, 2, 2, 2,],
@@ -273,7 +251,6 @@ class Logo:
             [0, 0, 0, 0, 1, 0, 0, 0, 0]
         ]
 
-
     def logo_surprise(self):
         self.pattern = [
             [0, 0, 1, 1, 1, 0, 0],
@@ -287,7 +264,6 @@ class Logo:
             [1, 1, 1, 0, 1, 1, 1]
         ]
 
-
     def reset_logo(self):
         self.pattern = reset_logo_func()
         self.make_logo()
@@ -298,7 +274,8 @@ class Logo:
             return False
         width_logo: int = len(self.pattern[0])
         height_logo: int = len(self.pattern)
-        if self.maze.width <= width_logo + 4 or self.maze.height < height_logo + 4:
+        if self.maze.width <= width_logo + 4 \
+                or self.maze.height < height_logo + 4:
             return False
         start_x = (self.maze.width - width_logo) // 2
         start_y = (self.maze.height - height_logo) // 2
@@ -331,7 +308,8 @@ class Logo:
                         cell.walls["South"] = False
                     if col > 0 and self.pattern[row][col - 1] == 1:
                         cell.walls["West"] = False
-                    if col < width_logo - 1 and self.pattern[row][col + 1] == 1:
+                    if col < width_logo - \
+                            1 and self.pattern[row][col + 1] == 1:
                         cell.walls["East"] = False
 
     def make_logo_start(self):
@@ -357,16 +335,22 @@ class Logo:
 
                     if row > 0 and self.pattern[row - 1][col] != 0:
                         cell.walls["North"] = False
-                        self.maze.grid[grid_y - 1][grid_x].walls["South"] = False
-                    if row < height_logo - 1 and self.pattern[row + 1][col] != 0:
+                        self.maze.grid[grid_y -
+                                       1][grid_x].walls["South"] = False
+                    if row < height_logo - \
+                            1 and self.pattern[row + 1][col] != 0:
                         cell.walls["South"] = False
-                        self.maze.grid[grid_y + 1][grid_x].walls["North"] = False
+                        self.maze.grid[grid_y +
+                                       1][grid_x].walls["North"] = False
                     if col > 0 and self.pattern[row][col - 1] != 0:
                         cell.walls["West"] = False
-                        self.maze.grid[grid_y][grid_x - 1].walls["East"] = False
-                    if col < width_logo - 1 and self.pattern[row][col + 1] != 0:
+                        self.maze.grid[grid_y][grid_x -
+                                               1].walls["East"] = False
+                    if col < width_logo - \
+                            1 and self.pattern[row][col + 1] != 0:
                         cell.walls["East"] = False
-                        self.maze.grid[grid_y][grid_x + 1].walls["West"] = False
+                        self.maze.grid[grid_y][grid_x +
+                                               1].walls["West"] = False
             time.sleep(0.09)
             self.maze.draw_maze(False)
 
@@ -377,4 +361,3 @@ class Logo:
             cell.color_case = self.color
             time.sleep(0.07)
             self.maze.draw_maze(False)
-

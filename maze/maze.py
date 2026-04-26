@@ -71,7 +71,6 @@ class Maze:
             kruskal(self)
             self.output_maze()
 
-
         elif algo_name == "DEMO":
             self.logo.make_logo_start()
         # elif algo_name == "PRIMS":
@@ -84,7 +83,8 @@ class Maze:
         # self.logo.select_logo()
         find_path_bfs(self)
 
-    # laisse cette fonction pour le moment ca sert pour le debug pour voir la
+    # laisse cette fonction pour le moment ca sert
+    # pour le debug pour voir la
     # matrice de chiffre
     def draw_grid(self) -> None:
         for data in self.grid:
@@ -119,7 +119,7 @@ class Maze:
                     for x in range(self.width):
                         cell = self.grid[y][x]
                         if cell.path_id != -1 and cell.path_id == i:
-                            self.logo.reset_logo() 
+                            self.logo.reset_logo()
                             self.generate_logo()
                             if Theme.logo_chrono:
                                 Theme.logo_midile = "0" + str(i)
@@ -144,8 +144,8 @@ class Maze:
                             break
         elif type == "basic":
             valid_colors = [
-            c.value for c in Color if c not in (
-                Color.RESET, Color.DEFAULT)]
+                c.value for c in Color if c not in (
+                    Color.RESET, Color.DEFAULT)]
             self.color = random.choice(valid_colors)
             time_start = Timer()
             b = 0
@@ -157,11 +157,11 @@ class Maze:
                             cell = self.grid[y][x]
                             if cell.path_id == i:
                                 if Theme.logo_chrono:
-                                        self.logo.reset_logo()
-                                        self.generate_logo()
-                                        timestr = f"{time_start.get_time(): .0f}"
-                                        Theme.logo_midile = str(timestr)
-                                        self.generate_logo()
+                                    self.logo.reset_logo()
+                                    self.generate_logo()
+                                    timestr = f"{time_start.get_time(): .0f}"
+                                    Theme.logo_midile = str(timestr)
+                                    self.generate_logo()
                                 cell.color_case = Theme.color_path
                                 self.draw_maze(False)
                                 if i > b:
@@ -169,11 +169,13 @@ class Maze:
                                 break
                     i -= 1
                 b += 1
+
     def all_path_false(self):
         for y in range(self.height):
             for x in range(self.width):
                 cell = self.grid[y][x]
                 cell.path_active = False
+
     def play_game(self) -> None:
         from options import play_game_func
         play_game_func(self)
@@ -262,7 +264,8 @@ class Maze:
             else:
                 h_char = Theme.color_wall + w.horizontal.value
 
-            line_bot += f"{Theme.color_wall}{inter}{h_char}{Color.DEFAULT.value}"
+            line_bot += f"{Theme.color_wall}{inter}"
+            f"{h_char}{Color.DEFAULT.value}"
         print(
             f"{line_bot}{
                 Theme.color_wall}{
