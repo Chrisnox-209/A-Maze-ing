@@ -83,8 +83,7 @@ class Maze:
         # self.logo.select_logo()
         find_path_bfs(self)
 
-    # laisse cette fonction pour le moment ca sert
-    # pour le debug pour voir la
+    # laisse cette fonction pour le moment ca sert pour le debug pour voir la
     # matrice de chiffre
     def draw_grid(self) -> None:
         for data in self.grid:
@@ -264,8 +263,8 @@ class Maze:
             else:
                 h_char = Theme.color_wall + w.horizontal.value
 
-            line_bot += f"{Theme.color_wall}{inter}"
-            f"{h_char}{Color.DEFAULT.value}"
+            line_bot += f"{Theme.color_wall}{inter}{h_char}"
+            f"{Color.DEFAULT.value}"
         print(
             f"{line_bot}{
                 Theme.color_wall}{
