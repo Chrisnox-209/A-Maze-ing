@@ -7,6 +7,7 @@ import time
 from algos.imperfect_maze import imperfect_maze_func
 from utils.timer import Timer
 import random
+from utils.output_maze import output_maze_func
 
 
 class Cell:
@@ -52,6 +53,9 @@ class Maze:
                 row.append(Cell(x, y, cell_id))
             self.grid.append(row)
 
+    def output_maze(self) -> None:
+        output_maze_func(self)
+
     def generate_logo(self) -> None:
         self.logo = Logo(self)
         return self.logo.select_logo()
@@ -62,8 +66,12 @@ class Maze:
             raise ValueError(f"Unknown algorithm: {algo_name}")
         if algo_name == "DFS":
             dfs(self)
+            self.output_maze()
         elif algo_name == "KRUSKAL":
             kruskal(self)
+            self.output_maze()
+
+
         elif algo_name == "DEMO":
             self.logo.make_logo_start()
         # elif algo_name == "PRIMS":
