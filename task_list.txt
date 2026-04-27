@@ -29,3 +29,10 @@ algo pour trouver un chemin
 timer au millieu
 
 ajout SEED
+
+pip install build
+cd mazegen
+python -m build
+pip install mazegen-0.1.0-py3-none-any.whl
+ou
+poetry build
