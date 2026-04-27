@@ -1,8 +1,8 @@
 from random import shuffle
 import random
-from maze.utils_enum import Color, Theme
+from mazegen.maze.utils_enum import Color, Theme
 import time
-from utils.timer import Timer
+from mazegen.utils.timer import Timer
 
 
 def dfs(maze):

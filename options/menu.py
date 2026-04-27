@@ -9,8 +9,8 @@ from rich.live import Live
 from rich.align import Align
 from rich.columns import Columns
 from typing import Literal, Any, Optional
-from options import edit_door, resize
-from maze.utils_enum import (
+from .options import edit_door, resize
+from mazegen.maze.utils_enum import (
     WallDouble,
     Wall,
     WallSkinny,

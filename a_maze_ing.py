@@ -1,6 +1,6 @@
-from utils.parser import clear, parsing_data
-from maze.maze import Maze
-from menu import Menu
+from mazegen.utils.parser import clear, parsing_data
+from mazegen.maze.maze import Maze
+from options.menu import Menu
 
 
 def main() -> None:

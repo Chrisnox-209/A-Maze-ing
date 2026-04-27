@@ -1,14 +1,14 @@
 try:
-    from algos.algo_bfs import find_path_bfs
-    from algos.algo_dfs import dfs
-    from algos.kruskal import kruskal
-    from maze.logo import Logo
-    from algos.imperfect_maze import imperfect_maze_func
+    from mazegen.algos.algo_bfs import find_path_bfs
+    from mazegen.algos.algo_dfs import dfs
+    from mazegen.algos.kruskal import kruskal
+    from mazegen.maze.logo import Logo
+    from mazegen.algos.imperfect_maze import imperfect_maze_func
+    from mazegen.utils.output_maze import output_maze_func
+    from mazegen.utils.parser import MazeConfig
+    from mazegen.utils.timer import Timer
+    from mazegen.maze.utils_enum import Color, Theme
     import random
-    from utils.output_maze import output_maze_func
-    from utils.parser import MazeConfig
-    from utils.timer import Timer
-    from maze.utils_enum import Color, Theme
     import time
 except Exception as e:
     print(e)
@@ -77,14 +77,11 @@ class Maze:
 
         elif algo_name == "DEMO":
             self.logo.make_logo_start()
-        # elif algo_name == "PRIMS":
-        #     prims(self)
 
     def imperfect_maze(self) -> None:
         imperfect_maze_func(self)
 
     def generate_path(self) -> None:
-        # self.logo.select_logo()
         find_path_bfs(self)
 
     # laisse cette fonction pour le moment ca sert pour le debug pour voir la
@@ -192,7 +189,6 @@ class Maze:
         entry.color_case = Theme.entry_color_case
         exit_cel.color_case = Theme.exit_color_case
         for y in range(self.height):
-            # La ligne du haut
             line_top = ""
             for x in range(self.width):
                 cell = self.grid[y][x]
@@ -218,7 +214,6 @@ class Maze:
                     Theme.color_wall}{last_inter}{res}\033[K",
                 flush=True)
 
-            # La putain de ligne du millieu
             line_mid = ""
             for x in range(self.width):
                 cell = self.grid[y][x]
@@ -253,7 +248,6 @@ class Maze:
                 flush=True)
             if start:
                 time.sleep(self.delay)
-        # La ligne du bas
         line_bot = ""
         for x in range(self.width):
             cell = self.grid[self.height - 1][x]
