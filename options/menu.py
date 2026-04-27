@@ -2,7 +2,7 @@ import sys
 import readchar
 from rich.console import Console, Group
 from rich.panel import Panel
-from utils.parser import clear
+from mazegen.utils.parser import clear
 from rich.text import Text
 from rich.table import Table
 from rich.live import Live
