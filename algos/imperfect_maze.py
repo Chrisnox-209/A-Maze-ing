@@ -4,7 +4,7 @@ import time
 
 
 def imperfect_maze_func(maze):
-    delay: int = Theme.delais_draw
+    delay: float = Theme.delais_draw
     if maze.seed:
         seed(maze.seed)
     maze.all_cell_false()

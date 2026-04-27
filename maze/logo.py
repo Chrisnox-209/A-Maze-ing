@@ -1,9 +1,12 @@
-from maze.utils_enum import Color, Theme
-import random
-import time
+try:    
+    import random
+    from maze.utils_enum import Color, Theme
+    import time
+except Exception as e:
+    print(e)
 
 
-def number_zero() -> dict:
+def number_zero() -> list[list[int]]:
     pattern = [
         [1, 1, 1],
         [1, 2, 1],
@@ -14,7 +17,7 @@ def number_zero() -> dict:
     return pattern
 
 
-def number_one() -> dict:
+def number_one() -> list[list[int]]:
     pattern = [
         [2, 1, 2],
         [1, 1, 2],
@@ -25,7 +28,7 @@ def number_one() -> dict:
     return pattern
 
 
-def number_two() -> dict:
+def number_two() -> list[list[int]]:
     pattern = [
         [1, 1, 1],
         [2, 2, 1],
@@ -36,7 +39,7 @@ def number_two() -> dict:
     return pattern
 
 
-def number_tree() -> dict:
+def number_tree() -> list[list[int]]:
     pattern = [
         [1, 1, 1],
         [2, 2, 1],
@@ -47,7 +50,7 @@ def number_tree() -> dict:
     return pattern
 
 
-def number_fourth() -> dict:
+def number_fourth() -> list[list[int]]:
     pattern = [
         [1, 2, 1,],
         [1, 2, 1,],
@@ -58,7 +61,7 @@ def number_fourth() -> dict:
     return pattern
 
 
-def number_five() -> dict:
+def number_five() -> list[list[int]]:
     pattern = [
         [1, 1, 1,],
         [1, 2, 2,],
@@ -69,7 +72,7 @@ def number_five() -> dict:
     return pattern
 
 
-def number_six() -> dict:
+def number_six() -> list[list[int]]:
     pattern = [
         [1, 1, 1,],
         [1, 2, 2,],
@@ -80,7 +83,7 @@ def number_six() -> dict:
     return pattern
 
 
-def number_seven() -> dict:
+def number_seven() -> list[list[int]]:
     pattern = [
         [1, 1, 1,],
         [2, 2, 1,],
@@ -91,7 +94,7 @@ def number_seven() -> dict:
     return pattern
 
 
-def number_eighth() -> dict:
+def number_eighth() -> list[list[int]]:
     pattern = [
         [1, 1, 1,],
         [1, 2, 1,],
@@ -102,7 +105,7 @@ def number_eighth() -> dict:
     return pattern
 
 
-def number_ninth() -> dict:
+def number_ninth() -> list[list[int]]:
     pattern = [
         [1, 1, 1,],
         [1, 2, 1,],
@@ -113,7 +116,7 @@ def number_ninth() -> dict:
     return pattern
 
 
-def reset_logo_func() -> dict:
+def reset_logo_func() -> list[list[int]]:
     pattern = [
         [2, 2, 2, 2, 2, 2, 2,],
         [2, 2, 2, 2, 2, 2, 2,],
@@ -124,7 +127,7 @@ def reset_logo_func() -> dict:
     return pattern
 
 
-def choice_number(number: str):
+def choice_number(number: str) -> list[list[int]]:
     if number == "0":
         return number_zero()
     if number == "1":

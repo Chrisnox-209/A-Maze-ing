@@ -1,21 +1,25 @@
-from maze.utils_enum import Color, Theme
-from algos.algo_dfs import dfs
-from algos.algo_bfs import find_path_bfs
-from algos.kruskal import kruskal
-from maze.logo import Logo
-import time
-from algos.imperfect_maze import imperfect_maze_func
-from utils.timer import Timer
-import random
-from utils.output_maze import output_maze_func
+try:
+    from algos.algo_bfs import find_path_bfs
+    from algos.algo_dfs import dfs
+    from algos.kruskal import kruskal
+    from maze.logo import Logo
+    from algos.imperfect_maze import imperfect_maze_func
+    import random
+    from utils.output_maze import output_maze_func
+    from utils.parser import MazeConfig
+    from utils.timer import Timer
+    from maze.utils_enum import Color, Theme
+    import time
+except Exception as e:
+    print(e)
 
 
 class Cell:
     def __init__(self, x: int, y: int, cell_id: int) -> None:
         self.x: int = int(x)
         self.y: int = int(y)
-        self.cell_id: int = int(cell_id)
-        self.color_case: Color = Theme.color_case
+        self.cell_id = int(cell_id)
+        self.color_case = Theme.color_case
         self.visit = False
         self.path_id = -1
         self.path_active = False
@@ -32,11 +36,11 @@ class Cell:
 
 
 class Maze:
-    def __init__(self, data: dict) -> None:
-        self.width: int = data.WIDTH
-        self.height: int = data.HEIGHT
-        self.entry: int = (data.ENTRY_X, data.ENTRY_Y)
-        self.exit: int = (data.EXIT_X, data.EXIT_Y)
+    def __init__(self, data: MazeConfig) -> None:
+        self.width = data.WIDTH
+        self.height = data.HEIGHT
+        self.entry = (data.ENTRY_X, data.ENTRY_Y)
+        self.exit = (data.EXIT_X, data.EXIT_Y)
         self.logo = Logo(self)
         self.seed = data.SEED
         self.file = data.OUTPUT_FILE

@@ -7,7 +7,7 @@ from utils.timer import Timer
 
 def dfs(maze):
     stack = [(maze.entry[0], maze.entry[1])]
-    delay: int = Theme.delais_draw
+    delay = Theme.delais_draw
     list_color = ["NEON_RED",
                   "NEON_GREEN",
                   "NEON_YELLOW",

@@ -1,6 +1,11 @@
 import os
 from typing import Self, Callable, Optional
-from pydantic import BaseModel, Field, ValidationError, model_validator
+import sys
+try:
+    from pydantic import BaseModel, Field, ValidationError, model_validator
+except Exception as e:
+    print(e)
+    sys.exit(1)
 
 clear: Callable[[], int] = lambda: os.system('cls' if os.name == 'nt'
                                              else 'clear')
@@ -34,7 +39,7 @@ class MazeConfig(BaseModel):
         return self
 
     @model_validator(mode='after')
-    def check_door(self) -> Self:
+    def check_door(self):
         if (self.ENTRY_Y == self.EXIT_Y and self.ENTRY_X == self.EXIT_X):
             raise ValueError("ENTRY is in the same place as the EXIT")
 
@@ -76,9 +81,9 @@ def parsing_data(file: str) -> MazeConfig | bool:
                     if data["SEED"] == "None":
                         data["SEED"] = None
         return MazeConfig(**data)
-    except Exception as error:
-        print(f"[ERROR]: {error.errors()[0]['msg']}")
+    except Exception as e:
+        print(f"[ERROR]: {e.errors()[0]['msg']}")
         return False
-    except ValidationError as error:
-        print(f"[ERROR]: {error.errors()[0]['msg']}")
+    except ValidationError as e:
+        print(f"[ERROR]: {e.errors()[0]['msg']}")
         return False

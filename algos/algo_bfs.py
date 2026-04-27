@@ -1,12 +1,13 @@
 from random import shuffle
 from maze.utils_enum import Color
 from collections import deque
+from typing import Any
 
 
 def find_path_bfs(maze):
     maze.all_cell_false()
     stack = deque([(maze.entry[0], maze.entry[1])])
-    path = {}
+    path: dict[Any, Any] = {}
     while stack:
         cell_work = stack.popleft()
         x = cell_work[0]
