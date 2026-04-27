@@ -210,8 +210,7 @@ class Maze:
                 line_top += f"{cc}{inter}{h_char}{Color.DEFAULT.value}"
             last_inter = w.corner_tr.value if y == 0 else w.corner_rt.value
             print(
-                f"{line_top}{
-                    Theme.color_wall}{last_inter}{res}\033[K",
+                f"{line_top}{Theme.color_wall}{last_inter}{res}\033[K",
                 flush=True)
 
             line_mid = ""
@@ -242,9 +241,7 @@ class Maze:
 
                 line_mid += f"{v_char}{content}{Color.DEFAULT.value}"
             print(
-                f"{line_mid}{
-                    Theme.color_wall}{
-                    w.vertical.value}{res}\033[K",
+                f"{line_mid}{Theme.color_wall}{w.vertical.value}{res}\033[K",
                 flush=True)
             if start:
                 time.sleep(self.delay)
@@ -264,7 +261,5 @@ class Maze:
             line_bot += f"{Theme.color_wall}{inter}{h_char}"
             f"{Color.DEFAULT.value}"
         print(
-            f"{line_bot}{
-                Theme.color_wall}{
-                w.corner_br.value}{res}\033[K",
+            f"{line_bot}{Theme.color_wall}{w.corner_br.value}{res}\033[K",
             flush=True)
