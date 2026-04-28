@@ -1,7 +1,7 @@
-from mazegen.maze.utils_enum import Color, Theme
+from maze_core.mazegen.maze.utils_enum import Color, Theme
 import random
 import time
-from mazegen.options.timer import Timer
+from maze_core.mazegen.options.timer import Timer
 
 
 def kruskal(maze):

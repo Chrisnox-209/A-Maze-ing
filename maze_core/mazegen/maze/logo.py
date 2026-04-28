@@ -1,6 +1,6 @@
 try:
     import random
-    from mazegen.maze.utils_enum import Color, Theme
+    from maze_core.mazegen.maze.utils_enum import Color, Theme
     import time
 except Exception as e:
     print(e)

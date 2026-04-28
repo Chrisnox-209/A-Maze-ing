@@ -3,14 +3,14 @@ import random
 import time
 from typing import Any
 try:
-    from mazegen.algos.algo_bfs import find_path_bfs # type: ignore
-    from mazegen.algos.algo_dfs import dfs # type: ignore
-    from mazegen.algos.kruskal import kruskal # type: ignore
-    from mazegen.maze.logo import Logo # type: ignore
-    from mazegen.algos.imperfect_maze import imperfect_maze_func # type: ignore
-    from mazegen.maze.output_maze import output_maze_func # type: ignore
-    from mazegen.options.timer import Timer # type: ignore
-    from mazegen.maze.utils_enum import Color, Theme # type: ignore
+    from maze_core.mazegen.algos.algo_bfs import find_path_bfs # type: ignore
+    from maze_core.mazegen.algos.algo_dfs import dfs # type: ignore
+    from maze_core.mazegen.algos.kruskal import kruskal # type: ignore
+    from maze_core.mazegen.maze.logo import Logo # type: ignore
+    from maze_core.mazegen.algos.imperfect_maze import imperfect_maze_func # type: ignore
+    from maze_core.mazegen.maze.output_maze import output_maze_func # type: ignore
+    from maze_core.mazegen.options.timer import Timer # type: ignore
+    from maze_core.mazegen.maze.utils_enum import Color, Theme # type: ignore
 except Exception as e:
     print(e)
     sys.exit(1)
@@ -86,8 +86,6 @@ class Maze:
     def generate_path(self) -> None:
         find_path_bfs(self)
 
-    # laisse cette fonction pour le moment ca sert pour le debug pour voir la
-    # matrice de chiffre
     def draw_grid(self) -> None:
         for data in self.grid:
             for visited in data:
@@ -121,7 +119,7 @@ class Maze:
                     for x in range(self.width):
                         cell = self.grid[y][x]
                         if cell.path_id != -1 and cell.path_id == i:
-                            self.logo.reset_logo() 
+                            self.logo.reset_logo()
                             self.generate_logo()
                             if Theme.logo_chrono:
                                 Theme.logo_midile = "0" + str(i)
@@ -146,8 +144,8 @@ class Maze:
                             break
         elif type == "basic":
             valid_colors = [
-            c.value for c in Color if c not in (
-                Color.RESET, Color.DEFAULT)]
+                c.value for c in Color
+                if c not in (Color.RESET, Color.DEFAULT)]
             self.color = random.choice(valid_colors)
             time_start = Timer()
             b = 0
@@ -159,11 +157,11 @@ class Maze:
                             cell = self.grid[y][x]
                             if cell.path_id == i:
                                 if Theme.logo_chrono:
-                                        self.logo.reset_logo()
-                                        self.generate_logo()
-                                        timestr = f"{time_start.get_time(): .0f}"
-                                        Theme.logo_midile = str(timestr)
-                                        self.generate_logo()
+                                    self.logo.reset_logo()
+                                    self.generate_logo()
+                                    timestr = f"{time_start.get_time(): .0f}"
+                                    Theme.logo_midile = str(timestr)
+                                    self.generate_logo()
                                 cell.color_case = Theme.color_path
                                 self.draw_maze(False)
                                 if i > b:

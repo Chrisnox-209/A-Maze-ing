@@ -1,5 +1,5 @@
-from mazegen.utils.parser import clear, parsing_data
-from mazegen.maze.maze import Maze
+from utils.parser import clear, parsing_data
+from maze_core.mazegen.maze.maze import Maze
 from options.menu import Menu
 
 

@@ -1,5 +1,5 @@
 from random import randrange, seed
-from mazegen.maze.utils_enum import Theme
+from maze_core.mazegen.maze.utils_enum import Theme
 import time
 
 

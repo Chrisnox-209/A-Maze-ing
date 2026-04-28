@@ -1,6 +1,6 @@
 import readchar
-from mazegen.maze.utils_enum import Theme
-from mazegen.utils.parser import clear
+from maze_core.mazegen.maze.utils_enum import Theme
+from utils.parser import clear
 
 
 def resize(maze) -> None:

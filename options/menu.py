@@ -2,7 +2,7 @@ import sys
 import readchar
 from rich.console import Console, Group
 from rich.panel import Panel
-from mazegen.utils.parser import clear
+from utils.parser import clear
 from rich.text import Text
 from rich.table import Table
 from rich.live import Live
@@ -10,7 +10,7 @@ from rich.align import Align
 from rich.columns import Columns
 from typing import Literal, Any, Optional
 from .options import edit_door, resize
-from mazegen.maze.utils_enum import (
+from maze_core.mazegen.maze.utils_enum import (
     WallDouble,
     Wall,
     WallSkinny,
@@ -107,7 +107,7 @@ def Menu(maze) -> None:
     style_opts: list[str] = ["CLASSIC WALL", "DOUBLE WALL",
                              "SKINNY WALL", "RETRO WALL",
                              "UGLY WALL", "BIG WALL"]
-    list_algo: list[str] = ["DFS", "KRUSKAL", "PRIMS"]
+    list_algo: list[str] = ["DFS", "KRUSKAL"]
     colors_list: list[str] = ["RED", "GREEN", "YELLOW", "BLUE",
                               "MAGENTA", "CYAN", "WHITE",
                               "ORANGE", "PINK"]

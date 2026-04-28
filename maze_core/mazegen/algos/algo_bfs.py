@@ -1,5 +1,5 @@
 from random import shuffle
-from mazegen.maze.utils_enum import Color
+from maze_core.mazegen.maze.utils_enum import Color
 from collections import deque
 from typing import Any
 
