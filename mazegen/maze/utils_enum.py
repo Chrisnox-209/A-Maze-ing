@@ -192,3 +192,4 @@ class Theme:
     exit_color_case = Color.EXIT.value
     logo_midile: str = "LOGO_42"
     logo_chrono: bool = False
+    default = "\033[0m"

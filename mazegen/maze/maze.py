@@ -1,17 +1,19 @@
+import sys
+import random
+import time
+from typing import Any
 try:
-    from mazegen.algos.algo_bfs import find_path_bfs
-    from mazegen.algos.algo_dfs import dfs
-    from mazegen.algos.kruskal import kruskal
-    from mazegen.maze.logo import Logo
-    from mazegen.algos.imperfect_maze import imperfect_maze_func
-    from mazegen.utils.output_maze import output_maze_func
-    from mazegen.utils.parser import MazeConfig
-    from mazegen.utils.timer import Timer
-    from mazegen.maze.utils_enum import Color, Theme
-    import random
-    import time
+    from mazegen.algos.algo_bfs import find_path_bfs # type: ignore
+    from mazegen.algos.algo_dfs import dfs # type: ignore
+    from mazegen.algos.kruskal import kruskal # type: ignore
+    from mazegen.maze.logo import Logo # type: ignore
+    from mazegen.algos.imperfect_maze import imperfect_maze_func # type: ignore
+    from mazegen.maze.output_maze import output_maze_func # type: ignore
+    from mazegen.options.timer import Timer # type: ignore
+    from mazegen.maze.utils_enum import Color, Theme # type: ignore
 except Exception as e:
     print(e)
+    sys.exit(1)
 
 
 class Cell:
@@ -36,15 +38,15 @@ class Cell:
 
 
 class Maze:
-    def __init__(self, data: MazeConfig) -> None:
-        self.width = data.WIDTH
-        self.height = data.HEIGHT
-        self.entry = (data.ENTRY_X, data.ENTRY_Y)
-        self.exit = (data.EXIT_X, data.EXIT_Y)
-        self.logo = Logo(self)
-        self.seed = data.SEED
-        self.file = data.OUTPUT_FILE
-        self.perfect = data.PERFECT
+    def __init__(self, data: Any) -> None:
+        self.width: int = data.WIDTH
+        self.height: int = data.HEIGHT
+        self.entry: tuple[int, int] = (data.ENTRY_X, data.ENTRY_Y)
+        self.exit: tuple[int, int] = (data.EXIT_X, data.EXIT_Y)
+        self.logo: Logo = Logo(self)
+        self.seed: str | None = data.SEED
+        self.file: str = data.OUTPUT_FILE
+        self.perfect: bool = data.PERFECT
         self.delay = 0.08
         self.generate_grid()
 
@@ -119,7 +121,7 @@ class Maze:
                     for x in range(self.width):
                         cell = self.grid[y][x]
                         if cell.path_id != -1 and cell.path_id == i:
-                            self.logo.reset_logo()
+                            self.logo.reset_logo() 
                             self.generate_logo()
                             if Theme.logo_chrono:
                                 Theme.logo_midile = "0" + str(i)
@@ -144,8 +146,8 @@ class Maze:
                             break
         elif type == "basic":
             valid_colors = [
-                c.value for c in Color if c not in (
-                    Color.RESET, Color.DEFAULT)]
+            c.value for c in Color if c not in (
+                Color.RESET, Color.DEFAULT)]
             self.color = random.choice(valid_colors)
             time_start = Timer()
             b = 0
@@ -157,11 +159,11 @@ class Maze:
                             cell = self.grid[y][x]
                             if cell.path_id == i:
                                 if Theme.logo_chrono:
-                                    self.logo.reset_logo()
-                                    self.generate_logo()
-                                    timestr = f"{time_start.get_time(): .0f}"
-                                    Theme.logo_midile = str(timestr)
-                                    self.generate_logo()
+                                        self.logo.reset_logo()
+                                        self.generate_logo()
+                                        timestr = f"{time_start.get_time(): .0f}"
+                                        Theme.logo_midile = str(timestr)
+                                        self.generate_logo()
                                 cell.color_case = Theme.color_path
                                 self.draw_maze(False)
                                 if i > b:
@@ -175,10 +177,6 @@ class Maze:
             for x in range(self.width):
                 cell = self.grid[y][x]
                 cell.path_active = False
-
-    def play_game(self) -> None:
-        from options import play_game_func
-        play_game_func(self)
 
     def draw_maze(self, start: bool) -> None:
         print("\033[H", end="")

@@ -32,7 +32,7 @@ def output_path(maze):
     return rev
 
 
-def output_maze_func(maze):
+def output_maze_func(maze) -> None:
     name_files = maze.file
     try:
         with open(name_files, "w") as f:

@@ -2,7 +2,7 @@ from random import shuffle
 import random
 from mazegen.maze.utils_enum import Color, Theme
 import time
-from mazegen.utils.timer import Timer
+from mazegen.options.timer import Timer
 
 
 def dfs(maze):
