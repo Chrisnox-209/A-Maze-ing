@@ -6,12 +6,16 @@ from typing import Any
 
 def find_path_bfs(maze: Any) -> None:
     maze.all_cell_false()
+    for row in maze.grid:
+        for cell in row:
+            cell.path_id = -1
     stack: deque[tuple[Any, Any]] = deque([(maze.entry[0], maze.entry[1])])
     path: dict[Any, Any] = {}
     while stack:
         cell_work = stack.popleft()
         x: Any = cell_work[0]
         y: Any = cell_work[1]
+
         if x == maze.exit[0] and y == maze.exit[1]:
             current: tuple[Any, Any] = (maze.exit[0], maze.exit[1])
             i: int = 0
@@ -40,18 +44,15 @@ def find_path_bfs(maze: Any) -> None:
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
                         path[(direct_x, direct_y)] = (x, y)
-
                     elif direct_y > y and not cell_destruction.walls["South"]:
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
                         path[(direct_x, direct_y)] = (x, y)
-
                 elif direct_y == y and not verif_visit.visit:
                     if direct_x < x and not cell_destruction.walls["West"]:
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
                         path[(direct_x, direct_y)] = (x, y)
-
                     elif direct_x > x and not cell_destruction.walls["East"]:
                         neighbor.visit = True
                         stack.append((direct_x, direct_y))
