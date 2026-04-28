@@ -4,37 +4,37 @@ from collections import deque
 from typing import Any
 
 
-def find_path_bfs(maze):
+def find_path_bfs(maze: Any) -> None:
     maze.all_cell_false()
-    stack = deque([(maze.entry[0], maze.entry[1])])
+    stack: deque[tuple[Any, Any]] = deque([(maze.entry[0], maze.entry[1])])
     path: dict[Any, Any] = {}
     while stack:
         cell_work = stack.popleft()
-        x = cell_work[0]
-        y = cell_work[1]
+        x: Any = cell_work[0]
+        y: Any = cell_work[1]
         if x == maze.exit[0] and y == maze.exit[1]:
-            current = (maze.exit[0], maze.exit[1])
+            current: tuple[Any, Any] = (maze.exit[0], maze.exit[1])
             i: int = 0
             while current != (maze.entry[0], maze.entry[1]):
                 maze.grid[current[1]][current[0]].path_id = i
                 i += 1
                 current = path[current]
             return
-        cell = maze.grid[y][x]
+        cell: Any = maze.grid[y][x]
         cell.visit = True
-        direction = [(x - 1, y),
-                     (x, y + 1),
-                     (x + 1, y),
-                     (x, y - 1)]
+        direction: list[tuple[Any, Any]] = [(x - 1, y),
+                                            (x, y + 1),
+                                            (x + 1, y),
+                                            (x, y - 1)]
         shuffle(direction)
         for direct_x, direct_y in direction:
             if 0 <= direct_x < maze.width and 0 <= direct_y < maze.height:
-                verif_visit = maze.grid[direct_y][direct_x]
+                verif_visit: Any = maze.grid[direct_y][direct_x]
                 if verif_visit.visit:
                     continue
                 cell.color_case = Color.DEFAULT.value
-                cell_destruction = maze.grid[y][x]
-                neighbor = maze.grid[direct_y][direct_x]
+                cell_destruction: Any = maze.grid[y][x]
+                neighbor: Any = maze.grid[direct_y][direct_x]
                 if direct_x == x and not verif_visit.visit:
                     if direct_y < y and not cell_destruction.walls["North"]:
                         neighbor.visit = True

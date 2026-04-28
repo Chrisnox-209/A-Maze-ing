@@ -1,16 +1,17 @@
 import readchar
 from maze_core.mazegen.maze.utils_enum import Theme
 from utils.parser import clear
+from typing import Any
 
 
-def resize(maze) -> None:
+def resize(maze: Any) -> None:
     print("╔═════════════════════════╗\n"
           "║      ✦ EDIT MODE ✦      ║\n"
           "╚═════════════════════════╝")
     print("[ MAZE RESIZING ] Use the arrow keys. Press ENTER to confirm.")
 
     while True:
-        key = readchar.readkey()
+        key: Any = readchar.readkey()
 
         if key in ['q', readchar.key.ENTER]:
             break
@@ -80,11 +81,11 @@ def resize(maze) -> None:
                       "the entrance or exit is located inside the logo.")
 
 
-def edit_door(maze, door: str) -> None:
+def edit_door(maze: Any, door: str) -> None:
 
     if door == "entry":
-        x = maze.entry[0]
-        y = maze.entry[1]
+        x: Any = maze.entry[0]
+        y: Any = maze.entry[1]
         name = "ENTRY"
     else:
         x = maze.exit[0]
@@ -99,13 +100,13 @@ def edit_door(maze, door: str) -> None:
     print(f"\n[ MOVEMENT {name} ] Use the arrow keys. Press ENTER to confirm.")
 
     while True:
-        key = readchar.readkey()
+        key: Any = readchar.readkey()
         if key in ['q', readchar.key.ENTER]:
             break
 
         moved = False
-        old_x = x
-        old_y = y
+        old_x: Any = x
+        old_y: Any = y
 
         if key in [readchar.key.RIGHT] and x < maze.width - 1:
             if maze.grid[y][x + 1].cell_id not in maze.logo_ids:
@@ -160,11 +161,11 @@ def edit_door(maze, door: str) -> None:
             maze.draw_maze(False)
 
 
-def play_game_func(maze) -> None:
-    x = maze.entry[0]
-    y = maze.entry[1]
+def play_game_func(maze: Any) -> None:
+    x: Any = maze.entry[0]
+    y: Any = maze.entry[1]
     i = 0
-    cell = maze.grid[y][x]
+    cell: Any = maze.grid[y][x]
     cell.path_active = True
     cell.path_content = "(S)"
     maze.logo.reset_logo()
@@ -178,7 +179,7 @@ def play_game_func(maze) -> None:
             maze.generate_path()
             maze.draw_path()
             return
-        key = readchar.readkey()
+        key: Any = readchar.readkey()
         if key == 'q' or key == 'Q' or key == readchar.key.CTRL_C:
             break
         moved = False

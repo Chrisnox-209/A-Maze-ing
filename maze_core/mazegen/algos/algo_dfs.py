@@ -3,9 +3,10 @@ import random
 from maze_core.mazegen.maze.utils_enum import Color, Theme
 import time
 from maze_core.mazegen.options.timer import Timer
+from typing import Any
 
 
-def dfs(maze):
+def dfs(maze: Any) -> None:
     stack = [(maze.entry[0], maze.entry[1])]
     delay = Theme.delais_draw
     list_color = ["NEON_RED",

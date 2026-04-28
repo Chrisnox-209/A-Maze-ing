@@ -1,3 +1,5 @@
+from typing import Literal, Any
+
 try:
     import random
     from maze_core.mazegen.maze.utils_enum import Color, Theme
@@ -7,7 +9,7 @@ except Exception as e:
 
 
 def number_zero() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1],
         [1, 2, 1],
         [1, 2, 1],
@@ -18,7 +20,7 @@ def number_zero() -> list[list[int]]:
 
 
 def number_one() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [2, 1, 2],
         [1, 1, 2],
         [2, 1, 2],
@@ -29,7 +31,7 @@ def number_one() -> list[list[int]]:
 
 
 def number_two() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1],
         [2, 2, 1],
         [1, 1, 1],
@@ -40,7 +42,7 @@ def number_two() -> list[list[int]]:
 
 
 def number_tree() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1],
         [2, 2, 1],
         [1, 1, 1],
@@ -51,7 +53,7 @@ def number_tree() -> list[list[int]]:
 
 
 def number_fourth() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 2, 1,],
         [1, 2, 1,],
         [1, 1, 1,],
@@ -62,7 +64,7 @@ def number_fourth() -> list[list[int]]:
 
 
 def number_five() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 2,],
         [1, 1, 1,],
@@ -73,7 +75,7 @@ def number_five() -> list[list[int]]:
 
 
 def number_six() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 2,],
         [1, 1, 1,],
@@ -84,7 +86,7 @@ def number_six() -> list[list[int]]:
 
 
 def number_seven() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1,],
         [2, 2, 1,],
         [2, 2, 1,],
@@ -95,7 +97,7 @@ def number_seven() -> list[list[int]]:
 
 
 def number_eighth() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 1,],
         [1, 1, 1,],
@@ -106,7 +108,7 @@ def number_eighth() -> list[list[int]]:
 
 
 def number_ninth() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 1,],
         [1, 1, 1,],
@@ -117,7 +119,7 @@ def number_ninth() -> list[list[int]]:
 
 
 def reset_logo_func() -> list[list[int]]:
-    pattern = [
+    pattern: list[list[int]] = [
         [2, 2, 2, 2, 2, 2, 2,],
         [2, 2, 2, 2, 2, 2, 2,],
         [2, 2, 2, 2, 2, 2, 2,],
@@ -151,13 +153,13 @@ def choice_number(number: str) -> list[list[int]]:
     return number_zero()
 
 
-def combine_twoo_number(number_one: str, number_twoo: str):
-    res_number = []
-    res_ligne_fusion = []
-    res_choice_one = choice_number(number_one)
-    res_choice_twoo = choice_number(number_twoo)
-    len_number_one = len(res_choice_one[0])
-    len_number_twoo = len(res_choice_twoo[0])
+def combine_twoo_number(number_one: str, number_twoo: str) -> list:
+    res_number: list = []
+    res_ligne_fusion: list = []
+    res_choice_one: list[list[int]] = choice_number(number_one)
+    res_choice_twoo: list[list[int]] = choice_number(number_twoo)
+    len_number_one: int = len(res_choice_one[0])
+    len_number_twoo: int = len(res_choice_twoo[0])
     for a in range(5):
         for i in range(len_number_one + len_number_twoo + 1):
             if i < len_number_one:
@@ -172,27 +174,27 @@ def combine_twoo_number(number_one: str, number_twoo: str):
     return res_number
 
 
-def create_number(number: str):
+def create_number(number: str) -> list:
     for i in range(len(number)):
-        number_res = combine_twoo_number(number[i - 1], number[i])
+        number_res: list = combine_twoo_number(number[i - 1], number[i])
     return number_res
 
 
 class Logo:
-    def __init__(self, maze) -> None:
-        self.maze = maze
-        self.color = Theme.color_case_logo
+    def __init__(self, maze: Any) -> None:
+        self.maze: Any = maze
+        self.color: str = Theme.color_case_logo
         if Theme.color_case_logo == "random":
             self.color = Color.random_color()
 
     def random_color_2(self) -> None:
-        valid_colors = [
+        valid_colors: list[str] = [
             c.value for c in Color if c not in (
                 Color.RESET, Color.DEFAULT)]
         self.color = random.choice(valid_colors)
         self.select_logo()
 
-    def select_logo(self):
+    def select_logo(self) -> None | Literal[False]:
         self.reset_logo()
         if Theme.logo_midile == "LOGO_42":
             self.logo_42()
@@ -204,18 +206,17 @@ class Logo:
             self.logo_heart()
         try:
             int(Theme.logo_midile)
-            self.pattern = create_number(Theme.logo_midile)
-            # self.tour_logo()
+            self.pattern: list = create_number(Theme.logo_midile)
         except BaseException:
             pass
         return self.make_logo()
 
-    def change_color_logo(self):
+    def change_color_logo(self) -> None:
         self.color = Theme.color_case_logo
         if Theme.color_case_logo == "random":
             self.color = Color.random_color()
 
-    def logo_42(self):
+    def logo_42(self) -> None:
         self.pattern = [
             [1, 0, 1, 0, 1, 1, 1],
             [1, 0, 1, 0, 0, 0, 1],
@@ -224,7 +225,7 @@ class Logo:
             [0, 0, 1, 0, 1, 1, 1]
         ]
 
-    def logo_42_start(self):
+    def logo_42_start(self) -> None:
         self.pattern = [
             ["A", 0, "E", 0, "J", "K", "L"],
             ["B", 0, "F", 0, 0, 0, "M"],
@@ -233,7 +234,7 @@ class Logo:
             [0, 0, "I", 0, "R", "S", "T"]
         ]
 
-    def logo_caca(self):
+    def logo_caca(self) -> None:
         self.pattern = [
             [0, 0, 0, 1, 0, 0, 0],
             [0, 0, 1, 1, 1, 0, 0],
@@ -242,7 +243,7 @@ class Logo:
             [0, 1, 1, 1, 1, 1, 0]
         ]
 
-    def logo_heart(self):
+    def logo_heart(self) -> None:
         self.pattern = [
             [0, 1, 1, 0, 0, 0, 1, 1, 0],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
@@ -254,7 +255,7 @@ class Logo:
             [0, 0, 0, 0, 1, 0, 0, 0, 0]
         ]
 
-    def logo_surprise(self):
+    def logo_surprise(self) -> None:
         self.pattern = [
             [0, 0, 1, 1, 1, 0, 0],
             [0, 0, 1, 1, 1, 0, 0],
@@ -267,11 +268,11 @@ class Logo:
             [1, 1, 1, 0, 1, 1, 1]
         ]
 
-    def reset_logo(self):
+    def reset_logo(self) -> None:
         self.pattern = reset_logo_func()
         self.make_logo()
 
-    def make_logo(self):
+    def make_logo(self) -> None | Literal[False]:
         self.maze.logo_ids = set()
         if Theme.logo_midile is None:
             return False
@@ -280,15 +281,15 @@ class Logo:
         if self.maze.width <= width_logo + 4 \
                 or self.maze.height < height_logo + 4:
             return False
-        start_x = (self.maze.width - width_logo) // 2
-        start_y = (self.maze.height - height_logo) // 2
+        start_x: Any = (self.maze.width - width_logo) // 2
+        start_y: Any = (self.maze.height - height_logo) // 2
 
         for row in range(height_logo):
             for col in range(width_logo):
                 if self.pattern[row][col] == 2 and Theme.logo_chrono:
-                    grid_y = start_y + row
-                    grid_x = start_x + col
-                    cell = self.maze.grid[grid_y][grid_x]
+                    grid_y: Any = start_y + row
+                    grid_x: Any = start_x + col
+                    cell: Any = self.maze.grid[grid_y][grid_x]
                     cell.color_case = Color.DEFAULT.value
                     self.maze.logo_ids.add(cell.cell_id)
                     cell.visit = True
@@ -314,26 +315,27 @@ class Logo:
                     if col < width_logo - \
                             1 and self.pattern[row][col + 1] == 1:
                         cell.walls["East"] = False
+        return None
 
-    def make_logo_start(self):
+    def make_logo_start(self) -> None:
         self.maze.logo_ids = set()
         self.logo_42_start()
-        list_cell = []
-        width_logo = len(self.pattern[0])
-        height_logo = len(self.pattern)
+        list_cell: list = []
+        width_logo: int = len(self.pattern[0])
+        height_logo: int = len(self.pattern)
 
-        start_x = (self.maze.width - width_logo) // 2
-        start_y = (self.maze.height - height_logo) // 2
+        start_x: Any = (self.maze.width - width_logo) // 2
+        start_y: Any = (self.maze.height - height_logo) // 2
 
         for row in range(height_logo):
             for col in range(width_logo):
                 if self.pattern[row][col] != 0:
-                    grid_y = start_y + row
-                    grid_x = start_x + col
-                    cell = self.maze.grid[grid_y][grid_x]
+                    grid_y: Any = start_y + row
+                    grid_x: Any = start_x + col
+                    cell: Any = self.maze.grid[grid_y][grid_x]
                     list_cell.append((cell, self.pattern[row][col]))
 
-                    cell_id = grid_y * self.maze.width + grid_x
+                    cell_id: Any = grid_y * self.maze.width + grid_x
                     self.maze.logo_ids.add(cell_id)
 
                     if row > 0 and self.pattern[row - 1][col] != 0:

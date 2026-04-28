@@ -1,13 +1,16 @@
-def binToHexa(a):
+from typing import Any, LiteralString
+
+
+def binToHexa(a: str | int) -> str:
 
     n = str(a)
     num = int(n, 2)
 
-    hex_num = format(num, 'X')
+    hex_num: str = format(num, 'X')
     return (hex_num)
 
 
-def output_path(maze):
+def output_path(maze: Any) -> LiteralString:
     maze.generate_path()
 
     coords = {}
@@ -32,7 +35,7 @@ def output_path(maze):
     return rev
 
 
-def output_maze_func(maze) -> None:
+def output_maze_func(maze: Any) -> None:
     name_files = maze.file
     try:
         with open(name_files, "w") as f:

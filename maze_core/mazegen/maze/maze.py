@@ -1,7 +1,7 @@
 import sys
 import random
 import time
-from typing import Any
+from typing import Any, Literal
 
 try:
     from maze_core.mazegen.algos import (
@@ -28,7 +28,7 @@ class Cell:
         self.x: int = int(x)
         self.y: int = int(y)
         self.cell_id = int(cell_id)
-        self.color_case = Theme.color_case
+        self.color_case: str = Theme.color_case
         self.visit = False
         self.path_id = -1
         self.path_active = False
@@ -69,12 +69,12 @@ class Maze:
     def output_maze(self) -> None:
         output_maze_func(self)
 
-    def generate_logo(self) -> None:
+    def generate_logo(self) -> None | Literal[False]:
         self.logo = Logo(self)
         return self.logo.select_logo()
 
     def generate_maze(self, algo_name: str) -> None:
-        algorithms = ["DFS", "KRUSKAL", "PRIMS", "DEMO"]
+        algorithms: list[str] = ["DFS", "KRUSKAL", "PRIMS", "DEMO"]
         if algo_name not in algorithms:
             raise ValueError(f"Unknown algorithm: {algo_name}")
         if algo_name == "DFS":
@@ -177,7 +177,7 @@ class Maze:
                     i -= 1
                 b += 1
 
-    def all_path_false(self):
+    def all_path_false(self) -> None:
         for y in range(self.height):
             for x in range(self.width):
                 cell = self.grid[y][x]

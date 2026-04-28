@@ -1,9 +1,10 @@
 from random import randrange, seed
 from maze_core.mazegen.maze.utils_enum import Theme
 import time
+from typing import Any
 
 
-def imperfect_maze_func(maze):
+def imperfect_maze_func(maze: Any) -> None:
     delay: float = Theme.delais_draw
     if maze.seed:
         seed(maze.seed)

@@ -23,13 +23,13 @@ from maze_core.mazegen.maze.utils_enum import (
 
 
 def get_menu_content(
-        options,
-        current_index,
-        is_active,
-        menu_type,
-        selected_val=None,
-        checked_dict=None,
-        error_logo=False) -> Group:
+        options: list[str],
+        current_index: int,
+        is_active: bool,
+        menu_type: str,
+        selected_val: Any = None,
+        checked_dict: dict | None = None,
+        error_logo: bool = False) -> Group:
     render_opts: list = []
 
     if checked_dict is None:
@@ -93,7 +93,7 @@ def get_menu_content(
     return Group(*render_opts)
 
 
-def Menu(maze) -> None:
+def Menu(maze: Any) -> None:
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
                             "PAKAGE", "PLAY GAME", "EXIT PROGRAM"]
