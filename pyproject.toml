@@ -7,12 +7,12 @@ authors = ["papilaz <papilaz@student.42lyon.fr>", "cpietrza <cpietrza@student.42
 
 [tool.poetry.dependencies]
 python = "^3.12.3"
-simple-term-menu = "^1.6.4"
 readchar = "^4.2.0"
 rich = "^13.7.1"
-art = "^6.1"
 pydantic = "^2.6"
-pynput = "^1.8.1"
+flake8 = "^7.3.0"
+mypy = "^1.20.2"
+
 
 [build-system]
 requires = ["poetry-core"]

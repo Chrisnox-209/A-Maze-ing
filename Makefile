@@ -1,3 +1,7 @@
+VENV = .venv
+MYPY_FLAGS = --warn-return-any --warn-unused-ignores --ignore-missing-imports \
+--disallow-untyped-defs --check-untyped-defs
+
 .PHONY: run, install, clean, lint
 
 install:
@@ -13,5 +17,7 @@ clean:
 	@rm -rf .mypy_cache
 	@echo "All code clean"
 
+
 lint:
-	python3 -m flake8 . && python3 -m mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+	poetry run python3 -m flake8 . --exclude $(VENV)
+	poetry run python3 -m mypy . $(MYPY_FLAGS)

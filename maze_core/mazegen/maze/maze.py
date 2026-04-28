@@ -2,17 +2,24 @@ import sys
 import random
 import time
 from typing import Any
+
 try:
-    from maze_core.mazegen.algos.algo_bfs import find_path_bfs # type: ignore
-    from maze_core.mazegen.algos.algo_dfs import dfs # type: ignore
-    from maze_core.mazegen.algos.kruskal import kruskal # type: ignore
-    from maze_core.mazegen.maze.logo import Logo # type: ignore
-    from maze_core.mazegen.algos.imperfect_maze import imperfect_maze_func # type: ignore
-    from maze_core.mazegen.maze.output_maze import output_maze_func # type: ignore
-    from maze_core.mazegen.options.timer import Timer # type: ignore
-    from maze_core.mazegen.maze.utils_enum import Color, Theme # type: ignore
-except Exception as e:
-    print(e)
+    from maze_core.mazegen.algos import (
+        find_path_bfs,
+        dfs,
+        kruskal,
+        imperfect_maze_func,
+    )
+    from maze_core.mazegen.maze import (
+        Logo,
+        output_maze_func,
+        Color,
+        Theme,
+    )
+    from maze_core.mazegen.options import Timer
+
+except ImportError as e:
+    raise SystemExit(f"Import error: {e}")
     sys.exit(1)
 
 
