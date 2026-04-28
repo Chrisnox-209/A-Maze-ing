@@ -232,7 +232,8 @@ class Maze:
                                     Theme.logo_midile = str(timestr)
                                     self.generate_logo()
                                 cell.color_case = Theme.color_path
-                                self.draw_maze(False)
+                                if Theme.animation_draw:
+                                    self.draw_maze(False)
                                 if i > b:
                                     cell.color_case = Color.DEFAULT.value
                                 break
