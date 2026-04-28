@@ -1,4 +1,3 @@
-VENV = .venv
 MYPY_FLAGS = --warn-return-any --warn-unused-ignores --ignore-missing-imports \
 --disallow-untyped-defs --check-untyped-defs
 
@@ -12,12 +11,16 @@ run:
 
 clean:
 	@find . -name "__pycache__" -o -name ".mypy_cache" -o -name "dist" | xargs rm -rf
+	@rm *.whl *.tar.gz
 	@echo "All code clean"
 
 build:
 	@echo "Building project.."
-	cd maze_core && python3 -m poetry  build
+	@cd maze_core && python3 -m poetry  build
+	@cd maze_core && mv dist/*  ../
+	@rm -R maze_core/dist
 
 lint:
-	poetry run python3 -m flake8 . --exclude $(VENV)
-	poetry run python3 -m mypy . $(MYPY_FLAGS)
+	@python3 -m poetry run python3 -m flake8 .
+	@python3 -m poetry run python3 -m mypy . $(MYPY_FLAGS)
+
