@@ -2,7 +2,6 @@ VENV = .venv
 MYPY_FLAGS = --warn-return-any --warn-unused-ignores --ignore-missing-imports \
 --disallow-untyped-defs --check-untyped-defs
 
-build:
 .PHONY: run, install, clean, build, lint
 
 install:
@@ -18,6 +17,7 @@ clean:
 build:
 	@echo "Building project.."
 	cd maze_core && python3 -m poetry  build
+
 lint:
 	poetry run python3 -m flake8 . --exclude $(VENV)
 	poetry run python3 -m mypy . $(MYPY_FLAGS)
