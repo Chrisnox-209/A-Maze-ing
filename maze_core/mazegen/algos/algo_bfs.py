@@ -6,12 +6,13 @@ from typing import Any
 
 def find_path_bfs(maze: Any) -> None:
     """Trouve le chemin le plus court entre l'entrée et la sortie via BFS.
+    Explore le labyrinthe niveau par niveau (parcours en largeur).
     Marque les cellules et reconstruit le chemin optimal.
     """
     maze.all_cell_false()
     for row in maze.grid:
-        for cell in row:
-            cell.path_id = -1
+        for cell2 in row:
+            cell2.path_id = -1
     stack: deque[tuple[Any, Any]] = deque([(maze.entry[0], maze.entry[1])])
     path: dict[Any, Any] = {}
     while stack:
