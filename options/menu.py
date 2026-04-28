@@ -9,7 +9,7 @@ from rich.live import Live
 from rich.align import Align
 from rich.columns import Columns
 from typing import Literal, Any, Optional
-from .options import edit_door, resize
+from .options import edit_door, resize, play_game_func
 from maze_core.mazegen.maze.utils_enum import (
     WallDouble,
     Wall,
@@ -96,7 +96,7 @@ def get_menu_content(
 def Menu(maze: Any) -> None:
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
-                            "PAKAGE", "PLAY GAME", "EXIT PROGRAM"]
+                            "PLAY GAME", "EXIT PROGRAM"]
     config_opts: list[str] = [
         "PERFECT",
         "ANIMATION",
@@ -111,7 +111,8 @@ def Menu(maze: Any) -> None:
     colors_list: list[str] = ["RED", "GREEN", "YELLOW", "BLUE",
                               "MAGENTA", "CYAN", "WHITE",
                               "ORANGE", "PINK"]
-    logos_list: list[str] = ["LOGO_42", "TIMER", "POOH", "HEART", "SURPRISE"]
+    logos_list: list[str] = ["LOGO_42", "TIMER", "INVADER", "HOME",
+                             "GRID", "HEART", "STING"]
 
     wall_name: str = style_opts[0]
     algo_name: str = list_algo[0]
@@ -511,18 +512,15 @@ def Menu(maze: Any) -> None:
                             print("\n" * 18)
                         live.start()
                     elif index == 4:
-                        current_menu = "PAKAGE"
-                        pass
-                    elif index == 5:
                         current_menu = "PLAY GAME"
                         live.stop()
-                        maze.play_game()
+                        play_game_func(maze)
                         if show_advanced:
                             print("\n" * 29)
                         else:
                             print("\n" * 18)
                         live.start()
-                    elif index == 6:
+                    elif index == 5:
                         current_menu = "EXIT"
                         sys.exit()
                 elif current_menu == "CONFIG":

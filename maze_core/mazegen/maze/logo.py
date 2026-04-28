@@ -198,12 +198,16 @@ class Logo:
         self.reset_logo()
         if Theme.logo_midile == "LOGO_42":
             self.logo_42()
-        if Theme.logo_midile == "POOH":
-            self.logo_caca()
-        if Theme.logo_midile == "SURPRISE":
-            self.logo_surprise()
+        if Theme.logo_midile == "GRID":
+            self.logo_checkerboardr()
+        if Theme.logo_midile == "INVADER":
+            self.logo_invader()
+        if Theme.logo_midile == "HOME":
+            self.logo_home()
         if Theme.logo_midile == "HEART":
             self.logo_heart()
+        if Theme.logo_midile == "STING":
+            self.logo_sting()
         try:
             int(Theme.logo_midile)
             self.pattern: list = create_number(Theme.logo_midile)
@@ -215,6 +219,29 @@ class Logo:
         self.color = Theme.color_case_logo
         if Theme.color_case_logo == "random":
             self.color = Color.random_color()
+
+    def logo_invader(self) -> None:
+        self.pattern = [
+            [0, 0, 1, 0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 1, 0, 1, 0, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 0, 0],
+            [0, 1, 1, 0, 1, 0, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 1, 0, 1],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0]
+        ]
+
+    def logo_home(self) -> None:
+        self.pattern = [
+            [0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 1, 1, 1, 0, 0],
+            [0, 1, 1, 1, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 0, 1, 1, 0],
+            [0, 1, 1, 0, 1, 1, 0]
+        ]
 
     def logo_42(self) -> None:
         self.pattern = [
@@ -234,15 +261,6 @@ class Logo:
             [0, 0, "I", 0, "R", "S", "T"]
         ]
 
-    def logo_caca(self) -> None:
-        self.pattern = [
-            [0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 1, 1, 1, 1, 1, 0],
-            [1, 1, 1, 1, 1, 1, 1],
-            [0, 1, 1, 1, 1, 1, 0]
-        ]
-
     def logo_heart(self) -> None:
         self.pattern = [
             [0, 1, 1, 0, 0, 0, 1, 1, 0],
@@ -255,17 +273,28 @@ class Logo:
             [0, 0, 0, 0, 1, 0, 0, 0, 0]
         ]
 
-    def logo_surprise(self) -> None:
+    def logo_checkerboardr(self) -> None:
         self.pattern = [
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 0, 1, 1, 1, 0, 0],
-            [0, 1, 1, 1, 1, 1, 0],
-            [1, 1, 1, 0, 1, 1, 1],
-            [1, 1, 1, 0, 1, 1, 1]
+            [1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1]
+        ]
+
+    def logo_sting(self) -> None:
+        self.pattern = [
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 1, 1, 0, 1, 0, 1, 1, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 0, 0]
         ]
 
     def reset_logo(self) -> None:
