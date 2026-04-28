@@ -6,12 +6,20 @@ from typing import Any
 
 
 def kruskal(maze: Any) -> None:
+    """Génère un labyrinthe parfait avec l'algorithme de Kruskal.
+    Trie les murs aléatoirement et connecte les cellules sans créer de boucles.
+    Utilise une structure d'ensembles disjoints (Union-Find).
+    """
     breakable_walls: list = wall_classification(maze)
     familly_cell: dict = cell_familly(maze)
     create_family(maze, breakable_walls, familly_cell)
 
 
 def wall_classification(maze: Any) -> list:
+    """Identifie et liste tous les murs cassables du labyrinthe.
+    Parcourt la grille pour trouver les séparations valides entre cellules.
+    Exclut les murs protégeant les zones réservées comme le logo.
+    """
     breakable_walls: list = []
 
     for y in range(maze.height):
@@ -46,6 +54,10 @@ def wall_classification(maze: Any) -> list:
 
 
 def cell_familly(maze: Any) -> dict:
+    """Initialise les familles (ensembles) pour l'algorithme de Kruskal.
+    Chaque cellule reçoit un identifiant unique au départ.
+    Permet de suivre quelles zones du labyrinthe sont déjà connectées.
+    """
     familly_cell: dict = {}
     for line in maze.grid:
         for id in line:
@@ -54,6 +66,10 @@ def cell_familly(maze: Any) -> dict:
 
 
 def check_familly(id_cell: int, id_neighbor: int, familly_cell: dict) -> bool:
+    """Vérifie si deux cellules appartiennent à la même famille.
+    Retourne True si elles sont déjà connectées (pour éviter un cycle).
+    Élément clé de l'algorithme de Kruskal.
+    """
     if familly_cell[id_cell] == familly_cell[id_neighbor]:
         return True
     else:
@@ -61,6 +77,11 @@ def check_familly(id_cell: int, id_neighbor: int, familly_cell: dict) -> bool:
 
 
 def pair_wall(direction: str) -> tuple[str, str]:
+    """Détermine la correspondance des directions de murs opposés.
+    Par exemple, le mur 'Nord' d'une cellule correspond au mur 'Sud' de sa
+    voisine.
+    Essentiel pour abattre un mur partagé par deux cellules.
+    """
     if direction == 'N':
         return ("North", "South")
     if direction == 'S':
@@ -86,6 +107,10 @@ list_color: list[str] = ["NEON_RED",
 def create_family(maze: Any,
                   breakable_walls: list,
                   familly_cell: dict) -> None:
+    """Fusionne les familles de cellules et détruit les murs entre elles.
+    Constitue la boucle principale de l'algorithme de Kruskal.
+    Gère également l'animation visuelle étape par étape si activée.
+    """
     total_cell: Any = maze.width * maze.height - len(maze.logo_ids)
     nb_wall_broken = 0
     time_start = Timer()

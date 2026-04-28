@@ -2,6 +2,10 @@ from typing import Any, LiteralString
 
 
 def binToHexa(a: str | int) -> str:
+    """Convertit une valeur binaire (chaîne) en caractère hexadécimal.
+    Prend 4 bits et retourne l'équivalent de '0' à 'F'.
+    Utilisé pour formater l'état des murs de chaque cellule.
+    """
 
     n = str(a)
     num = int(n, 2)
@@ -11,6 +15,10 @@ def binToHexa(a: str | int) -> str:
 
 
 def output_path(maze: Any) -> LiteralString:
+    """Convertit une séquence de coordonnées en directions cardinales.
+    Parcourt le chemin et associe chaque pas à N, S, E, ou W.
+    Retourne la chaîne de caractères attendue par le sujet.
+    """
     maze.generate_path()
 
     coords = {}
@@ -36,6 +44,10 @@ def output_path(maze: Any) -> LiteralString:
 
 
 def output_maze_func(maze: Any) -> None:
+    """Sauvegarde le labyrinthe complet dans le fichier de configuration.
+    Génère l'encodage hexadécimal ligne par ligne.
+    Ajoute ensuite les coordonnées et la solution à la fin.
+    """
     name_files = maze.file
     try:
         with open(name_files, "w") as f:

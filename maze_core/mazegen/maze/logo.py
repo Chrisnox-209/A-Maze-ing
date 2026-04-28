@@ -9,6 +9,8 @@ except Exception as e:
 
 
 def number_zero() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre zéro.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1],
         [1, 2, 1],
@@ -20,6 +22,8 @@ def number_zero() -> list[list[int]]:
 
 
 def number_one() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre un.
+    """
     pattern: list[list[int]] = [
         [2, 1, 2],
         [1, 1, 2],
@@ -31,6 +35,8 @@ def number_one() -> list[list[int]]:
 
 
 def number_two() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre deux.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1],
         [2, 2, 1],
@@ -42,6 +48,8 @@ def number_two() -> list[list[int]]:
 
 
 def number_tree() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre trois.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1],
         [2, 2, 1],
@@ -53,6 +61,8 @@ def number_tree() -> list[list[int]]:
 
 
 def number_fourth() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre quatre.
+    """
     pattern: list[list[int]] = [
         [1, 2, 1,],
         [1, 2, 1,],
@@ -64,6 +74,8 @@ def number_fourth() -> list[list[int]]:
 
 
 def number_five() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre cinq.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 2,],
@@ -75,6 +87,8 @@ def number_five() -> list[list[int]]:
 
 
 def number_six() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre six.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 2,],
@@ -86,6 +100,10 @@ def number_six() -> list[list[int]]:
 
 
 def number_seven() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre sept.
+    Construit le motif géométrique du chiffre sept.
+    Sert pour l'horloge ou les indications visuelles.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1,],
         [2, 2, 1,],
@@ -97,6 +115,8 @@ def number_seven() -> list[list[int]]:
 
 
 def number_eighth() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre huit.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 1,],
@@ -108,6 +128,8 @@ def number_eighth() -> list[list[int]]:
 
 
 def number_ninth() -> list[list[int]]:
+    """Génère la matrice représentant le chiffre neuf.
+    """
     pattern: list[list[int]] = [
         [1, 1, 1,],
         [1, 2, 1,],
@@ -119,6 +141,10 @@ def number_ninth() -> list[list[int]]:
 
 
 def reset_logo_func() -> list[list[int]]:
+    """Réinitialise l'état et les cellules occupées par le logo.
+    Libère l'espace au centre pour pouvoir redessiner ou nettoyer.
+    Assure que l'ancien logo n'interfère pas avec le nouveau.
+    """
     pattern: list[list[int]] = [
         [2, 2, 2, 2, 2, 2, 2,],
         [2, 2, 2, 2, 2, 2, 2,],
@@ -130,6 +156,10 @@ def reset_logo_func() -> list[list[int]]:
 
 
 def choice_number(number: str) -> list[list[int]]:
+    """Sélectionne et retourne la matrice correspondant à un chiffre donné en
+    string.
+    Associe le caractère '0'-'9' à sa fonction génératrice respective.
+    """
     if number == "0":
         return number_zero()
     if number == "1":
@@ -154,6 +184,10 @@ def choice_number(number: str) -> list[list[int]]:
 
 
 def combine_twoo_number(number_one: str, number_twoo: str) -> list:
+    """Combine les matrices de deux chiffres pour former un nombre (ex: '42').
+    Gère l'espacement et l'alignement entre les deux formes.
+    Retourne le motif global prêt à être intégré.
+    """
     res_number: list = []
     res_ligne_fusion: list = []
     res_choice_one: list[list[int]] = choice_number(number_one)
@@ -175,19 +209,33 @@ def combine_twoo_number(number_one: str, number_twoo: str) -> list:
 
 
 def create_number(number: str) -> list:
+    """Analyse une chaîne de caractères et génère la matrice visuelle associée.
+    """
     for i in range(len(number)):
         number_res: list = combine_twoo_number(number[i - 1], number[i])
     return number_res
 
 
 class Logo:
+    """Enumération des identifiants ou types de logos disponibles.
+    Gère les différentes formes qui peuvent être affichées (42, Timer, etc.).
+    Facilite la sélection du motif central.
+    """
     def __init__(self, maze: Any) -> None:
+        """Initialise l'instance avec ses attributs par défaut.
+        Met en place l'état initial requis pour le fonctionnement.
+        Configure les variables internes de l'objet.
+        """
         self.maze: Any = maze
         self.color: str = Theme.color_case_logo
         if Theme.color_case_logo == "random":
             self.color = Color.random_color()
 
     def random_color_2(self) -> None:
+        """Méthode alternative pour changer la couleur de manière aléatoire.
+        Modifie les attributs de l'instance pour appliquer la nouvelle couleur.
+        Crée un effet de clignotement ou de variation.
+        """
         valid_colors: list[str] = [
             c.value for c in Color if c not in (
                 Color.RESET, Color.DEFAULT)]
@@ -195,6 +243,12 @@ class Logo:
         self.select_logo()
 
     def select_logo(self) -> None | Literal[False]:
+        """Identifie et sélectionne le type de logo à dessiner selon le thème
+        actuel.
+        Gère les options comme l'icône Home, l'Invader, ou un
+        chronomètre dynamique.
+        Retourne l'état ou False si l'espace est insuffisant.
+        """
         self.reset_logo()
         if Theme.logo_midile == "LOGO_42":
             self.logo_42()
@@ -216,11 +270,20 @@ class Logo:
         return self.make_logo()
 
     def change_color_logo(self) -> None:
+        """Modifie aléatoirement ou spécifiquement la couleur du logo affiché.
+        Permet des effets de clignotement ou des transitions de couleurs
+        animées.
+        Met à jour l'état visuel des cellules concernées.
+        """
         self.color = Theme.color_case_logo
         if Theme.color_case_logo == "random":
             self.color = Color.random_color()
 
     def logo_invader(self) -> None:
+        """Génère la matrice pour le logo en forme de Space Invader.
+        Positionne les blocs pour dessiner le motif rétro.
+        Ajoute une touche ludique au centre du labyrinthe.
+        """
         self.pattern = [
             [0, 0, 1, 0, 0, 0, 1, 0, 0],
             [0, 0, 0, 1, 0, 1, 0, 0, 0],
@@ -233,6 +296,10 @@ class Logo:
         ]
 
     def logo_home(self) -> None:
+        """Génère la matrice pour le logo en forme de petite maison.
+        Calcule les coordonnées de la structure de base et du toit.
+        Option décorative pour le générateur.
+        """
         self.pattern = [
             [0, 0, 0, 1, 0, 0, 0],
             [0, 0, 1, 1, 1, 0, 0],
@@ -244,6 +311,10 @@ class Logo:
         ]
 
     def logo_42(self) -> None:
+        """Dessine le logo officiel de l'école 42 dans la grille.
+        Combine les chiffres '4' et '2' avec l'espacement correct.
+        Satisfait la contrainte visuelle du sujet.
+        """
         self.pattern = [
             [1, 0, 1, 0, 1, 1, 1],
             [1, 0, 1, 0, 0, 0, 1],
@@ -253,6 +324,10 @@ class Logo:
         ]
 
     def logo_42_start(self) -> None:
+        """Dessine la version initiale ou alternative du logo 42.
+        Affiche le motif au moment du démarrage ou dans des menus spécifiques.
+        Contribue à l'identité visuelle de l'application.
+        """
         self.pattern = [
             ["A", 0, "E", 0, "J", "K", "L"],
             ["B", 0, "F", 0, 0, 0, "M"],
@@ -262,6 +337,10 @@ class Logo:
         ]
 
     def logo_heart(self) -> None:
+        """Génère les coordonnées pour dessiner un motif en forme de cœur.
+        Option cosmétique pour personnaliser l'affichage central.
+        Utilise la grille pour former l'image pixélisée.
+        """
         self.pattern = [
             [0, 1, 1, 0, 0, 0, 1, 1, 0],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
@@ -274,6 +353,10 @@ class Logo:
         ]
 
     def logo_checkerboardr(self) -> None:
+        """Crée un motif en damier (checkerboard) pour le centre du labyrinthe.
+        Alterne les cellules pleines et vides sur la zone cible.
+        Offre un effet visuel texturé.
+        """
         self.pattern = [
             [1, 0, 1, 0, 1, 0, 1, 0, 1],
             [0, 1, 0, 1, 0, 1, 0, 1, 0],
@@ -285,6 +368,10 @@ class Logo:
         ]
 
     def logo_sting(self) -> None:
+        """Dessine un motif stylisé (sting) au centre de la grille.
+        Ajoute une variante graphique supplémentaire pour l'utilisateur.
+        Calculé dynamiquement selon la taille disponible.
+        """
         self.pattern = [
             [0, 0, 0, 0, 1, 0, 0, 0, 0],
             [0, 0, 0, 1, 1, 1, 0, 0, 0],
@@ -298,10 +385,19 @@ class Logo:
         ]
 
     def reset_logo(self) -> None:
+        """Nettoie le logo actuel en réinitialisant les couleurs des cellules
+        cibles.
+        Permet de préparer la zone pour un nouveau dessin.
+        Évite les chevauchements visuels indésirables.
+        """
         self.pattern = reset_logo_func()
         self.make_logo()
 
     def make_logo(self) -> None | Literal[False]:
+        """Applique les couleurs et les propriétés de murs pour former le logo.
+        Transforme les matrices de coordonnées abstraites en affichage réel.
+        Appelle les fonctions de dessin spécifiques selon le choix.
+        """
         self.maze.logo_ids = set()
         if Theme.logo_midile is None:
             return False
@@ -347,6 +443,10 @@ class Logo:
         return None
 
     def make_logo_start(self) -> None:
+        """Dessine l'animation ou le logo de départ avec un effet visuel.
+        S'assure que l'affichage d'accueil est correctement rendu.
+        Marque le début de l'exécution du programme.
+        """
         self.maze.logo_ids = set()
         self.logo_42_start()
         list_cell: list = []

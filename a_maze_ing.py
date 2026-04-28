@@ -4,6 +4,10 @@ from options.menu import Menu
 
 
 def main() -> None:
+    """Point d'entrée principal du programme.
+    Parse la configuration, initialise le labyrinthe et lance l'affichage.
+    Démarre ensuite le menu interactif pour l'utilisateur.
+    """
     file_config = "config.txt"
     config = parsing_data(file_config)
     if config is False:

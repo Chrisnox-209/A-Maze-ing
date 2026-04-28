@@ -5,6 +5,9 @@ from typing import Any
 
 
 def imperfect_maze_func(maze: Any) -> None:
+    """Transforme le labyrinthe en supprimant des murs aléatoires.
+    Augmente le nombre de chemins possibles pour le rendre imparfait.
+    """
     delay: float = Theme.delais_draw
     if maze.seed:
         seed(maze.seed)

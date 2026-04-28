@@ -5,6 +5,11 @@ from typing import Any
 
 
 def resize(maze: Any) -> None:
+    """Modifie dynamiquement les dimensions du labyrinthe depuis le menu.
+    Demande à l'utilisateur de nouvelles valeurs et met à jour
+    la configuration.
+    Gère les erreurs de saisie.
+    """
     print("╔═════════════════════════╗\n"
           "║      ✦ EDIT MODE ✦      ║\n"
           "╚═════════════════════════╝")
@@ -82,6 +87,11 @@ def resize(maze: Any) -> None:
 
 
 def edit_door(maze: Any, door: str) -> None:
+    """Permet de redéfinir manuellement les coordonnées de l'entrée ou de la
+    sortie.
+    Vérifie la validité des nouvelles coordonnées fournies.
+    Met à jour l'instance du labyrinthe.
+    """
 
     if door == "entry":
         x: Any = maze.entry[0]
@@ -162,6 +172,10 @@ def edit_door(maze: Any, door: str) -> None:
 
 
 def play_game_func(maze: Any) -> None:
+    """Lance le mode de jeu interactif où le joueur déplace un curseur.
+    Gère les entrées clavier (flèches) pour naviguer dans le labyrinthe.
+    Détecte les collisions avec les murs et la condition de victoire.
+    """
     x: Any = maze.entry[0]
     y: Any = maze.entry[1]
     i = 0

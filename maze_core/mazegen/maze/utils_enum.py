@@ -3,6 +3,8 @@ import random
 
 
 class WallRetro(Enum):
+    """Enumération définissant l'apparence des murs de style rétro.
+    """
     horizontal = '---'
     vertical = '|'
     corner = '+'
@@ -20,6 +22,8 @@ class WallRetro(Enum):
 
 
 class WallRounded(Enum):
+    """Enumération pour les murs avec des coins arrondis.
+    """
     horizontal = '───'
     vertical = '│'
     corner = '┼'
@@ -37,6 +41,8 @@ class WallRounded(Enum):
 
 
 class WallSkinny(Enum):
+    """Enumération pour les murs fins (skinny).
+    """
     horizontal = '───'
     vertical = '│'
     corner = '┼'
@@ -54,6 +60,8 @@ class WallSkinny(Enum):
 
 
 class WallBig(Enum):
+    """Enumération pour les murs épais (big).
+    """
     horizontal = '███'
     vertical = '█'
     corner = '█'
@@ -71,6 +79,8 @@ class WallBig(Enum):
 
 
 class Wall(Enum):
+    """Enumération standard des murs du labyrinthe.
+    """
     horizontal = '━━━'
     vertical = '┃'
     corner = '╋'
@@ -88,6 +98,8 @@ class Wall(Enum):
 
 
 class WallUgly(Enum):
+    """Enumération proposant un style de mur délibérément basique.
+    """
     horizontal = '···'
     vertical = '┆'
     corner = '+'
@@ -105,6 +117,8 @@ class WallUgly(Enum):
 
 
 class WallDouble(Enum):
+    """Enumération pour les murs représentés par des lignes doubles.
+    """
     horizontal = '═══'
     vertical = '║'
     corner = '╬'
@@ -122,6 +136,9 @@ class WallDouble(Enum):
 
 
 class Color(Enum):
+    """Enumération des couleurs disponibles pour l'interface.
+    Permet de styliser le texte et les murs dans le terminal.
+    """
     RESET = "\033[0m"
     DEFAULT = "\033[0m"
 
@@ -161,6 +178,9 @@ class Color(Enum):
 
     @classmethod
     def random_color(cls) -> str:
+        """Retourne une couleur aléatoire parmi celles disponibles.
+        Utilisé pour l'animation ou des effets visuels dynamiques.
+        """
         valid_colors = [
             c.value for c in cls if c not in (
                 cls.RESET, cls.DEFAULT)]
@@ -168,12 +188,20 @@ class Color(Enum):
 
 
 class Logo(Enum):
+    """Enumération des identifiants ou types de logos disponibles.
+    Gère les différentes formes qui peuvent être affichées (42, Timer, etc.).
+    Facilite la sélection du motif central.
+    """
     logo_42 = "LOGO_42"
     caca = "POOH"
     logo_surprise = "SURPRISE"
 
 
 class Theme:
+    """Classe regroupant la configuration visuelle globale.
+    Stocke les couleurs, le style de mur, et l'état des animations.
+    Sert de variable globale pour le rendu interactif.
+    """
     color_select = Color.MAGENTA.value
     color_case = Color.DEFAULT.value
     color_case_logo = Color.NEON_RED.value

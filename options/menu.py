@@ -30,6 +30,10 @@ def get_menu_content(
         selected_val: Any = None,
         checked_dict: dict | None = None,
         error_logo: bool = False) -> Group:
+    """Prépare le rendu visuel dynamique du menu pour l'interface Rich.
+    Applique les styles de couleur, met en surbrillance l'option sélectionnée.
+    Gère l'affichage des coches et états des sous-menus.
+    """
     render_opts: list = []
 
     if checked_dict is None:
@@ -94,6 +98,11 @@ def get_menu_content(
 
 
 def Menu(maze: Any) -> None:
+    """Affiche et gère le menu interactif principal du programme.
+    Utilise la librairie Rich pour un rendu fluide avec Live.
+    Traite la navigation, les sélections et déclenche les actions
+    correspondantes.
+    """
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
                             "PLAY GAME", "EXIT PROGRAM"]

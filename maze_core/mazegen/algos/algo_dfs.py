@@ -7,6 +7,11 @@ from typing import Any
 
 
 def dfs(maze: Any) -> None:
+    """Implémente l'algorithme de parcours en profondeur (Depth-First Search).
+    Génère le labyrinthe en creusant des chemins aléatoires de manière
+    récursive.
+    Utilise une pile pour mémoriser le chemin et gérer le backtracking.
+    """
     stack = [(maze.entry[0], maze.entry[1])]
     delay = Theme.delais_draw
     list_color = ["NEON_RED",

@@ -24,7 +24,15 @@ except ImportError as e:
 
 
 class Cell:
+    """Représente une cellule individuelle dans la grille du labyrinthe.
+    Stocke l'état de ses murs, ses couleurs et ses flags de visite.
+    Gère aussi son appartenance potentielle à un chemin ou un logo.
+    """
     def __init__(self, x: int, y: int, cell_id: int) -> None:
+        """Initialise l'instance avec ses attributs par défaut.
+        Met en place l'état initial requis pour le fonctionnement.
+        Configure les variables internes de l'objet.
+        """
         self.x: int = int(x)
         self.y: int = int(y)
         self.cell_id = int(cell_id)
@@ -41,11 +49,23 @@ class Cell:
         }
 
     def __repr__(self) -> str:
+        """Fournit une représentation textuelle de la cellule pour le débogage.
+        Affiche l'identifiant de la cellule de manière claire.
+        Facilite le traçage lors de l'exécution.
+        """
         return f"{self.x}:{self.y}, id={self.cell_id}"
 
 
 class Maze:
+    """Classe principale représentant la grille du labyrinthe.
+    Gère la structure de données interne, les dimensions et les cellules.
+    Orchestre la génération, la résolution et l'affichage.
+    """
     def __init__(self, data: Any) -> None:
+        """Initialise l'instance avec ses attributs par défaut.
+        Met en place l'état initial requis pour le fonctionnement.
+        Configure les variables internes de l'objet.
+        """
         self.width: int = data.WIDTH
         self.height: int = data.HEIGHT
         self.entry: tuple[int, int] = (data.ENTRY_X, data.ENTRY_Y)
@@ -58,6 +78,10 @@ class Maze:
         self.generate_grid()
 
     def generate_grid(self) -> None:
+        """Crée la grille vide du labyrinthe en initialisant chaque cellule.
+        Met en place les objets Cell avec leurs propriétés par défaut.
+        Prépare la structure avant d'appliquer l'algorithme.
+        """
         self.grid: list[list[Cell]] = []
         for y in range(self.height):
             row: list[Cell] = []
@@ -67,13 +91,28 @@ class Maze:
             self.grid.append(row)
 
     def output_maze(self) -> None:
+        """Délègue l'écriture du labyrinthe vers le fichier de sortie
+        configuré.
+        Appelle la classe spécialisée pour gérer l'encodage hexadécimal.
+        Finalise le processus de génération du projet.
+        """
         output_maze_func(self)
 
     def generate_logo(self) -> None | Literal[False]:
+        """Place et intègre le motif central (logo) dans la structure du
+        labyrinthe.
+        Verrouille les cellules concernées pour empêcher la destruction de
+        leurs murs.
+        Vérifie que la taille permet son insertion.
+        """
         self.logo = Logo(self)
         return self.logo.select_logo()
 
     def generate_maze(self, algo_name: str) -> None:
+        """Lance l'algorithme de génération sélectionné (DFS ou Kruskal).
+        Coordonne la création des murs et l'animation éventuelle.
+        Constitue la fonction maîtresse de création.
+        """
         algorithms: list[str] = ["DFS", "KRUSKAL", "PRIMS", "DEMO"]
         if algo_name not in algorithms:
             raise ValueError(f"Unknown algorithm: {algo_name}")
@@ -88,12 +127,25 @@ class Maze:
             self.logo.make_logo_start()
 
     def imperfect_maze(self) -> None:
+        """Transforme un labyrinthe parfait en labyrinthe imparfait.
+        Brise des murs supplémentaires au hasard pour créer de
+        multiples chemins.
+        Ajoute de la complexité ou facilite le jeu selon la densité.
+        """
         imperfect_maze_func(self)
 
     def generate_path(self) -> None:
+        """Déclenche l'algorithme de résolution BFS pour trouver le chemin
+        optimal.
+        Associe la recherche de solution à l'état actuel de la grille.
+        Prépare les données pour la fonction draw_path.
+        """
         find_path_bfs(self)
 
     def draw_grid(self) -> None:
+        """Dessine les éléments bruts de la grille sur l'affichage console.
+        Fonction de debug
+        """
         for data in self.grid:
             for visited in data:
                 if not visited.visit:
@@ -103,6 +155,12 @@ class Maze:
             print()
 
     def all_cell_false(self) -> None:
+        """Réinitialise le statut de visite de toutes les cellules de la
+        grille.
+        Permet de relancer un algorithme de parcours (comme BFS) sur un
+        terrain vierge.
+        Efface les traces d'anciens chemins.
+        """
         for height in self.grid:
             for width in height:
                 width.visit = False
@@ -110,6 +168,10 @@ class Maze:
             self.generate_logo()
 
     def draw_path(self, type: str) -> None:
+        """Affiche visuellement le chemin résolu sur le labyrinthe.
+        Colore les cellules appartenant au tracé du BFS.
+        Rend la solution facilement lisible pour l'utilisateur.
+        """
         max_id_path = 0
         for y in range(self.height):
             for x in range(self.width):
@@ -178,12 +240,21 @@ class Maze:
                 b += 1
 
     def all_path_false(self) -> None:
+        """Efface les identifiants de chemins résolus de toutes les cellules.
+        Remet à zéro l'état visuel du labyrinthe après une résolution.
+        Prépare la grille pour une nouvelle recherche.
+        """
         for y in range(self.height):
             for x in range(self.width):
                 cell = self.grid[y][x]
                 cell.path_active = False
 
     def draw_maze(self, start: bool) -> None:
+        """Génère et affiche le rendu ASCII/Unicode du labyrinthe dans le
+        terminal.
+        Parcourt la grille et dessine les murs, l'entrée, la sortie et le logo.
+        Prend en compte les thèmes et couleurs configurés.
+        """
         print("\033[H", end="")
         w = Theme.wall
         res = Color.DEFAULT.value

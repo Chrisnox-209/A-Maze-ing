@@ -5,6 +5,9 @@ from typing import Any
 
 
 def find_path_bfs(maze: Any) -> None:
+    """Trouve le chemin le plus court entre l'entrée et la sortie via BFS.
+    Marque les cellules et reconstruit le chemin optimal.
+    """
     maze.all_cell_false()
     for row in maze.grid:
         for cell in row:
