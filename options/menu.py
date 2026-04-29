@@ -103,6 +103,7 @@ def Menu(maze: Any) -> None:
     Traite la navigation, les sélections et déclenche les actions
     correspondantes.
     """
+    Theme.logo_raise_error = False
     console: Any = Console()
     main_opts: list[str] = ["GENERATE", "SOLVE PATH", "UPDATE", "RESET",
                             "PLAY GAME", "EXIT PROGRAM"]

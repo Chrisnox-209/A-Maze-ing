@@ -441,10 +441,11 @@ class Logo:
                             1 and self.pattern[row][col + 1] == 1:
                         cell.walls["East"] = False
         """ Verifie si l'entree et la sortie de sont pas sur le logo"""
-        exit_id: int = self.maze.exit[1] * self.maze.width + self.maze.exit[0]
-        entry_id: int = self.maze.entry[1] * self.maze.width + self.maze.entry[0]
-        if exit_id in self.maze.logo_ids or entry_id in self.maze.logo_ids:
-            raise ValueError("the entrance or exit is located inside the logo")
+        if Theme.logo_raise_error:
+            exit_id: int = self.maze.exit[1] * self.maze.width + self.maze.exit[0]
+            entry_id: int = self.maze.entry[1] * self.maze.width + self.maze.entry[0]
+            if exit_id in self.maze.logo_ids or entry_id in self.maze.logo_ids:
+                raise ValueError("the entrance or exit is located inside the logo")
         return None
 
     def make_logo_start(self) -> None:

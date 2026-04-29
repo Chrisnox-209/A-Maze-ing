@@ -215,6 +215,7 @@ class Theme:
     animation_algo: bool = False
     animation_draw_path: bool = False
     color_path = Color.BLUE.value
+    logo_raise_error = True
 
     entry_color_case = Color.ENTRY.value
     exit_color_case = Color.EXIT.value
