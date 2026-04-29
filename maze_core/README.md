@@ -48,6 +48,13 @@ maze_core/
 # install pip
 pip install mazegen-1.0.0-py3-none-any.whl
 ```
+### ℹ️ Test information
+*The tests are used to verify that the package works correctly after installation.  
+If you can generate a maze with an exit, everything is working properly.*
+
+```python
+python3 -m mazegen.test
+```
 
 ### import & initialization
 ```python
