@@ -1,6 +1,7 @@
 from utils.parser import clear, parsing_data
 from maze_core.mazegen.maze.maze import Maze
 from options.menu import Menu
+import sys
 
 
 def main() -> None:
@@ -8,7 +9,12 @@ def main() -> None:
     Parse la configuration, initialise le labyrinthe et lance l'affichage.
     Démarre ensuite le menu interactif pour l'utilisateur.
     """
-    file_config = "config.txt"
+    if len(sys.argv) != 2 or not sys.argv[1].endswith(".txt"):
+        print(
+            "[ERROR] -> Usage: python a_maze_ing.py <config_file.txt> "
+        )
+        sys.exit(1)
+    file_config: str = sys.argv[1]
     config = parsing_data(file_config)
     if config is False:
         print(f"[ERROR]: file {file_config}")
