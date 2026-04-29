@@ -313,8 +313,7 @@ class Maze:
                 cell.path_active = False
 
     def draw_maze(self, start: bool) -> None:
-        """Génère et affiche le rendu ASCII/Unicode du labyrinthe dans le
-        terminal.
+        """Génère et affiche le rendu ASCII/Unicode du labyrinthe dans le terminal.
         Parcourt la grille et dessine les murs, l'entrée, la sortie et le logo.
         Prend en compte les thèmes et couleurs configurés.
         """
@@ -325,6 +324,7 @@ class Maze:
         exit_cel = self.grid[self.exit[1]][self.exit[0]]
         entry.color_case = Theme.entry_color_case
         exit_cel.color_case = Theme.exit_color_case
+
         for y in range(self.height):
             line_top = ""
             for x in range(self.width):
@@ -337,14 +337,18 @@ class Maze:
                     inter = w.corner_lt.value if x == 0 else w.corner_x.value
 
                 if not cell.walls["North"]:
-                    if (cell.color_case != Color.DEFAULT.value
-                       and cell != entry and cell != exit_cel):
+                    top_cell = self.grid[y-1][x] if y > 0 else None
+                    if (cell.color_case != Color.DEFAULT.value and
+                       top_cell and
+                       top_cell.color_case != Color.DEFAULT.value):
                         h_char = cell.color_case + w.cursor.value
                     else:
                         h_char = w.box.value
                 else:
                     h_char = Theme.color_wall + w.horizontal.value
+
                 line_top += f"{cc}{inter}{h_char}{Color.DEFAULT.value}"
+
             last_inter = w.corner_tr.value if y == 0 else w.corner_rt.value
             print(
                 f"{line_top}{Theme.color_wall}{last_inter}{res}\033[K",
@@ -355,8 +359,10 @@ class Maze:
                 cell = self.grid[y][x]
 
                 if not cell.walls["West"]:
-                    if (cell.color_case != Color.DEFAULT.value
-                       and cell != entry and cell != exit_cel):
+                    left_cell = self.grid[y][x-1] if x > 0 else None
+                    if (cell.color_case != Color.DEFAULT.value and
+                       left_cell and
+                       left_cell.color_case != Color.DEFAULT.value):
                         v_char = cell.color_case + w.cursor.value[0]
                     else:
                         v_char = " "
@@ -380,23 +386,23 @@ class Maze:
             print(
                 f"{line_mid}{Theme.color_wall}{w.vertical.value}{res}\033[K",
                 flush=True)
+
             if start:
                 time.sleep(self.delay)
+
         line_bot = ""
         for x in range(self.width):
             cell = self.grid[self.height - 1][x]
             inter = w.corner_bl.value if x == 0 else w.corner_bt.value
+            
             if not cell.walls["South"]:
-                if (cell.color_case != Color.DEFAULT.value
-                   and cell != entry and cell != exit_cel):
-                    h_char = cell.color_case + w.cursor.value
-                else:
-                    h_char = w.box.value
+                h_char = w.box.value
             else:
                 h_char = Theme.color_wall + w.horizontal.value
 
-            line_bot += f"{Theme.color_wall}{inter}{h_char}"
-            f"{Color.DEFAULT.value}"
+            line_bot += (
+                f"{Theme.color_wall}{inter}{h_char}{Color.DEFAULT.value}")
+
         print(
             f"{line_bot}{Theme.color_wall}{w.corner_br.value}{res}\033[K",
             flush=True)
