@@ -1,5 +1,5 @@
 from random import randrange, seed
-from maze_core.mazegen.maze.utils_enum import Theme
+from ..maze.utils_enum import Theme
 import time
 from typing import Any
 
@@ -29,7 +29,6 @@ def imperfect_maze_func(maze: Any) -> None:
                     if neighbor.visit is not True:
                         cell_destruction.walls["West"] = False
                         neighbor.walls["East"] = False
-                # maze.draw_maze()
                 if Theme.animation_draw:
                     maze.draw_maze(False)
                     time.sleep(delay)

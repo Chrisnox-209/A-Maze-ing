@@ -212,7 +212,7 @@ class Theme:
     animation_draw: bool = False
     color_animation_backtraking = Color.BLUE.value
 
-    animation_algo: bool = True
+    animation_algo: bool = False
     animation_draw_path: bool = False
     color_path = Color.BLUE.value
 

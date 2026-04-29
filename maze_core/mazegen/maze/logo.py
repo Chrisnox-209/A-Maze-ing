@@ -2,7 +2,7 @@ from typing import Literal, Any
 
 try:
     import random
-    from maze_core.mazegen.maze.utils_enum import Color, Theme
+    from ..maze.utils_enum import Color, Theme
     import time
 except Exception as e:
     print(e)
@@ -440,6 +440,10 @@ class Logo:
                     if col < width_logo - \
                             1 and self.pattern[row][col + 1] == 1:
                         cell.walls["East"] = False
+        exit_id: int = self.maze.exit[1] * self.maze.width + self.maze.exit[0]
+        entry_id: int = self.maze.entry[1] * self.maze.width + self.maze.entry[0]
+        if exit_id in self.maze.logo_ids or entry_id in self.maze.logo_ids:
+            raise ValueError("the entrance or exit is located inside the logo")
         return None
 
     def make_logo_start(self) -> None:

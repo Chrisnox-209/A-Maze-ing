@@ -1,22 +1,22 @@
 import sys
 import random
 import time
-from typing import Any, Literal
-
+from typing import Any, Literal, Optional, Self
 try:
-    from maze_core.mazegen.algos import (
+    from ..algos import (
         find_path_bfs,
         dfs,
         kruskal,
         imperfect_maze_func,
     )
-    from maze_core.mazegen.maze import (
+    from ..maze import (
         Logo,
         output_maze_func,
         Color,
         Theme,
     )
-    from maze_core.mazegen.options import Timer
+    from ..options import Timer
+    from pydantic import BaseModel, Field, ValidationError, model_validator
 
 except ImportError as e:
     raise SystemExit(f"Import error: {e}")
@@ -56,6 +56,66 @@ class Cell:
         return f"{self.x}:{self.y}, id={self.cell_id}"
 
 
+class MazeConfig(BaseModel):
+    """Modèle de validation pour la configuration du labyrinthe.
+    Vérifie les types et les valeurs (hauteur, largeur, seed, etc.).
+    Utilise Pydantic pour s'assurer que les données sont conformes.
+    """
+    WIDTH: int = Field(ge=3)
+    HEIGHT: int = Field(ge=3)
+    ENTRY_X: int = Field(ge=0)
+    ENTRY_Y: int = Field(ge=0)
+    EXIT_X: int = Field(ge=0)
+    EXIT_Y: int = Field(ge=0)
+    OUTPUT_FILE: str = Field(default="exit.txt", max_length=20)
+    PERFECT: bool = Field(default=True)
+    SEED: Optional[str] = Field(default=None, min_length=1)
+
+    @model_validator(mode='after')
+    def check_entry(self) -> Self:
+        """Vérifie la validité des coordonnées d'entrée du labyrinthe.
+        Lève une erreur si l'entrée est en dehors des limites.
+        S'assure que l'entrée est bien sur un bord du labyrinthe.
+        """
+        if (self.ENTRY_X >= self.WIDTH):
+            raise ValueError("ENTRY X is outside the maze.")
+        if (self.ENTRY_Y >= self.HEIGHT):
+            raise ValueError("ENTRY Y is outside the maze.")
+        return self
+
+    @model_validator(mode='after')
+    def check_file(self) -> Self:
+        """Vérifie la validité des coordonnées d'entrée du labyrinthe.
+        Lève une erreur si l'entrée est en dehors des limites.
+        S'assure que l'entrée est bien sur un bord du labyrinthe.
+        """
+        if not self.OUTPUT_FILE.endswith(".txt"):
+            raise ValueError("OUTPUT FILE The extension is not valid.")
+        return self
+
+    @model_validator(mode='after')
+    def check_exit(self) -> Self:
+        """Vérifie la validité des coordonnées de sortie du labyrinthe.
+        Lève une erreur si la sortie est hors limites ou identique à l'entrée.
+        S'assure que la sortie se trouve bien sur un bord externe.
+        """
+        if (self.EXIT_X >= self.WIDTH):
+            raise ValueError("EXIT X is outside the maze.")
+        if (self.EXIT_Y >= self.HEIGHT):
+            raise ValueError("EXIT Y is outside the maze.")
+        return self
+
+    @model_validator(mode='after')
+    def check_door(self) -> Self:
+        """Applique les vérifications complètes sur l'entrée et la sortie.
+        S'assure que ces deux portes respectent les dimensions de la grille.
+        Valide la cohérence globale des accès au labyrinthe.
+        """
+        if (self.ENTRY_Y == self.EXIT_Y and self.ENTRY_X == self.EXIT_X):
+            raise ValueError("ENTRY is in the same place as the EXIT")
+        return self
+
+
 class Maze:
     """Classe principale représentant la grille du labyrinthe.
     Gère la structure de données interne, les dimensions et les cellules.
@@ -66,6 +126,8 @@ class Maze:
         Met en place l'état initial requis pour le fonctionnement.
         Configure les variables internes de l'objet.
         """
+        if isinstance(data, dict):
+            data = MazeConfig(**data)
         self.width: int = data.WIDTH
         self.height: int = data.HEIGHT
         self.entry: tuple[int, int] = (data.ENTRY_X, data.ENTRY_Y)

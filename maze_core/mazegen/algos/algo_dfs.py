@@ -1,8 +1,8 @@
 from random import shuffle
 import random
-from maze_core.mazegen.maze.utils_enum import Color, Theme
+from ..maze.utils_enum import Color, Theme
 import time
-from maze_core.mazegen.options.timer import Timer
+from ..options.timer import Timer
 from typing import Any
 
 
@@ -60,32 +60,25 @@ def dfs(maze: Any) -> None:
                     found = True
                 cell_destruction = maze.grid[y][x]
                 neighbor = maze.grid[direct_y][direct_x]
-                # Mouvement Vertical
                 if direct_x == x and not verif_visit.visit:
-                    # on monte vers le nord
                     if direct_y < y:
                         cell_destruction.walls["North"] = False
                         neighbor.walls["South"] = False
                         neighbor.visit = True
                     elif direct_y > y:
-                        # on dessend vers le sud
                         cell_destruction.walls["South"] = False
                         neighbor.walls["North"] = False
                         neighbor.visit = True
-                # Mouvement Horizontal
                 elif direct_y == y and not verif_visit.visit:
                     if direct_x < x:
-                        # on va vers l ouest
                         cell_destruction.walls["West"] = False
                         neighbor.walls["East"] = False
                         neighbor.visit = True
                     elif direct_x > x:
-                        # on va vers l est
                         cell_destruction.walls["East"] = False
                         neighbor.walls["West"] = False
                         neighbor.visit = True
                 stack.append((direct_x, direct_y))
-                # print(stack)
                 if Theme.animation_algo:
                     maze.draw_maze(False)
                     time.sleep(delay)

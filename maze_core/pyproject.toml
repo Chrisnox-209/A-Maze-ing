@@ -12,6 +12,7 @@ packages = [{ include = "mazegen" }]
 
 [tool.poetry.dependencies]
 python = "^3.12.3"
+pydantic = "^2.6"
 
 [build-system]
 requires = ["poetry-core"]

@@ -3,7 +3,6 @@ MYPY_FLAGS = --warn-return-any --warn-unused-ignores --ignore-missing-imports \
 MAIN = a_maze_ing.py
 CONFIG = config.txt
 
-
 .PHONY: run, install, clean, build, lint
 
 install:
@@ -26,7 +25,6 @@ build:
 debug:
 	@python3 -m poetry run python3 -m pdb $(MAIN) $(CONFIG)
 
-
 lint:
-		poetry run python3 -m flake8 .\
-		poetry run python3 -m mypy . $(MYPY_FLAGS)\
+	@python3 -m poetry run python3 -m mypy . $(MYPY_FLAGS)
+	@python3 -m poetry run python3 -m flake8 .

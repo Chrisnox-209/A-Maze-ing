@@ -1,64 +1,12 @@
 import os
 from typing import Self, Callable, Optional
+from maze_core.mazegen.maze.maze import MazeConfig
+from pydantic import ValidationError
 import sys
-try:
-    from pydantic import BaseModel, Field, ValidationError, model_validator
-except Exception as e:
-    print(e)
-    sys.exit(1)
+
 
 clear: Callable[[], int] = lambda: os.system('cls' if os.name == 'nt'
                                              else 'clear')
-
-
-class MazeConfig(BaseModel):
-    """Modèle de validation pour la configuration du labyrinthe.
-    Vérifie les types et les valeurs (hauteur, largeur, seed, etc.).
-    Utilise Pydantic pour s'assurer que les données sont conformes.
-    """
-    WIDTH: int = Field(ge=3)
-    HEIGHT: int = Field(ge=3)
-    ENTRY_X: int = Field(ge=0)
-    ENTRY_Y: int = Field(ge=0)
-    EXIT_X: int = Field(ge=0)
-    EXIT_Y: int = Field(ge=0)
-    OUTPUT_FILE: str = Field(default="exit.txt", max_length=20)
-    PERFECT: bool = Field(default=True)
-    SEED: Optional[str] = Field(default=None, min_length=1)
-
-    @model_validator(mode='after')
-    def check_entry(self) -> Self:
-        """Vérifie la validité des coordonnées d'entrée du labyrinthe.
-        Lève une erreur si l'entrée est en dehors des limites.
-        S'assure que l'entrée est bien sur un bord du labyrinthe.
-        """
-        if (self.ENTRY_X >= self.WIDTH):
-            raise ValueError("ENTRY X is outside the maze.")
-        if (self.ENTRY_Y >= self.HEIGHT):
-            raise ValueError("ENTRY Y is outside the maze.")
-        return self
-
-    @model_validator(mode='after')
-    def check_exit(self) -> Self:
-        """Vérifie la validité des coordonnées de sortie du labyrinthe.
-        Lève une erreur si la sortie est hors limites ou identique à l'entrée.
-        S'assure que la sortie se trouve bien sur un bord externe.
-        """
-        if (self.EXIT_X >= self.WIDTH):
-            raise ValueError("EXIT X is outside the maze.")
-        if (self.EXIT_Y >= self.HEIGHT):
-            raise ValueError("EXIT Y is outside the maze.")
-        return self
-
-    @model_validator(mode='after')
-    def check_door(self) -> Self:
-        """Applique les vérifications complètes sur l'entrée et la sortie.
-        S'assure que ces deux portes respectent les dimensions de la grille.
-        Valide la cohérence globale des accès au labyrinthe.
-        """
-        if (self.ENTRY_Y == self.EXIT_Y and self.ENTRY_X == self.EXIT_X):
-            raise ValueError("ENTRY is in the same place as the EXIT")
-        return self
 
 
 def parsing_data(file: str) -> MazeConfig | bool:

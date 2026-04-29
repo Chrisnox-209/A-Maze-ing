@@ -42,13 +42,30 @@ maze_core/
 
 ## Usage Example
 
+
+### install package
+```python
+# install pip
+pip install mazegen-1.0.0-py3-none-any.whl
+```
+
 ### import & initialization
 ```python
-# inport
+# import
 from mazegen.maze.maze import Maze
 
+# Create dict
+dict_data = {
+	"WIDTH": 18,
+ 	"HEIGHT": 18,
+ 	"ENTRY_X":1, 
+ 	"ENTRY_Y":1, 
+ 	"EXIT_X": 18, 
+ 	"EXIT_Y": 19, 
+}
+
 # Initialize a new maze
-maze = Maze(width=10, height=10, entry=1,1, exit=9,9)
+maze = Maze(dict_data)
 ```
 
 ### grid generation
@@ -65,6 +82,10 @@ To generate the maze you can choose between "DFS" and "KRUSKAL"
 exemple with kruskal
 ```python
 maze.generate_maze("KRUSKAL")
+
+or 
+
+maze.generate_maze("DFS")
 ```
 ### inperfect Maze
 to generate an imperfect maze you must call the imperfect_maze() function after generating the algorithm
@@ -79,6 +100,16 @@ maze.draw_maze(False)
 
 #path visualization
 maze.draw_path("basic")
+```
+
+### Activate animation:
+```python
+
+
+# first import
+from mazegen.maze.maze import Theme
+
+Theme.animation_algo = True
 ```
 
 

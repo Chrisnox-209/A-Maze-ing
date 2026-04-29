@@ -1,5 +1,5 @@
 from utils.parser import clear, parsing_data
-from maze_core.mazegen.maze.maze import Maze
+from maze_core.mazegen.maze.maze import Maze, Theme
 from options.menu import Menu
 import sys
 
@@ -9,6 +9,7 @@ def main() -> None:
     Parse la configuration, initialise le labyrinthe et lance l'affichage.
     Démarre ensuite le menu interactif pour l'utilisateur.
     """
+    Theme.animation_algo = True
     if len(sys.argv) != 2 or not sys.argv[1].endswith(".txt"):
         print(
             "[ERROR] -> Usage: python a_maze_ing.py <config_file.txt> "

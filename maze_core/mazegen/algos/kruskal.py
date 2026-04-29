@@ -1,7 +1,7 @@
-from maze_core.mazegen.maze.utils_enum import Color, Theme
+from ..maze.utils_enum import Color, Theme
 import random
 import time
-from maze_core.mazegen.options.timer import Timer
+from ..options.timer import Timer
 from typing import Any
 
 
@@ -169,4 +169,3 @@ def create_family(maze: Any,
 
             cell1.color_case = Color.DEFAULT.value
             cell2.color_case = Color.DEFAULT.value
-    maze.draw_maze(False)
