@@ -43,7 +43,14 @@ def parsing_data(file: str) -> MazeConfig | bool:
                         raise ValueError("OUTPUT_FILE missing")
                     data["OUTPUT_FILE"] = value
                 elif key == "PERFECT":
-                    data["PERFECT"] = value.lower() == "true"
+                    if (value == "True" or
+                        value == "true" or
+                       value == "TRUE"):
+                        data["PERFECT"] = True
+                    elif (value == "False" or
+                          value == "false" or
+                          value == "FALSE"):
+                        data["PERFECT"] = False
                 elif key == "SEED":
                     data["SEED"] = str(value)
                     if data["SEED"] == "None":
