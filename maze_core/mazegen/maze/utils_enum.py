@@ -187,16 +187,6 @@ class Color(Enum):
         return random.choice(valid_colors)
 
 
-class Logo(Enum):
-    """Enumération des identifiants ou types de logos disponibles.
-    Gère les différentes formes qui peuvent être affichées (42, Timer, etc.).
-    Facilite la sélection du motif central.
-    """
-    logo_42 = "LOGO_42"
-    caca = "POOH"
-    logo_surprise = "SURPRISE"
-
-
 class Theme:
     """Classe regroupant la configuration visuelle globale.
     Stocke les couleurs, le style de mur, et l'état des animations.

@@ -112,7 +112,7 @@ L’algorithme DFS (Depth First Search) est utilisé pour générer un labyrinth
 
 Le principe consiste à :
 
-1. Partir d’une cellule aléatoire
+1. Partir du point de depart 
 2. Explorer récursivement une direction
 3. Supprimer les murs entre cellules voisines
 4. Revenir en arrière lorsqu’aucun chemin n’est disponible

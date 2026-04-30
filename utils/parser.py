@@ -1,8 +1,7 @@
 import os
-from typing import Self, Callable, Optional
+from typing import Callable
 from maze_core.mazegen.maze.maze import MazeConfig
 from pydantic import ValidationError
-import sys
 
 
 clear: Callable[[], int] = lambda: os.system('cls' if os.name == 'nt'

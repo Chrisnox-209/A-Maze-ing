@@ -6,6 +6,7 @@ class Timer:
     Permet de chronométrer la génération ou la résolution du labyrinthe.
     Gère le démarrage et le calcul de la durée écoulée.
     """
+
     def __init__(self) -> None:
         self.start: float = time.perf_counter()
 

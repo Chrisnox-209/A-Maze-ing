@@ -16,7 +16,7 @@ try:
         Theme,
     )
     from ..options import Timer
-    from pydantic import BaseModel, Field, ValidationError, model_validator
+    from pydantic import BaseModel, Field, model_validator
 
 except ImportError as e:
     raise SystemExit(f"Import error: {e}")
@@ -28,6 +28,7 @@ class Cell:
     Stocke l'état de ses murs, ses couleurs et ses flags de visite.
     Gère aussi son appartenance potentielle à un chemin ou un logo.
     """
+
     def __init__(self, x: int, y: int, cell_id: int) -> None:
         """Initialise l'instance avec ses attributs par défaut.
         Met en place l'état initial requis pour le fonctionnement.
@@ -121,6 +122,7 @@ class Maze:
     Gère la structure de données interne, les dimensions et les cellules.
     Orchestre la génération, la résolution et l'affichage.
     """
+
     def __init__(self, data: Any) -> None:
         """Initialise l'instance avec ses attributs par défaut.
         Met en place l'état initial requis pour le fonctionnement.
@@ -241,7 +243,7 @@ class Maze:
                 if cell.path_id > max_id_path:
                     max_id_path = cell.path_id
 
-        if type == "game":
+        if type == "ascii":
             i = max_id_path
             old_x = 0
             old_y = 0
@@ -294,7 +296,7 @@ class Maze:
                                     Theme.logo_midile = str(timestr)
                                     self.generate_logo()
                                 cell.color_case = Theme.color_path
-                                if Theme.animation_draw:
+                                if Theme.animation_algo:
                                     self.draw_maze(False)
                                 if i > b:
                                     cell.color_case = Color.DEFAULT.value
@@ -313,7 +315,8 @@ class Maze:
                 cell.path_active = False
 
     def draw_maze(self, start: bool) -> None:
-        """Génère et affiche le rendu ASCII/Unicode du labyrinthe dans le terminal.
+        """Génère et affiche le rendu ASCII/Unicode
+        du labyrinthe dans le terminal.
         Parcourt la grille et dessine les murs, l'entrée, la sortie et le logo.
         Prend en compte les thèmes et couleurs configurés.
         """
@@ -337,7 +340,7 @@ class Maze:
                     inter = w.corner_lt.value if x == 0 else w.corner_x.value
 
                 if not cell.walls["North"]:
-                    top_cell = self.grid[y-1][x] if y > 0 else None
+                    top_cell = self.grid[y - 1][x] if y > 0 else None
                     if (cell.color_case != Color.DEFAULT.value and
                        top_cell and
                        top_cell.color_case != Color.DEFAULT.value):
@@ -359,7 +362,7 @@ class Maze:
                 cell = self.grid[y][x]
 
                 if not cell.walls["West"]:
-                    left_cell = self.grid[y][x-1] if x > 0 else None
+                    left_cell = self.grid[y][x - 1] if x > 0 else None
                     if (cell.color_case != Color.DEFAULT.value and
                        left_cell and
                        left_cell.color_case != Color.DEFAULT.value):
@@ -394,7 +397,7 @@ class Maze:
         for x in range(self.width):
             cell = self.grid[self.height - 1][x]
             inter = w.corner_bl.value if x == 0 else w.corner_bt.value
-            
+
             if not cell.walls["South"]:
                 h_char = w.box.value
             else:

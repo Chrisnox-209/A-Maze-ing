@@ -622,3 +622,5 @@ def Menu(maze: Any) -> None:
                     Theme.color_path = color_map[index % len(color_map)]
                     current_menu = "MAIN"
                     index = 0
+            elif key == "q":
+                sys.exit()
