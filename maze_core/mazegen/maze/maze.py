@@ -69,7 +69,7 @@ class MazeConfig(BaseModel):
     EXIT_X: int = Field(ge=0)
     EXIT_Y: int = Field(ge=0)
     OUTPUT_FILE: str = Field(default="exit.txt", max_length=20)
-    PERFECT: bool = Field(choices=[True, False])
+    PERFECT: bool = Field(...)
     SEED: Optional[str] = Field(default=None, min_length=1)
 
     @model_validator(mode='after')
