@@ -68,7 +68,8 @@ dict_data = {
  	"ENTRY_X":1, 
  	"ENTRY_Y":1, 
  	"EXIT_X": 18, 
- 	"EXIT_Y": 19, 
+ 	"EXIT_Y": 19,
+	"PERFECT": True,
 }
 
 # Initialize a new maze

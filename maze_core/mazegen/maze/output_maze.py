@@ -1,4 +1,5 @@
 from typing import Any, LiteralString
+import sys
 
 
 def binToHexa(a: str | int) -> str:
@@ -79,3 +80,4 @@ def output_maze_func(maze: Any) -> None:
             f.write(output_path(maze))
     except Exception as e:
         print(e)
+        sys.exit(1)

@@ -12,6 +12,7 @@ def test() -> None:
         "ENTRY_Y": 1,
         "EXIT_X": 9,
         "EXIT_Y": 9,
+        "PERFECT": True,
     }
 
     # activate animation
