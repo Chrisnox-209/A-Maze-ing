@@ -4,6 +4,9 @@
 
 # 🧩 A-Maze-ing — Générateur de Labyrinthe
 
+<p align="center">
+  <img src="./maze.gif" alt="Demo" />
+</p>
 
 
 ## 📖 Description
